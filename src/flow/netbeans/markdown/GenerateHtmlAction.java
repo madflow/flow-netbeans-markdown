@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Generate HTML from a Mardown source file.
  */
 package flow.netbeans.markdown;
 
@@ -14,15 +13,11 @@ import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.NbBundle.Messages;
 import com.cforcoding.jmd.MarkDown;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import org.openide.DialogDisplayer;
-import org.openide.NotifyDescriptor;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 
 @ActionID(category = "File",
 id = "flow.netbeans.markdown.GenerateHtmlAction")
