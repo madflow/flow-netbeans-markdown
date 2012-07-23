@@ -66,6 +66,7 @@
                     <file name="MarkdownDataLoader.instance">
                         <attr name="dataObjectClass" stringvalue="flow.netbeans.markdown.MarkdownDataObject"/>
                         <attr name="instanceCreate" methodvalue="org.openide.loaders.DataLoaderPool.factory"/>
+                        <attr name="iconBase" stringvalue="flow/netbeans/markdown/text-x-generic.png"/>
                         <attr name="mimeType" stringvalue="text/x-markdown"/>
                     </file>
                 </folder>
