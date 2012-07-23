@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package flow.netbeans.markdown;
 
 import java.io.IOException;
@@ -23,7 +19,7 @@ public class MarkdownDataObject extends MultiDataObject {
         CookieSet cookies = getCookieSet();
         cookies.add((Node.Cookie) DataEditorSupport.create(this, getPrimaryEntry(), cookies));
     }
-
+    
     @Override
     protected Node createNodeDelegate() {
         return new DataNode(this, Children.LEAF, getLookup());

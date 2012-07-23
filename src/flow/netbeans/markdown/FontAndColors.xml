@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fontscolors PUBLIC "-//NetBeans//DTD Editor Fonts and Colors settings 1.1//EN" "http://www.netbeans.org/dtds/EditorFontsColors-1_1.dtd">
+<fontscolors>
+    <fontcolor foreColor="red" name="removed"/>
+
+    <fontcolor foreColor="blue" name="header">
+        <font style="bold"/>
+    </fontcolor>
+
+    <fontcolor name="bold">
+        <font style="bold"/>
+    </fontcolor>
+
+    <fontcolor foreColor="blue" name="list"/>
+    <fontcolor bgColor="ffe0e0e0" name="blockquote"/>
+
+    <fontcolor name="plain"/>
+
+    <fontcolor bgColor="ffe0e0e0" name="filename">
+        <font style="bold+italic"/>
+    </fontcolor>
+    <fontcolor default="error" name="error"/>
+
+</fontscolors>
+
+
+
+
+
+
+
+
+

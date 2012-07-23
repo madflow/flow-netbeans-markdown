@@ -65,11 +65,34 @@
                 <folder name="Factories">
                     <file name="MarkdownDataLoader.instance">
                         <attr name="dataObjectClass" stringvalue="flow.netbeans.markdown.MarkdownDataObject"/>
-                        <attr name="instanceCreate" methodvalue="org.openide.loaders.DataLoaderPool.factory"/>
                         <attr name="iconBase" stringvalue="flow/netbeans/markdown/text-x-generic.png"/>
+                        <attr name="instanceCreate" methodvalue="org.openide.loaders.DataLoaderPool.factory"/>
                         <attr name="mimeType" stringvalue="text/x-markdown"/>
                     </file>
                 </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Editors">
+        <folder name="text">
+            <folder name="x-markdown">
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.Bundle"/>
+                <folder name="FontsColors">
+                    <folder name="NetBeans">
+                        <folder name="Defaults">
+                            <file name="FontAndColors.xml" url="FontAndColors.xml">
+                                <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.Bundle"/>
+                            </file>
+                        </folder>
+                    </folder>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="OptionsDialog">
+        <folder name="PreviewExamples">
+            <folder name="text">
+                <file name="x-markdown" url="MarkdownExample.md"/>
             </folder>
         </folder>
     </folder>
@@ -77,14 +100,6 @@
         <folder name="MIMEResolver">
             <file name="MarkdownResolver.xml" url="MarkdownResolver.xml">
                 <attr name="displayName" bundlevalue="flow.netbeans.markdown.Bundle#Services/MIMEResolver/MarkdownResolver.xml"/>
-            </file>
-        </folder>
-    </folder>
-    <folder name="Templates">
-        <folder name="Other">
-            <file name="MarkdownTemplate.md" url="MarkdownTemplate.md">
-                <attr name="displayName" bundlevalue="flow.netbeans.markdown.Bundle#Templates/Other/MarkdownTemplate.md"/>
-                <attr name="template" boolvalue="true"/>
             </file>
         </folder>
     </folder>
