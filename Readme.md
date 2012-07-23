@@ -14,4 +14,7 @@ Markdown file support for the Netbeans IDE
 
 - Florian Reiss <http://github/madflow/> 
 
-- JMD Java port of MarkDownSharp <https://github.com/cletus/jmd/>
+# Credits
+
+- sirthias (Mathias) https://github.com/sirthias/pegdown/ 
+ - A pure-Java Markdown processor based on a parboiled PEG parser supporting a number of extensions
