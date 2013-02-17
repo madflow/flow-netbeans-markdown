@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-OpenIDE-Module: flow.netbeans.markdown
+OpenIDE-Module: flow.netbeans.markdown/0
 OpenIDE-Module-Layer: flow/netbeans/markdown/layer.xml
 OpenIDE-Module-Localizing-Bundle: flow/netbeans/markdown/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
