@@ -34,7 +34,7 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
     public MarkdownGenerateHtmlAction(MarkdownDataObject context) throws IOException {
         this.context = context;
 
-        FileObject f = (FileObject) context.getPrimaryFile();
+        FileObject f = context.getPrimaryFile();
         String markdownSource = f.asText();
         String html = markdownProcessor.markdownToHtml(markdownSource);
         String full = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"></head><body>" + html.toString() + "</body></html>";

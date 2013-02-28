@@ -32,7 +32,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
     public MarkdownViewHtmlAction(MarkdownDataObject context) throws IOException {
         this.context = context;
 
-        FileObject f = (FileObject) context.getPrimaryFile();
+        FileObject f = context.getPrimaryFile();
         String markdownSource = f.asText();
         String html = markdownProcessor.markdownToHtml(markdownSource);
 
