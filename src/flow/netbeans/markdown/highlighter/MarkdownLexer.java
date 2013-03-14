@@ -7,6 +7,10 @@ import org.netbeans.spi.lexer.LexerRestartInfo;
 
 class MarkdownLexer implements Lexer<MarkdownTokenId> {
 
+    static Lexer<MarkdownTokenId> create(LexerRestartInfo<MarkdownTokenId> info) {
+        return new MarkdownLexer(info);
+    }
+
     private LexerRestartInfo<MarkdownTokenId> info;
     private final LexerInput input;
     private static final int EOF = LexerInput.EOF;
@@ -14,7 +18,6 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
     MarkdownLexer(LexerRestartInfo<MarkdownTokenId> info) {
         this.info = info;
         this.input = info.input();
-        boolean inited = false;
     }
 
     @Override
@@ -102,7 +105,7 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
     @Override
     public void release() {
     }
-    
+
     private void parseInput(){
 
         LexerInput input = info.input();
@@ -113,9 +116,9 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
         {
                 data.append((char) i);
         }
-        
-        
-        
+
+
+
     }
-            
+
 }
