@@ -1,5 +1,8 @@
 package flow.netbeans.markdown;
 
+import flow.netbeans.markdown.options.MarkdownGlobalOptions;
+import flow.netbeans.markdown.options.MarkdownOptionsPanelController;
+import flow.netbeans.markdown.options.MarkdownPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -7,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.prefs.Preferences;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -14,6 +18,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.HtmlBrowser.URLDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.util.NbBundle.Messages;
+import org.openide.util.NbPreferences;
 import org.pegdown.PegDownProcessor;
 
 @ActionID(category = "File",
@@ -27,10 +32,12 @@ public final class MarkdownViewHtmlAction implements ActionListener {
 
     private final MarkdownDataObject context;
 
-    private final PegDownProcessor markdownProcessor = new PegDownProcessor();
-
     public MarkdownViewHtmlAction(MarkdownDataObject context) throws IOException {
         this.context = context;
+
+        Preferences prefs = NbPreferences.forModule(MarkdownPanel.class);
+        MarkdownGlobalOptions markdownOptions = new MarkdownGlobalOptions(prefs);
+        PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
 
         FileObject f = context.getPrimaryFile();
         String markdownSource = f.asText();
