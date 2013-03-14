@@ -43,6 +43,15 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>org.netbeans.modules.options.api</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <release-version>1</release-version>
+                        <specification-version>1.24.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.netbeans.modules.settings</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -126,16 +135,16 @@
             </module-dependencies>
             <public-packages/>
             <class-path-extension>
-                <runtime-relative-path>ext/parboiled-core-1.0.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/parboiled-core-1.0.2.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
                 <runtime-relative-path>ext/asm-3.3.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/asm-3.3.1.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/pegdown-1.2.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/pegdown-1.2.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/parboiled-core-1.1.4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/parboiled-core-1.1.4.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/asm-tree-3.3.1.jar</runtime-relative-path>
@@ -156,6 +165,10 @@
             <class-path-extension>
                 <runtime-relative-path>ext/pegdown-1.2.1-javadoc.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/pegdown-1.2.1-javadoc.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/parboiled-java-1.1.4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/parboiled-java-1.1.4.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/asm-util-3.3.1.jar</runtime-relative-path>
