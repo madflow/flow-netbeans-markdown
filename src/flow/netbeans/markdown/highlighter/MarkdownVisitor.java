@@ -195,7 +195,7 @@ public class MarkdownVisitor implements Visitor {
     }
 
     @Override
-    public void visit(TableCaptionNode node) {
+    public void visit(TableCaptionNode tcn) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
