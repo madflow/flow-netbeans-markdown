@@ -22,8 +22,7 @@ import org.pegdown.PegDownProcessor;
 id = "flow.netbeans.markdown.GenerateHtmlAction")
 @ActionRegistration(displayName = "#CTL_GenerateHtmlAction")
 @ActionReferences({
-    @ActionReference(path = "Menu/File", position = 0),
-    @ActionReference(path = "Loaders/text/x-markdown/Actions", position = 250)
+   @ActionReference(path = "Loaders/text/x-markdown/Actions", position = 250)
 })
 @Messages("CTL_GenerateHtmlAction=Generate HTML")
 public final class MarkdownGenerateHtmlAction implements ActionListener {
