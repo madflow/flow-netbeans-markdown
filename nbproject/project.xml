@@ -134,6 +134,10 @@
                 <binary-origin>release/modules/ext/asm-3.3.1.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
+                <runtime-relative-path>ext/pegdown-1.2.1.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/pegdown-1.2.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
                 <runtime-relative-path>ext/asm-tree-3.3.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/asm-tree-3.3.1.jar</binary-origin>
             </class-path-extension>
@@ -142,12 +146,16 @@
                 <binary-origin>release/modules/ext/asm-analysis-3.3.1.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/pegdown-1.1.0.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/pegdown-1.1.0.jar</binary-origin>
+                <runtime-relative-path>ext/pegdown-1.2.1-sources.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/pegdown-1.2.1-sources.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/parboiled-java-1.0.2.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/parboiled-java-1.0.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/pegdown-1.2.1-javadoc.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/pegdown-1.2.1-javadoc.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/asm-util-3.3.1.jar</runtime-relative-path>
