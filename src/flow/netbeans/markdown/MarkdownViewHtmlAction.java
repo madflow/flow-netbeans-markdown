@@ -25,6 +25,8 @@ import org.pegdown.PegDownProcessor;
 id = "flow.netbeans.markdown.MarkdownViewHtmlAction")
 @ActionRegistration(displayName = "#CTL_MarkdownViewHtmlAction")
 @ActionReferences({
+    @ActionReference(path = "Editors/text/x-markdown/Toolbars/Default", position = 270100),
+    @ActionReference(path = "Editors/text/x-markdown/Popup", position = 0),
     @ActionReference(path = "Loaders/text/x-markdown/Actions", position = 251)
 })
 @Messages("CTL_MarkdownViewHtmlAction=View HTML")
