@@ -232,7 +232,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         NbPreferences.forModule(MarkdownPanel.class).put("HTML_TEMPLATE", HTML_TEMPLATE.getText());
     }
     
-    String getDefaultHtmlTemplate()
+    public static String getDefaultHtmlTemplate()
     {
         return "<html>\n"
                 + "<head>\n"

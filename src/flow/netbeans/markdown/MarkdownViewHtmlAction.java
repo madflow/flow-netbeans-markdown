@@ -44,7 +44,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
         String markdownSource = f.asText();
         String html = markdownProcessor.markdownToHtml(markdownSource);
         String full = prefs
-                .get("HTML_TEMPLATE", "{%CONTENT%}")
+                .get("HTML_TEMPLATE", MarkdownPanel.getDefaultHtmlTemplate())
                 .replace("{%CONTENT%}", html.toString())
                 .replace("{%TITLE%}", context.getPrimaryFile().getName());
         File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
