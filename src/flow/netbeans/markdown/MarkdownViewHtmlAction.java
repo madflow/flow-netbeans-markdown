@@ -1,7 +1,6 @@
 package flow.netbeans.markdown;
 
 import flow.netbeans.markdown.options.MarkdownGlobalOptions;
-import flow.netbeans.markdown.options.MarkdownOptionsPanelController;
 import flow.netbeans.markdown.options.MarkdownPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,8 +41,10 @@ public final class MarkdownViewHtmlAction implements ActionListener {
         FileObject f = context.getPrimaryFile();
         String markdownSource = f.asText();
         String html = markdownProcessor.markdownToHtml(markdownSource);
-
-        String full = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"></head><body>" + html.toString() + "</body></html>";
+        String full = prefs
+                .get("HTML_TEMPLATE", "{%CONTENT%}")
+                .replace("{%CONTENT%}", html.toString())
+                .replace("{%TITLE%}", context.getPrimaryFile().getName());
         File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
 
         PrintStream out = new PrintStream(new FileOutputStream(temp));

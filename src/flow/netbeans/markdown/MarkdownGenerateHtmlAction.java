@@ -26,7 +26,7 @@ import org.pegdown.PegDownProcessor;
 id = "flow.netbeans.markdown.GenerateHtmlAction")
 @ActionRegistration(displayName = "#CTL_GenerateHtmlAction")
 @ActionReferences({
-   @ActionReference(path = "Loaders/text/x-markdown/Actions", position = 250)
+    @ActionReference(path = "Loaders/text/x-markdown/Actions", position = 250)
 })
 @Messages("CTL_GenerateHtmlAction=Generate HTML")
 public final class MarkdownGenerateHtmlAction implements ActionListener {
@@ -43,12 +43,15 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
         FileObject f = context.getPrimaryFile();
         String markdownSource = f.asText();
         String html = markdownProcessor.markdownToHtml(markdownSource);
-        String full = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"></head><body>" + html.toString() + "</body></html>";
+        String full = prefs
+                .get("HTML_TEMPLATE", "{%CONTENT%}")
+                .replace("{%CONTENT%}", html.toString())
+                .replace("{%TITLE%}", context.getPrimaryFile().getName());
 
         JFileChooser fileChooser = new JFileChooser("user.home");
         int option = fileChooser.showSaveDialog(fileChooser);
         int result = 0;
-        String fileName = "";
+        String fileName;
 
         if (option == JFileChooser.APPROVE_OPTION) {
             fileName = fileChooser.getSelectedFile().toString();
