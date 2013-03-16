@@ -1,5 +1,6 @@
 package flow.netbeans.markdown.highlighter;
 
+import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
 import java.util.Collection;
 import java.util.EnumSet;
 import org.netbeans.spi.lexer.LanguageHierarchy;
@@ -20,7 +21,7 @@ public class MarkdownLanguageHierarchy extends LanguageHierarchy<MarkdownTokenId
 
     @Override
     protected String mimeType () {
-        return "text/x-markdown";
+        return MarkdownLanguageConfig.MIME_TYPE;
     }
 
 }
