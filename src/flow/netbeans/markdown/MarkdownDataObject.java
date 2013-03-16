@@ -40,7 +40,7 @@ public class MarkdownDataObject extends MultiDataObject {
     @NbBundle.Messages("Source=&Source")
     @MultiViewElement.Registration(
             displayName="#Source",
-            iconBase="flow/netbeans/markdown/text-x-generic.png",
+            iconBase="flow/netbeans/markdown/resources/text-x-generic.png",
             persistenceType=TopComponent.PERSISTENCE_ONLY_OPENED,
             mimeType=MarkdownLanguageConfig.MIME_TYPE,
             preferredID="markdown.source",
