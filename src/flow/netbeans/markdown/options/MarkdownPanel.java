@@ -234,7 +234,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     
     public static String getDefaultHtmlTemplate()
     {
-        return "<html>\n"
+        return "<!DOCTYPE html>"
+                + "<html>\n"
                 + "<head>\n"
                 + "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"
                 + "<title>{%TITLE%}</title>\n"
