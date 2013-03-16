@@ -236,7 +236,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     {
         return "<html>\n"
                 + "<head>\n"
-                + "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"></head>\n"
+                + "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"
                 + "<title>{%TITLE%}</title>\n"
                 + "<style type=\"text/css\">/*...*/</style>\n"
                 + "</head>\n"
