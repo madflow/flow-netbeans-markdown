@@ -115,8 +115,12 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(RootNode node) {
-        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) abbreviationNode.accept(this);
-            for (ReferenceNode referenceNode : node.getReferences()) referenceNode.accept(this);
+        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) {
+            abbreviationNode.accept(this);
+        }
+            for (ReferenceNode referenceNode : node.getReferences()) {
+            referenceNode.accept(this);
+        }
             visitChildren(node);
     }
 
@@ -191,7 +195,9 @@ public class MarkdownVisitor implements Visitor {
     }
 
     protected void visitChildren(SuperNode node) {
-        for (Node child : node.getChildren()) child.accept(this);
+        for (Node child : node.getChildren()) {
+            child.accept(this);
+        }
     }
 
     @Override
