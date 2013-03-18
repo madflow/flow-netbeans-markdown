@@ -11,14 +11,33 @@ import org.netbeans.spi.lexer.LexerRestartInfo;
 
 public enum MarkdownTokenId implements TokenId {
 
-    HEADER("header"),
-    LIST("list"),
+    ABBREVIATION("abbreviation"),
+    AUTOLINK("autolink"),
     BLOCKQUOTE("blockquote"),
-    REMOVED("removed"),
+    BULLETLIST("bulletlist"),
+    CODE("code"),
+    EMPH("emph"),
+    EXPIMAGE("expimage"),
+    EXPLINK("explink"),
+    HEADER("header"),
+    HORIZONTALRULE("horizontalrule"),
+    HTMLBLOCK("htmlblock"),
+    INLINEHTML("inlinehtml"),
+    LISTITEM("listitem"),
+    MAILLINK("maillink"),
+    ORDEREDLIST("orderedlist"),
     PLAIN("plain"),
-    BOLD("bold");
+    STRONG("strong"),
+    TABLE("table"),
+    TEXT("text"),
+    VERBATIM("verbatim"),
+    WIKILINK("wikilink"),
+    WHITESPACE("whitespace");
+        
+    private String name;
 
     private static final Language<MarkdownTokenId> LANGUAGE = new LanguageHierarchy<MarkdownTokenId>() {
+
         @Override
         protected Collection<MarkdownTokenId> createTokenIds() {
             return EnumSet.allOf(MarkdownTokenId.class);
@@ -35,18 +54,16 @@ public enum MarkdownTokenId implements TokenId {
         }
     }.language();
 
-    public static Language language() {
-        return LANGUAGE;
-    }
-    private String name;
-
-    MarkdownTokenId(
-            String name) {
+    MarkdownTokenId(String name) {
         this.name = name;
     }
 
     @Override
     public String primaryCategory() {
         return name;
+    }
+
+    public static Language<MarkdownTokenId> language() {
+        return LANGUAGE;
     }
 }

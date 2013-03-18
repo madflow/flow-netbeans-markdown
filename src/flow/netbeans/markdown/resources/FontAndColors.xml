@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontscolors PUBLIC "-//NetBeans//DTD Editor Fonts and Colors settings 1.1//EN" "http://www.netbeans.org/dtds/EditorFontsColors-1_1.dtd">
 <fontscolors>
-    <fontcolor name="header" default="keyword" >
+    <fontcolor name='autolink' default='keyword' />
+    <fontcolor name='blockquote' default='comment' />
+    <fontcolor name='bulletlist' default='keyword' />
+    <fontcolor name='code' default='comment' />
+    <fontcolor name='emph'>
+        <font style="italic"/>
+    </fontcolor>
+    <fontcolor name='expimage' default='keyword' />
+    <fontcolor name='explink' default='keyword' />
+    <fontcolor name='header' default='keyword'>
         <font style="bold"/>
     </fontcolor>
-    <fontcolor name="list" default="keyword" />
-    <fontcolor name="blockquote" default="comment"/>
-    <fontcolor name="plain"/>
-    <fontcolor default="error" name="error"/>
-    <fontcolor name="bold">
+    <fontcolor name='horizontalrule' default='seperator' />
+    <fontcolor name='htmlblock' default='string' />
+    <fontcolor name='inlinehtml' default='keyword' />
+    <fontcolor name='listitem' default='keyword' />
+    <fontcolor name='maillink' default='keyword' />
+    <fontcolor name='orderedlist' default='keyword' />
+    <fontcolor name='plain'/>
+    <fontcolor name='strong'>
         <font style="bold"/>
     </fontcolor>
+    <fontcolor name='table' default='string' />
+    <fontcolor name='text' />
+    <fontcolor name='verbatim' default='comment' />
+    <fontcolor name='wikilink' default='keyword' />
+    <fontcolor name='whitespace' default='whitespace' />
+
 </fontscolors>
-
-
-
-
-
-
-
-
-
