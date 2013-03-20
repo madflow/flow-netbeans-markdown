@@ -14,7 +14,6 @@ The plugin is still under development and not considered stable enough to be rel
 - Enables HTML preview of your saved file in your configured web browser
 - Lets you customize the HTML output with CSS and alien intelligence (Options->Miscellaneous->Markdown->HTML Export)
 - Supports multiple extensions over standard markdown (see https://github.com/sirthias/pegdown, Options->Miscellaneous->Markdown->Extensions)
-- 
 
 # Requirements
 
