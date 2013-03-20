@@ -53,7 +53,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
         out.print(full);
         out.close();
 
-        URLDisplayer.getDefault().showURL(new URL("file://" + temp.toString()));
+        URLDisplayer.getDefault().showURLExternal(new URL("file://" + temp.toString()));
 
         temp.deleteOnExit();
     }
