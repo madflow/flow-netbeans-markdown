@@ -24,7 +24,7 @@ import org.pegdown.PegDownProcessor;
 
 @ActionID(category = "File",
 id = "flow.netbeans.markdown.GenerateHtmlAction")
-@ActionRegistration(displayName = "#CTL_GenerateHtmlAction")
+@ActionRegistration(displayName = "#CTL_GenerateHtmlAction", iconBase = "flow/netbeans/markdown/resources/action-export.png")
 @ActionReferences({
     @ActionReference(path = "Editors/text/x-markdown/Toolbars/Default", position = 270000),
     @ActionReference(path = "Editors/text/x-markdown/Popup", position = 0),
