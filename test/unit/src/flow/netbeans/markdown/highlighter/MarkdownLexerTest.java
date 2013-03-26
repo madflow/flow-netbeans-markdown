@@ -23,4 +23,9 @@ public class MarkdownLexerTest extends MarkdownLexerTestBase {
     public void testParagraphs() throws Exception {
         assertEquals(getGoldenFileContent("paragraphs.pass"), getTestResult("paragraphs.md"));
     }
+    
+    @Test
+    public void testHeadings() throws Exception {
+        assertEquals(getGoldenFileContent("headings.pass"), getTestResult("headings.md"));
+    }
 }
