@@ -18,6 +18,7 @@ The plugin is still under development and not considered stable enough to be rel
 # Requirements
 
 - Netbeans >= 7.0
+- 'Netbeans Plugin Development' plugin must be installed
 
 # Installation
 
