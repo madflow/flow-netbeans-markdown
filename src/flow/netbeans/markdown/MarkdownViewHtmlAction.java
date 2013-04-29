@@ -16,12 +16,13 @@ import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.HtmlBrowser.URLDisplayer;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.NbPreferences;
 import org.pegdown.PegDownProcessor;
 
 @ActionID(category = "File",
-id = "flow.netbeans.markdown.MarkdownViewHtmlAction")
+        id = "flow.netbeans.markdown.MarkdownViewHtmlAction")
 @ActionRegistration(displayName = "#CTL_MarkdownViewHtmlAction", iconBase = "flow/netbeans/markdown/resources/action-view.png")
 @ActionReferences({
     @ActionReference(path = "Editors/text/x-markdown/Toolbars/Default", position = 270100),
@@ -35,31 +36,33 @@ public final class MarkdownViewHtmlAction implements ActionListener {
 
     public MarkdownViewHtmlAction(MarkdownDataObject context) throws IOException {
         this.context = context;
-
-        Preferences prefs = NbPreferences.forModule(MarkdownPanel.class);
-        MarkdownGlobalOptions markdownOptions = new MarkdownGlobalOptions(prefs);
-        PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
-
-        FileObject f = context.getPrimaryFile();
-        String markdownSource = f.asText();
-        String html = markdownProcessor.markdownToHtml(markdownSource);
-        String full = prefs
-                .get("HTML_TEMPLATE", MarkdownPanel.getDefaultHtmlTemplate())
-                .replace("{%CONTENT%}", html.toString())
-                .replace("{%TITLE%}", context.getPrimaryFile().getName());
-        File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
-
-        PrintStream out = new PrintStream(new FileOutputStream(temp));
-        out.print(full);
-        out.close();
-
-        URLDisplayer.getDefault().showURL(new URL("file://" + temp.toString()));
-
-        temp.deleteOnExit();
     }
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        // TODO use context
+        try {
+            Preferences prefs = NbPreferences.forModule(MarkdownPanel.class);
+            MarkdownGlobalOptions markdownOptions = new MarkdownGlobalOptions(prefs);
+            PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
+
+            FileObject f = context.getPrimaryFile();
+            String markdownSource = f.asText();
+            String html = markdownProcessor.markdownToHtml(markdownSource);
+            String full = prefs
+                    .get("HTML_TEMPLATE", MarkdownPanel.getDefaultHtmlTemplate())
+                    .replace("{%CONTENT%}", html.toString())
+                    .replace("{%TITLE%}", context.getPrimaryFile().getName());
+            File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
+
+            PrintStream out = new PrintStream(new FileOutputStream(temp));
+            out.print(full);
+            out.close();
+
+            URLDisplayer.getDefault().showURL(new URL("file://" + temp.toString()));
+
+            temp.deleteOnExit();
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 }

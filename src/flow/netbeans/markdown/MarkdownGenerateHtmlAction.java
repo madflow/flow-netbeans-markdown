@@ -18,12 +18,13 @@ import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.NbPreferences;
 import org.pegdown.PegDownProcessor;
 
 @ActionID(category = "File",
-id = "flow.netbeans.markdown.GenerateHtmlAction")
+        id = "flow.netbeans.markdown.GenerateHtmlAction")
 @ActionRegistration(displayName = "#CTL_GenerateHtmlAction", iconBase = "flow/netbeans/markdown/resources/action-export.png")
 @ActionReferences({
     @ActionReference(path = "Editors/text/x-markdown/Toolbars/Default", position = 270000),
@@ -37,49 +38,50 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
 
     public MarkdownGenerateHtmlAction(MarkdownDataObject context) throws IOException {
         this.context = context;
+    }
 
-        Preferences prefs = NbPreferences.forModule(MarkdownPanel.class);
-        MarkdownGlobalOptions markdownOptions = new MarkdownGlobalOptions(prefs);
-        PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
+    @Override
+    public void actionPerformed(ActionEvent ev) {
+        try {
+            Preferences prefs = NbPreferences.forModule(MarkdownPanel.class);
+            MarkdownGlobalOptions markdownOptions = new MarkdownGlobalOptions(prefs);
+            PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
 
-        FileObject f = context.getPrimaryFile();
-        String markdownSource = f.asText();
-        String html = markdownProcessor.markdownToHtml(markdownSource);
-        String full = prefs
-                .get("HTML_TEMPLATE", MarkdownPanel.getDefaultHtmlTemplate())
-                .replace("{%CONTENT%}", html.toString())
-                .replace("{%TITLE%}", context.getPrimaryFile().getName());
+            FileObject f = context.getPrimaryFile();
+            String markdownSource = f.asText();
+            String html = markdownProcessor.markdownToHtml(markdownSource);
+            String full = prefs
+                    .get("HTML_TEMPLATE", MarkdownPanel.getDefaultHtmlTemplate())
+                    .replace("{%CONTENT%}", html.toString())
+                    .replace("{%TITLE%}", context.getPrimaryFile().getName());
 
-        JFileChooser fileChooser = new JFileChooser("user.home");
-        int option = fileChooser.showSaveDialog(fileChooser);
-        int result = 0;
-        String fileName;
+            JFileChooser fileChooser = new JFileChooser("user.home");
+            int option = fileChooser.showSaveDialog(fileChooser);
+            int result = 0;
+            String fileName;
 
-        if (option == JFileChooser.APPROVE_OPTION) {
-            fileName = fileChooser.getSelectedFile().toString();
+            if (option == JFileChooser.APPROVE_OPTION) {
+                fileName = fileChooser.getSelectedFile().toString();
 
-            if (fileChooser.getSelectedFile().exists()) {
-                result = JOptionPane.showConfirmDialog(fileChooser,
-                        "The file exists, overwrite?", "Existing file",
-                        JOptionPane.YES_NO_CANCEL_OPTION);
-            }
+                if (fileChooser.getSelectedFile().exists()) {
+                    result = JOptionPane.showConfirmDialog(fileChooser,
+                            "The file exists, overwrite?", "Existing file",
+                            JOptionPane.YES_NO_CANCEL_OPTION);
+                }
 
-            switch (result) {
-                case JOptionPane.NO_OPTION:
-                    return;
-                case JOptionPane.CANCEL_OPTION:
-                    return;
-            }
-            try {
+                switch (result) {
+                    case JOptionPane.NO_OPTION:
+                        return;
+                    case JOptionPane.CANCEL_OPTION:
+                        return;
+                }
+                
                 PrintStream out = new PrintStream(new FileOutputStream(fileName));
                 out.print(full);
                 out.close();
-            } catch (IOException e) {
             }
-
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
         }
-    }
-
-    public void actionPerformed(ActionEvent ev) {
     }
 }
