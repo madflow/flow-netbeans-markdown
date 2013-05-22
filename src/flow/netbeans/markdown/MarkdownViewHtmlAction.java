@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.prefs.Preferences;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.HtmlBrowser.URLDisplayer;
+import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
@@ -45,8 +48,16 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             MarkdownGlobalOptions markdownOptions = new MarkdownGlobalOptions(prefs);
             PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
 
-            FileObject f = context.getPrimaryFile();
-            String markdownSource = f.asText();
+            // get document
+            EditorCookie ec = context.getLookup().lookup(EditorCookie.class);
+            StyledDocument document = ec.getDocument();
+            String markdownSource = "";
+            if (document != null) {
+                markdownSource = document.getText(0, document.getLength());
+            } else {
+                FileObject f = context.getPrimaryFile();
+                markdownSource = f.asText();
+            }
             String html = markdownProcessor.markdownToHtml(markdownSource);
             String full = prefs
                     .get("HTML_TEMPLATE", MarkdownPanel.getDefaultHtmlTemplate())
@@ -62,6 +73,8 @@ public final class MarkdownViewHtmlAction implements ActionListener {
 
             temp.deleteOnExit();
         } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (BadLocationException ex) {
             Exceptions.printStackTrace(ex);
         }
     }
