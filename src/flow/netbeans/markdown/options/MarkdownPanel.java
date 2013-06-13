@@ -5,6 +5,7 @@ import org.openide.util.NbPreferences;
 public final class MarkdownPanel extends javax.swing.JPanel {
 
     private final MarkdownOptionsPanelController controller;
+    private static final long serialVersionUID = -2655146103696320933L;
 
     MarkdownPanel(MarkdownOptionsPanelController controller) {
         this.controller = controller;
@@ -38,6 +39,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         HTML_PANEL_HEADER = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         HTML_TEMPLATE = new javax.swing.JTextArea();
+        ONSAVE_PANEL = new javax.swing.JPanel();
+        VIEW_HTML_ON_SAVE = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(jCheckBox1, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.jCheckBox1.text")); // NOI18N
 
@@ -88,7 +91,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
                     .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
                         .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(INLINE_HTML_SUPPRESSION)
@@ -161,11 +164,32 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(HTML_PANEL_HEADER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.HTML_EXPORT_PANEL.TabConstraints.tabTitle"), HTML_EXPORT_PANEL); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(VIEW_HTML_ON_SAVE, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.VIEW_HTML_ON_SAVE.text")); // NOI18N
+
+        javax.swing.GroupLayout ONSAVE_PANELLayout = new javax.swing.GroupLayout(ONSAVE_PANEL);
+        ONSAVE_PANEL.setLayout(ONSAVE_PANELLayout);
+        ONSAVE_PANELLayout.setHorizontalGroup(
+            ONSAVE_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ONSAVE_PANELLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(VIEW_HTML_ON_SAVE)
+                .addContainerGap(478, Short.MAX_VALUE))
+        );
+        ONSAVE_PANELLayout.setVerticalGroup(
+            ONSAVE_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ONSAVE_PANELLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(VIEW_HTML_ON_SAVE)
+                .addContainerGap(456, Short.MAX_VALUE))
+        );
+
+        TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.ONSAVE_PANEL.TabConstraints.tabTitle"), ONSAVE_PANEL); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -207,6 +231,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         TABLES.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("TABLES", false));
         WIKILINKS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("WIKILINKS", false));
         HTML_TEMPLATE.setText(NbPreferences.forModule(MarkdownPanel.class).get("HTML_TEMPLATE", getDefaultHtmlTemplate()));
+        VIEW_HTML_ON_SAVE.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("VIEW_HTML_ON_SAVE", false));
     }
 
     void store() {
@@ -230,6 +255,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         NbPreferences.forModule(MarkdownPanel.class).putBoolean("TABLES", TABLES.isSelected());
         NbPreferences.forModule(MarkdownPanel.class).putBoolean("WIKILINKS", WIKILINKS.isSelected());
         NbPreferences.forModule(MarkdownPanel.class).put("HTML_TEMPLATE", HTML_TEMPLATE.getText());
+        NbPreferences.forModule(MarkdownPanel.class).putBoolean("VIEW_HTML_ON_SAVE", VIEW_HTML_ON_SAVE.isSelected());
     }
     
     public static String getDefaultHtmlTemplate()
@@ -264,10 +290,12 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JLabel HTML_PANEL_HEADER;
     private javax.swing.JTextArea HTML_TEMPLATE;
     private javax.swing.JCheckBox INLINE_HTML_SUPPRESSION;
+    private javax.swing.JPanel ONSAVE_PANEL;
     private javax.swing.JCheckBox QUOTES;
     private javax.swing.JCheckBox SMARTS;
     private javax.swing.JCheckBox TABLES;
     private javax.swing.JTabbedPane TABS;
+    private javax.swing.JCheckBox VIEW_HTML_ON_SAVE;
     private javax.swing.JCheckBox WIKILINKS;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JScrollPane jScrollPane1;
