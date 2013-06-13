@@ -46,11 +46,6 @@ public class MarkdownVisitor implements Visitor {
     }
 
     @Override
-    public void visit(EmphNode node) {
-       
-    }
-
-    @Override
     public void visit(ExpImageNode node) {
         
     }
@@ -141,11 +136,6 @@ public class MarkdownVisitor implements Visitor {
     }
 
     @Override
-    public void visit(StrongNode node) {
-        
-    }
-
-    @Override
     public void visit(TableBodyNode node) {
         
     }
@@ -216,5 +206,10 @@ public class MarkdownVisitor implements Visitor {
         MarkdownTokenId tk = currentToken;
         currentToken = MarkdownTokenId.PLAIN;
         return tk;
+    }
+
+    @Override
+    public void visit(StrongEmphSuperNode sesn) {
+
     }
 }
