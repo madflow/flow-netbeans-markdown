@@ -39,7 +39,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         HTML_PANEL_HEADER = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         HTML_TEMPLATE = new javax.swing.JTextArea();
-        ONSAVE_PANEL = new javax.swing.JPanel();
+        MISC_PANEL = new javax.swing.JPanel();
         VIEW_HTML_ON_SAVE = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(jCheckBox1, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.jCheckBox1.text")); // NOI18N
@@ -134,7 +134,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(INLINE_HTML_SUPPRESSION)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(WIKILINKS)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL.TabConstraints.tabTitle"), EXTENSIONS_PANEL); // NOI18N
@@ -164,7 +164,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(HTML_PANEL_HEADER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -172,24 +172,24 @@ public final class MarkdownPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(VIEW_HTML_ON_SAVE, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.VIEW_HTML_ON_SAVE.text")); // NOI18N
 
-        javax.swing.GroupLayout ONSAVE_PANELLayout = new javax.swing.GroupLayout(ONSAVE_PANEL);
-        ONSAVE_PANEL.setLayout(ONSAVE_PANELLayout);
-        ONSAVE_PANELLayout.setHorizontalGroup(
-            ONSAVE_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ONSAVE_PANELLayout.createSequentialGroup()
+        javax.swing.GroupLayout MISC_PANELLayout = new javax.swing.GroupLayout(MISC_PANEL);
+        MISC_PANEL.setLayout(MISC_PANELLayout);
+        MISC_PANELLayout.setHorizontalGroup(
+            MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(VIEW_HTML_ON_SAVE)
-                .addContainerGap(478, Short.MAX_VALUE))
+                .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(390, Short.MAX_VALUE))
         );
-        ONSAVE_PANELLayout.setVerticalGroup(
-            ONSAVE_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ONSAVE_PANELLayout.createSequentialGroup()
+        MISC_PANELLayout.setVerticalGroup(
+            MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(VIEW_HTML_ON_SAVE)
                 .addContainerGap(456, Short.MAX_VALUE))
         );
 
-        TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.ONSAVE_PANEL.TabConstraints.tabTitle"), ONSAVE_PANEL); // NOI18N
+        TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -290,7 +290,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JLabel HTML_PANEL_HEADER;
     private javax.swing.JTextArea HTML_TEMPLATE;
     private javax.swing.JCheckBox INLINE_HTML_SUPPRESSION;
-    private javax.swing.JPanel ONSAVE_PANEL;
+    private javax.swing.JPanel MISC_PANEL;
     private javax.swing.JCheckBox QUOTES;
     private javax.swing.JCheckBox SMARTS;
     private javax.swing.JCheckBox TABLES;
