@@ -1,14 +1,13 @@
 package flow.netbeans.markdown;
 
 import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
-import flow.netbeans.markdown.options.MarkdownPanel;
+import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import java.io.IOException;
 import javax.swing.text.Document;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
 import org.netbeans.modules.editor.NbEditorUtilities;
 import org.netbeans.spi.editor.document.OnSaveTask;
 import org.openide.util.Exceptions;
-import org.openide.util.NbPreferences;
 
 /**
  *
@@ -32,7 +31,7 @@ public final class MarkdownOnSaveTask implements OnSaveTask{
         }
 
         // view html
-        if (NbPreferences.forModule(MarkdownPanel.class).getBoolean("VIEW_HTML_ON_SAVE", false)) {
+        if (MarkdownGlobalOptions.getInstance().isViewHtmlOnSave()) {
             try {
                 MarkdownViewHtmlAction viewAction = new MarkdownViewHtmlAction(dataObject);
                 viewAction.actionPerformed(null);
