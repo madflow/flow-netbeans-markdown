@@ -34,7 +34,7 @@ You may also compile a binary yourself.
 
 # Authors
 
-- Florian Reiss <https://github/madflow/>
+- Florian Reiss <https://github.com/madflow/>
 
 # Contributions
 
