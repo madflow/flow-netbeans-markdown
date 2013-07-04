@@ -1,6 +1,7 @@
 package flow.netbeans.markdown.options;
 
 import java.util.prefs.Preferences;
+import org.openide.util.NbPreferences;
 import org.pegdown.Extensions;
 
 /**
@@ -8,22 +9,40 @@ import org.pegdown.Extensions;
  */
 public final class MarkdownGlobalOptions {
 
-    public MarkdownGlobalOptions(Preferences prefs) {
-        bindPreferences(prefs);
+    private static final MarkdownGlobalOptions INSTANCE = new MarkdownGlobalOptions();
+    private static final String SMARTS = "SMARTS"; // NOI18N
+    private static final String QUOTES = "QUOTES"; // NOI18N
+    private static final String ABBREVIATIONS = "ABBREVIATIONS"; // NOI18N
+    private static final String DEFINITION_LISTS = "DEFINITION_LISTS"; // NOI18N
+    private static final String FENCED_CODE_BLOCKS = "FENCED_CODE_BLOCKS"; // NOI18N
+    private static final String HARDWRAPS = "HARDWRAPS"; // NOI18N
+    private static final String AUTOLINKS = "AUTOLINKS"; // NOI18N
+    private static final String WIKILINKS = "WIKILINKS"; // NOI18N
+    private static final String TABLES = "TABLES"; // NOI18N
+    private static final String HTML_BLOCK_SUPPRESSION = "HTML_BLOCK_SUPPRESSION"; // NOI18N
+    private static final String INLINE_HTML_SUPPRESSION = "INLINE_HTML_SUPPRESSION"; // NOI18N
+    private static final String HTML_TEMPLATE = "HTML_TEMPLATE"; // NOI18N
+    private static final String VIEW_HTML_ON_SAVE = "VIEW_HTML_ON_SAVE"; // NOI18N
+
+    public static MarkdownGlobalOptions getInstance() {
+        return INSTANCE;
     }
 
-    public void bindPreferences(Preferences prefs) {
-        abbreviations = prefs.getBoolean("ABBREVIATIONS", false);
-        autoLinks = prefs.getBoolean("AUTOLINKS", false);
-        definitions = prefs.getBoolean("DEFINITION_LISTS", false);
-        fencedCodeBlocks = prefs.getBoolean("FENCED_CODE_BLOCKS", false);
-        hardWraps = prefs.getBoolean("HARDWRAPS", false);
-        suppressHTMLBlocks = prefs.getBoolean("HTML_BLOCK_SUPPRESSION", false);
-        suppressInlineHTML = prefs.getBoolean("INLINE_HTML_SUPPRESSION", false);
-        quotes = prefs.getBoolean("QUOTES", false);
-        smarts = prefs.getBoolean("SMARTS", false);
-        tables = prefs.getBoolean("TABLES", false);
-        wikiLinks = prefs.getBoolean("WIKILINKS", false);
+    private MarkdownGlobalOptions() {
+    }
+
+    private void bindPreferences() {
+        abbreviations = isAbbreviations();
+        autoLinks = isAutoLinks();
+        definitions = isDefinitions();
+        fencedCodeBlocks = isFencedCodeBlocks();
+        hardWraps = isHardWraps();
+        suppressHTMLBlocks = isSuppressHTMLBlocks();
+        suppressInlineHTML = isSuppressInlineHTML();
+        quotes = isQuotes();
+        smarts = isSmarts();
+        tables = isTables();
+        wikiLinks = isWikiLinks();
     }
 
     /**
@@ -84,6 +103,7 @@ public final class MarkdownGlobalOptions {
      * @return the value to use with {@link org.pegdown.PegDownProcessor(int)}
      */
     public int getExtensionsValue() {
+        bindPreferences();
         return (smarts ? Extensions.SMARTS : 0)
                 + (quotes ? Extensions.QUOTES : 0)
                 + (abbreviations ? Extensions.ABBREVIATIONS : 0)
@@ -97,91 +117,111 @@ public final class MarkdownGlobalOptions {
                 + (suppressInlineHTML ? Extensions.SUPPRESS_INLINE_HTML : 0);
     }
 
-        public boolean isSmarts() {
-        return smarts;
+    public boolean isSmarts() {
+        return getPreferences().getBoolean(SMARTS, false);
     }
 
     public void setSmarts(boolean smarts) {
-        this.smarts = smarts;
+        getPreferences().putBoolean(SMARTS, smarts);
     }
 
     public boolean isQuotes() {
-        return quotes;
+        return getPreferences().getBoolean(QUOTES, false);
     }
 
     public void setQuotes(boolean quotes) {
-        this.quotes = quotes;
+        getPreferences().putBoolean(QUOTES, quotes);
     }
 
     public boolean isAbbreviations() {
-        return abbreviations;
+        return getPreferences().getBoolean(ABBREVIATIONS, false);
     }
 
     public void setAbbreviations(boolean abbreviations) {
-        this.abbreviations = abbreviations;
+        getPreferences().putBoolean(ABBREVIATIONS, abbreviations);
     }
 
     public boolean isDefinitions() {
-        return definitions;
+        return getPreferences().getBoolean(DEFINITION_LISTS, false);
     }
 
     public void setDefinitions(boolean definitions) {
-        this.definitions = definitions;
+        getPreferences().putBoolean(DEFINITION_LISTS, definitions);
     }
 
     public boolean isFencedCodeBlocks() {
-        return fencedCodeBlocks;
+        return getPreferences().getBoolean(FENCED_CODE_BLOCKS, false);
     }
 
     public void setFencedCodeBlocks(boolean fencedCodeBlocks) {
-        this.fencedCodeBlocks = fencedCodeBlocks;
+        getPreferences().putBoolean(FENCED_CODE_BLOCKS, fencedCodeBlocks);
     }
 
     public boolean isHardWraps() {
-        return hardWraps;
+        return getPreferences().getBoolean(HARDWRAPS, false);
     }
 
     public void setHardWraps(boolean hardWraps) {
-        this.hardWraps = hardWraps;
+        getPreferences().putBoolean(HARDWRAPS, hardWraps);
     }
 
     public boolean isAutoLinks() {
-        return autoLinks;
+        return getPreferences().getBoolean(AUTOLINKS, false);
     }
 
     public void setAutoLinks(boolean autoLinks) {
-        this.autoLinks = autoLinks;
+        getPreferences().putBoolean(AUTOLINKS, autoLinks);
     }
 
     public boolean isWikiLinks() {
-        return wikiLinks;
+        return getPreferences().getBoolean(WIKILINKS, false);
     }
 
     public void setWikiLinks(boolean wikiLinks) {
-        this.wikiLinks = wikiLinks;
+        getPreferences().putBoolean(WIKILINKS, wikiLinks);
     }
 
     public boolean isTables() {
-        return tables;
+        return getPreferences().getBoolean(TABLES, false);
     }
 
     public void setTables(boolean tables) {
-        this.tables = tables;
+        getPreferences().putBoolean(TABLES, tables);
     }
 
     public boolean isSuppressHTMLBlocks() {
-        return suppressHTMLBlocks;
+        return getPreferences().getBoolean(HTML_BLOCK_SUPPRESSION, false);
     }
 
     public void setSuppressHTMLBlocks(boolean suppressHTMLBlocks) {
-        this.suppressHTMLBlocks = suppressHTMLBlocks;
+        getPreferences().putBoolean(HTML_BLOCK_SUPPRESSION, suppressHTMLBlocks);
     }
 
     public boolean isSuppressInlineHTML() {
-        return suppressInlineHTML;
+        return getPreferences().getBoolean(INLINE_HTML_SUPPRESSION, false);
     }
 
     public void setSuppressInlineHTML(boolean suppressInlineHTML) {
-        this.suppressInlineHTML = suppressInlineHTML;
+        getPreferences().putBoolean(INLINE_HTML_SUPPRESSION, suppressInlineHTML);
+    }
+
+    public String getHtmlTemplate() {
+        return getPreferences().get(HTML_TEMPLATE, MarkdownPanel.getDefaultHtmlTemplate());
+    }
+
+    public void setHtmlTemplate(String htmlTemplate) {
+        getPreferences().put(HTML_TEMPLATE, htmlTemplate);
+    }
+
+    public boolean isViewHtmlOnSave() {
+        return getPreferences().getBoolean(VIEW_HTML_ON_SAVE, false);
+    }
+
+    public void setViewHtmlOnSave(boolean onSave) {
+        getPreferences().putBoolean(VIEW_HTML_ON_SAVE, onSave);
+    }
+
+    private Preferences getPreferences() {
+        return NbPreferences.forModule(MarkdownGlobalOptions.class);
     }
 }

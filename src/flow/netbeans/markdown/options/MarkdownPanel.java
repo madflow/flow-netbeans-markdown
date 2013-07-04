@@ -1,7 +1,5 @@
 package flow.netbeans.markdown.options;
 
-import org.openide.util.NbPreferences;
-
 public final class MarkdownPanel extends javax.swing.JPanel {
 
     private final MarkdownOptionsPanelController controller;
@@ -186,7 +184,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(VIEW_HTML_ON_SAVE)
-                .addContainerGap(456, Short.MAX_VALUE))
+                .addContainerGap(459, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -219,19 +217,20 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         // someCheckBox.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("someFlag", false));
         // or:
         // someTextField.setText(SomeSystemOption.getDefault().getSomeStringProperty());
-        ABBREVIATIONS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("ABBREVIATIONS", false));
-        AUTOLINKS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("AUTOLINKS", false));
-        DEFINITION_LISTS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("DEFINITION_LISTS", false));
-        FENCED_CODE_BLOCKS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("FENCED_CODE_BLOCKS", false));
-        HARDWRAPS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("HARDWRAPS", false));
-        HTML_BLOCK_SUPPRESSION.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("HTML_BLOCK_SUPPRESSION", false));
-        INLINE_HTML_SUPPRESSION.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("INLINE_HTML_SUPPRESSION", false));
-        QUOTES.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("QUOTES", false));
-        SMARTS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("SMARTS", false));
-        TABLES.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("TABLES", false));
-        WIKILINKS.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("WIKILINKS", false));
-        HTML_TEMPLATE.setText(NbPreferences.forModule(MarkdownPanel.class).get("HTML_TEMPLATE", getDefaultHtmlTemplate()));
-        VIEW_HTML_ON_SAVE.setSelected(NbPreferences.forModule(MarkdownPanel.class).getBoolean("VIEW_HTML_ON_SAVE", false));
+        MarkdownGlobalOptions options = MarkdownGlobalOptions.getInstance();
+        ABBREVIATIONS.setSelected(options.isAbbreviations());
+        AUTOLINKS.setSelected(options.isAutoLinks());
+        DEFINITION_LISTS.setSelected(options.isDefinitions());
+        FENCED_CODE_BLOCKS.setSelected(options.isFencedCodeBlocks());
+        HARDWRAPS.setSelected(options.isHardWraps());
+        HTML_BLOCK_SUPPRESSION.setSelected(options.isSuppressHTMLBlocks());
+        INLINE_HTML_SUPPRESSION.setSelected(options.isSuppressInlineHTML());
+        QUOTES.setSelected(options.isQuotes());
+        SMARTS.setSelected(options.isSmarts());
+        TABLES.setSelected(options.isTables());
+        WIKILINKS.setSelected(options.isWikiLinks());
+        HTML_TEMPLATE.setText(options.getHtmlTemplate());
+        VIEW_HTML_ON_SAVE.setSelected(options.isViewHtmlOnSave());
     }
 
     void store() {
@@ -243,19 +242,20 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         // or:
         // SomeSystemOption.getDefault().setSomeStringProperty(someTextField.getText());
 
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("ABBREVIATIONS", ABBREVIATIONS.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("AUTOLINKS", AUTOLINKS.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("DEFINITION_LISTS", DEFINITION_LISTS.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("FENCED_CODE_BLOCKS", FENCED_CODE_BLOCKS.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("HARDWRAPS", HARDWRAPS.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("HTML_BLOCK_SUPPRESSION", HTML_BLOCK_SUPPRESSION.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("INLINE_HTML_SUPPRESSION", INLINE_HTML_SUPPRESSION.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("QUOTES", QUOTES.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("SMARTS", SMARTS.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("TABLES", TABLES.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("WIKILINKS", WIKILINKS.isSelected());
-        NbPreferences.forModule(MarkdownPanel.class).put("HTML_TEMPLATE", HTML_TEMPLATE.getText());
-        NbPreferences.forModule(MarkdownPanel.class).putBoolean("VIEW_HTML_ON_SAVE", VIEW_HTML_ON_SAVE.isSelected());
+        MarkdownGlobalOptions options = MarkdownGlobalOptions.getInstance();
+        options.setAbbreviations(ABBREVIATIONS.isSelected());
+        options.setAutoLinks(AUTOLINKS.isSelected());
+        options.setDefinitions(DEFINITION_LISTS.isSelected());
+        options.setFencedCodeBlocks(FENCED_CODE_BLOCKS.isSelected());
+        options.setHardWraps(HARDWRAPS.isSelected());
+        options.setSuppressHTMLBlocks(HTML_BLOCK_SUPPRESSION.isSelected());
+        options.setSuppressInlineHTML(INLINE_HTML_SUPPRESSION.isSelected());
+        options.setQuotes(QUOTES.isSelected());
+        options.setSmarts(SMARTS.isSelected());
+        options.setTables(TABLES.isSelected());
+        options.setWikiLinks(WIKILINKS.isSelected());
+        options.setHtmlTemplate(HTML_TEMPLATE.getText());
+        options.setViewHtmlOnSave(VIEW_HTML_ON_SAVE.isSelected());
     }
     
     public static String getDefaultHtmlTemplate()
