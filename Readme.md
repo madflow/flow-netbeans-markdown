@@ -18,7 +18,7 @@ The plugin is still under development and not considered stable enough to be rel
 # Requirements
 
 - NetBeans >= 7.0
-- "NetBeans Plugin Development" plugin must be installed
+- "NetBeans Plugin Development" plugin must be installed if you want to compile your own binary package.
 
 # Installation
 
