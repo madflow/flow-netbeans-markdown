@@ -57,7 +57,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             }
 
             String markdownSource = "";
-            if (document != null && markdownOptions.isViewHtmlOnSave()) {
+            if (document != null) {
                 markdownSource = document.getText(0, document.getLength());
             } else {
                 markdownSource = f.asText();
@@ -69,7 +69,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
 
             PrintStream out;
-            if (document != null && markdownOptions.isViewHtmlOnSave()) {
+            if (document != null) {
                 // get file encoding
                 Charset encoding = FileEncodingQuery.getEncoding(f);
                 out = new PrintStream(new FileOutputStream(temp), false, encoding.name());
