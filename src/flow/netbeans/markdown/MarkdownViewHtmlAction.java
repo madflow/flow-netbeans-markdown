@@ -10,7 +10,10 @@ import java.io.PrintStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
 import javax.swing.text.StyledDocument;
+import org.netbeans.api.editor.EditorRegistry;
 import org.netbeans.api.queries.FileEncodingQuery;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -56,9 +59,23 @@ public final class MarkdownViewHtmlAction implements ActionListener {
                 return;
             }
 
+            // get selected text
+            JTextComponent editor = EditorRegistry.lastFocusedComponent();
+            String selectedText = "";
+            if (editor != null) {
+                Document lastFocusedDocument = editor.getDocument();
+                if (document == lastFocusedDocument) {
+                    selectedText = editor.getSelectedText();
+                }
+            }
+
             String markdownSource = "";
-            if (document != null && markdownOptions.isViewHtmlOnSave()) {
-                markdownSource = document.getText(0, document.getLength());
+            if (document != null) {
+                if (selectedText != null && !selectedText.isEmpty()) {
+                    markdownSource = selectedText;
+                } else {
+                    markdownSource = document.getText(0, document.getLength());
+                }
             } else {
                 markdownSource = f.asText();
             }
@@ -69,7 +86,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
 
             PrintStream out;
-            if (document != null && markdownOptions.isViewHtmlOnSave()) {
+            if (document != null) {
                 // get file encoding
                 Charset encoding = FileEncodingQuery.getEncoding(f);
                 out = new PrintStream(new FileOutputStream(temp), false, encoding.name());
