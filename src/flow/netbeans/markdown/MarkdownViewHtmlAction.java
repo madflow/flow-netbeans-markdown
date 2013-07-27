@@ -8,8 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
+import java.nio.charset.Charset;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
+import org.netbeans.api.queries.FileEncodingQuery;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -47,11 +49,17 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             // get document
             EditorCookie ec = context.getLookup().lookup(EditorCookie.class);
             StyledDocument document = ec.getDocument();
+
+            // get file object
+            FileObject f = context.getPrimaryFile();
+            if (f == null) {
+                return;
+            }
+
             String markdownSource = "";
-            if (document != null) {
+            if (document != null && markdownOptions.isViewHtmlOnSave()) {
                 markdownSource = document.getText(0, document.getLength());
             } else {
-                FileObject f = context.getPrimaryFile();
                 markdownSource = f.asText();
             }
             String html = markdownProcessor.markdownToHtml(markdownSource);
@@ -60,7 +68,14 @@ public final class MarkdownViewHtmlAction implements ActionListener {
                     .replace("{%TITLE%}", context.getPrimaryFile().getName());
             File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
 
-            PrintStream out = new PrintStream(new FileOutputStream(temp));
+            PrintStream out;
+            if (document != null && markdownOptions.isViewHtmlOnSave()) {
+                // get file encoding
+                Charset encoding = FileEncodingQuery.getEncoding(f);
+                out = new PrintStream(new FileOutputStream(temp), false, encoding.name());
+            } else {
+                out = new PrintStream(new FileOutputStream(temp));
+            }
             out.print(full);
             out.close();
 
