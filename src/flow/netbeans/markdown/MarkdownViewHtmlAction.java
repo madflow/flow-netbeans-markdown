@@ -66,7 +66,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             String full = markdownOptions.getHtmlTemplate()
                     .replace("{%CONTENT%}", html.toString())
                     .replace("{%TITLE%}", context.getPrimaryFile().getName());
-            File temp = File.createTempFile(context.getPrimaryFile().getName(), ".html");
+            File temp = File.createTempFile("preview-" + context.getPrimaryFile().getName(), ".html");
 
             PrintStream out;
             if (document != null) {
