@@ -24,6 +24,8 @@ The plugin is still under development and not considered stable enough to be rel
 
 For the time beeing there is a nbm binary in the "nbm" directory directly in the Git repository.
 
+[Download](https://github.com/madflow/flow-netbeans-markdown/raw/master/nbm/flow-netbeans-markdown.nbm)
+
 You may also compile a binary yourself.
 
  1. git clone git://github.com/madflow/flow-netbeans-markdown.git
