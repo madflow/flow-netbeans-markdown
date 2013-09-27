@@ -1,131 +1,127 @@
 package flow.netbeans.markdown.highlighter;
 
 import org.pegdown.ast.*;
+import static org.pegdown.ast.SimpleNode.Type.HRule;
 
 public class MarkdownVisitor implements Visitor {
     
     private MarkdownTokenId currentToken = MarkdownTokenId.PLAIN;
+    
+    private MarkdownTokenMap tokenMap = new MarkdownTokenMap();
 
     @Override
     public void visit(AbbreviationNode node) {
-        
+        addToken(MarkdownTokenId.ABBREVIATION, node);
     }
 
     @Override
     public void visit(AutoLinkNode node) {
-        
+        addToken(MarkdownTokenId.AUTOLINK, node);
     }
 
     @Override
     public void visit(BlockQuoteNode node) {
-        currentToken = MarkdownTokenId.BLOCKQUOTE;
-    }
-
-    @Override
-    public void visit(BulletListNode node) {
-        currentToken = MarkdownTokenId.BULLETLIST;
+        addToken(MarkdownTokenId.BLOCKQUOTE, node);
     }
 
     @Override
     public void visit(CodeNode node) {
-        currentToken = MarkdownTokenId.CODE;
+        addToken(MarkdownTokenId.CODE, node);
     }
 
     @Override
     public void visit(DefinitionListNode node) {
-        
+        addToken(MarkdownTokenId.DEFINITION_LIST, node);
     }
 
     @Override
     public void visit(DefinitionNode node) {
+        addToken(MarkdownTokenId.DEFINITION, node);
     }
 
     @Override
     public void visit(DefinitionTermNode node) {
-        
+        addToken(MarkdownTokenId.DEFINITION_TERM, node);
     }
 
     @Override
     public void visit(ExpImageNode node) {
-        
+        addToken(MarkdownTokenId.EXPIMAGE, node);
     }
 
     @Override
     public void visit(ExpLinkNode node) {
-        
+        addToken(MarkdownTokenId.EXPIMAGE, node);
     }
 
     @Override
     public void visit(HeaderNode node) {
-        currentToken = MarkdownTokenId.HEADER;
+        addToken(MarkdownTokenId.HEADER, node);
     }
 
     @Override
     public void visit(HtmlBlockNode node) {
-        currentToken = MarkdownTokenId.HTMLBLOCK;
+        addToken(MarkdownTokenId.HTMLBLOCK, node);
     }
 
     @Override
     public void visit(InlineHtmlNode node) {
-        
+        addToken(MarkdownTokenId.INLINEHTML, node);
     }
 
     @Override
     public void visit(ListItemNode node) {
-        currentToken = MarkdownTokenId.LISTITEM;
-    }
-
-    @Override
-    public void visit(MailLinkNode node) {
-        
+        addToken(MarkdownTokenId.LISTITEM, node);
+        //visitChildren(node);
     }
 
     @Override
     public void visit(OrderedListNode node) {
-        currentToken = MarkdownTokenId.ORDEREDLIST;
+        addToken(MarkdownTokenId.ORDEREDLIST, node);
+        //visitChildren(node);
+    }
+    
+    @Override
+    public void visit(BulletListNode node) {
+        addToken(MarkdownTokenId.BULLETLIST, node);
+        //visitChildren(node);
+    }
+    
+    @Override
+    public void visit(MailLinkNode node) {
+        addToken(MarkdownTokenId.MAILLINK, node);
     }
 
     @Override
     public void visit(ParaNode node) {
-        
+        visitChildren(node);
     }
 
     @Override
     public void visit(QuotedNode node) {
-        
+        addToken(MarkdownTokenId.QUOTED, node);
     }
 
     @Override
     public void visit(ReferenceNode node) {
-        
+        addToken(MarkdownTokenId.REFERENCE, node);
     }
 
     @Override
     public void visit(RefImageNode node) {
-        
+        addToken(MarkdownTokenId.REF_IMAGE, node);
     }
 
     @Override
     public void visit(RefLinkNode node) {
-        
-    }
-
-    @Override
-    public void visit(RootNode node) {
-        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) {
-            abbreviationNode.accept(this);
-        }
-            for (ReferenceNode referenceNode : node.getReferences()) {
-            referenceNode.accept(this);
-        }
-            visitChildren(node);
+        addToken(MarkdownTokenId.REF_LINK, node);
     }
 
     @Override
     public void visit(SimpleNode node) {
         switch (node.getType()) {
             case HRule:
-                currentToken = MarkdownTokenId.HORIZONTALRULE;
+                addToken(MarkdownTokenId.HORIZONTALRULE, node);
                 break;
         }
     }
@@ -137,7 +133,7 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(TableBodyNode node) {
-        
+
     }
 
     @Override
@@ -157,17 +153,22 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(TableNode node) {
-        
+        visitChildren(node);
     }
 
     @Override
     public void visit(TableRowNode node) {
         
     }
+    
+    @Override
+    public void visit(TableCaptionNode node) {
+
+    }
 
     @Override
     public void visit(VerbatimNode node) {
-        currentToken = MarkdownTokenId.BLOCKQUOTE;
+        addToken(MarkdownTokenId.BLOCKQUOTE, node);
     }
 
     @Override
@@ -177,25 +178,28 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(TextNode node) {
-        
-    }
 
-    @Override
-    public void visit(SuperNode node) {
-        
     }
 
     @Override
     public void visit(Node node) {
-        
-    }
-
-    @Override
-    public void visit(TableCaptionNode node) {
-
+        addToken(MarkdownTokenId.PLAIN, node);
     }
     
-    protected void visitChildren(SuperNode node) {
+    
+    @Override
+    public void visit(RootNode node) {
+        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) abbreviationNode.accept(this);
+        for (ReferenceNode referenceNode : node.getReferences()) referenceNode.accept(this);
+        visitChildren(node);
+    }
+    
+    @Override
+    public void visit(SuperNode node) {
+        visitChildren(node);
+    }
+
+    protected void visitChildren(Node node) {
         for (Node child : node.getChildren()) {
             child.accept(this);
         }
@@ -209,7 +213,21 @@ public class MarkdownVisitor implements Visitor {
     }
 
     @Override
-    public void visit(StrongEmphSuperNode sesn) {
-
+    public void visit(StrongEmphSuperNode node) {
+            addToken((node.isStrong() ? MarkdownTokenId.BOLD : MarkdownTokenId.ITALIC), node);
+            visitChildren(node);
     }
+
+    private void addToken(MarkdownTokenId tokenId, Node node) {
+        MarkdownToken tkn = new MarkdownToken(tokenId, 
+                node.getEndIndex()-node.getStartIndex()
+                );
+        tokenMap.put(node.getStartIndex(), tkn);
+        currentToken = tokenId;
+    }
+    
+    public MarkdownTokenMap getTokenMap() {
+        return tokenMap;
+    }
+    
 }

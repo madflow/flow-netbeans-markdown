@@ -28,10 +28,19 @@ public enum MarkdownTokenId implements TokenId {
     ORDEREDLIST("orderedlist"),
     PLAIN("plain"),
     STRONG("strong"),
+    BOLD("bold"),
+    ITALIC("italic"),
     TABLE("table"),
     TEXT("text"),
     VERBATIM("verbatim"),
     WIKILINK("wikilink"),
+    DEFINITION("definition"),
+    DEFINITION_LIST("definition_list"),
+    DEFINITION_TERM("definition_term"),
+    REFERENCE("reference"),
+    QUOTED("quoted"),
+    REF_IMAGE("ref_image"),
+    REF_LINK("ref_link"),
     WHITESPACE("whitespace");
         
     private String name;

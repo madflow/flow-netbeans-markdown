@@ -13,7 +13,7 @@
     <fontcolor name='header' default='keyword'>
         <font style="bold"/>
     </fontcolor>
-    <fontcolor name='horizontalrule' default='seperator' />
+    <fontcolor name='horizontalrule' default='keyword' />
     <fontcolor name='htmlblock' default='string' />
     <fontcolor name='inlinehtml' default='keyword' />
     <fontcolor name='listitem' default='keyword' />
@@ -23,10 +23,23 @@
     <fontcolor name='strong'>
         <font style="bold"/>
     </fontcolor>
+    <fontcolor name='bold'>
+        <font style="bold"/>
+    </fontcolor>
+    <fontcolor name='italic'>
+        <font style="italic"/>
+    </fontcolor>
     <fontcolor name='table' default='string' />
     <fontcolor name='text' />
     <fontcolor name='verbatim' default='comment' />
     <fontcolor name='wikilink' default='keyword' />
+    <fontcolor name='definition' default='keyword' />
+    <fontcolor name='definition_list' default='keyword' />
+    <fontcolor name='definition_term' default='keyword' />
+    <fontcolor name='reference' default='keyword' />
+    <fontcolor name='quoted' default='keyword' />
+    <fontcolor name='ref_image' default='keyword' />
+    <fontcolor name='ref_link' default='keyword' />
     <fontcolor name='whitespace' default='whitespace' />
 
 </fontscolors>
