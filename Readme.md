@@ -22,7 +22,7 @@ The plugin is still under development and not considered stable enough to be rel
 
 # Installation
 
-For the time beeing there is a nbm binary in the "nbm" directory directly in the Git repository.
+For the time being there is a nbm binary in the "nbm" directory directly in the Git repository.
 
 [Download](https://github.com/madflow/flow-netbeans-markdown/raw/master/nbm/flow-netbeans-markdown.nbm)
 
