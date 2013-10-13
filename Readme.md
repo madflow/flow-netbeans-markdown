@@ -1,6 +1,6 @@
 A NetBeans IDE plugin which adds Markdown support. This plugin provides basic syntax highlighting, HTML preview and HTML export when editing a Markdown document.
 
-The plugin is still under development and not considered stable enough to be releases through the NetBeans plugin channel. Unit tests must be added and the lexer implementation has to be revamped.
+The plugin is still under development and not considered stable enough to be releases through the NetBeans plugin channel. Unit tests must be added and ~~the lexer implementation has to be revamped~~.
 
 # What is Markdown?
 
