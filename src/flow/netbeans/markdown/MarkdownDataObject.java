@@ -16,6 +16,7 @@ import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 
 public class MarkdownDataObject extends MultiDataObject {
+    private static final long serialVersionUID = 1L;
 
     public MarkdownDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
         super(pf, loader);

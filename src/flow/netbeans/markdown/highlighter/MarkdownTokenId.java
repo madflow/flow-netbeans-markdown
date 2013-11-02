@@ -43,7 +43,7 @@ public enum MarkdownTokenId implements TokenId {
     REF_LINK("ref_link"),
     WHITESPACE("whitespace");
         
-    private String name;
+    private final String name;
 
     private static final Language<MarkdownTokenId> LANGUAGE = new LanguageHierarchy<MarkdownTokenId>() {
 

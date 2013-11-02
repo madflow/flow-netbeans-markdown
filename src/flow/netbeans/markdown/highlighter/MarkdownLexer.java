@@ -93,7 +93,7 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
         int j = 0;
         while (j <= inputLength) {
             if(tempMap.containsKey(j)) {
-                MarkdownToken currentToken = (MarkdownToken) tempMap.get(j);
+                MarkdownToken currentToken = tempMap.get(j);
                 tokenMap.put(j, currentToken);
                 j += currentToken.getLength();
                 continue;

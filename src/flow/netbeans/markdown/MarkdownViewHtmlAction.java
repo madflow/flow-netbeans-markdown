@@ -56,7 +56,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
                 return;
             }
 
-            String markdownSource = "";
+            String markdownSource;
             if (document != null) {
                 markdownSource = document.getText(0, document.getLength());
             } else {

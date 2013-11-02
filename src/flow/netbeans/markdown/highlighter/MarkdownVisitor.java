@@ -7,7 +7,7 @@ public class MarkdownVisitor implements Visitor {
     
     private MarkdownTokenId currentToken = MarkdownTokenId.PLAIN;
     
-    private MarkdownTokenMap tokenMap = new MarkdownTokenMap();
+    private final MarkdownTokenMap tokenMap = new MarkdownTokenMap();
 
     @Override
     public void visit(AbbreviationNode node) {
@@ -189,8 +189,12 @@ public class MarkdownVisitor implements Visitor {
     
     @Override
     public void visit(RootNode node) {
-        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) abbreviationNode.accept(this);
-        for (ReferenceNode referenceNode : node.getReferences()) referenceNode.accept(this);
+        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) {
+            abbreviationNode.accept(this);
+        }
+        for (ReferenceNode referenceNode : node.getReferences()) {
+            referenceNode.accept(this);
+        }
         visitChildren(node);
     }
     

@@ -2,8 +2,8 @@ package flow.netbeans.markdown.highlighter;
 
 public class MarkdownToken {
 
-    private MarkdownTokenId id;
-    private int length;
+    private final MarkdownTokenId id;
+    private final int length;
     
     public MarkdownToken(MarkdownTokenId id, int length) {
         this.id = id;
