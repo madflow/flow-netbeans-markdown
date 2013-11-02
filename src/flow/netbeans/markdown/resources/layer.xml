@@ -76,7 +76,11 @@
     <folder name="Editors">
         <folder name="text">
             <folder name="x-markdown">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.Bundle"/>
+                <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#Editors/text/x-markdown"/>
+                <file name="language.instance">
+                    <attr name="instanceCreate" methodvalue="flow.netbeans.markdown.highlighter.MarkdownTokenId.language"/>
+                    <attr name="instanceOf" stringvalue="org.netbeans.api.lexer.Language"/>
+                </file>
                 <folder name="FontsColors">
                     <folder name="NetBeans">
                         <folder name="Defaults">
