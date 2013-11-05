@@ -3,5 +3,5 @@ OpenIDE-Module: flow.netbeans.markdown/0
 OpenIDE-Module-Layer: flow/netbeans/markdown/resources/layer.xml
 OpenIDE-Module-Localizing-Bundle: flow/netbeans/markdown/resources/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
-OpenIDE-Module-Specification-Version: 1.3
+OpenIDE-Module-Specification-Version: 1.4
 
