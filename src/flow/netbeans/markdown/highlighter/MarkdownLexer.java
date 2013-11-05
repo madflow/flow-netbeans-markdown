@@ -76,7 +76,7 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
         LexerInput lexerInput = info.input();
         StringBuilder data = new StringBuilder();
         
-        // Read the complete input and feed the Pedgown Parser 
+        // Read the complete input and feed the PegDown Parser
         // Selected extensions over plain markdown are taken in account
         int i;
         while ((i = lexerInput.read()) != LexerInput.EOF) {

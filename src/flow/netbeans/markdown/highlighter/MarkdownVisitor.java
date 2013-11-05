@@ -51,7 +51,7 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(ExpLinkNode node) {
-        addToken(MarkdownTokenId.EXPIMAGE, node);
+        addToken(MarkdownTokenId.EXPLINK, node);
     }
 
     @Override
@@ -168,7 +168,7 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(VerbatimNode node) {
-        addToken(MarkdownTokenId.BLOCKQUOTE, node);
+        addToken(MarkdownTokenId.VERBATIM, node);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(StrongEmphSuperNode node) {
-            addToken((node.isStrong() ? MarkdownTokenId.BOLD : MarkdownTokenId.ITALIC), node);
+            addToken((node.isStrong() ? MarkdownTokenId.STRONG : MarkdownTokenId.EMPH), node);
             visitChildren(node);
     }
 

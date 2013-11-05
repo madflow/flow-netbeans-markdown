@@ -23,11 +23,6 @@
     <fontcolor name='strong'>
         <font style="bold"/>
     </fontcolor>
-    <fontcolor name='bold'>
-        <font style="bold"/>
-    </fontcolor>
-    <fontcolor name='italic'>
-        <font style="italic"/>
     </fontcolor>
     <fontcolor name='table' default='string' />
     <fontcolor name='text' />

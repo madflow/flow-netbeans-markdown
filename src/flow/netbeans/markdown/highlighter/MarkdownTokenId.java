@@ -28,8 +28,6 @@ public enum MarkdownTokenId implements TokenId {
     ORDEREDLIST("orderedlist"),
     PLAIN("plain"),
     STRONG("strong"),
-    BOLD("bold"),
-    ITALIC("italic"),
     TABLE("table"),
     TEXT("text"),
     VERBATIM("verbatim"),
