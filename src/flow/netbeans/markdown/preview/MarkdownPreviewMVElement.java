@@ -103,7 +103,7 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
         previewTextPane = new JTextPane();
         previewTextPane.setEditable(false);
         previewTextPane.setContentType("text/html");
-        previewTextPane.setText("<html><head></head><body>Initializing...</body></html>");
+        previewTextPane.setText("<html><head></head><body></body></html>");
 
         previewScrollPane = new JScrollPane(previewTextPane);
         previewScrollPane.setBorder(BorderFactory.createEmptyBorder());
