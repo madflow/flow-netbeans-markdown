@@ -76,16 +76,23 @@
     <folder name="Editors">
         <folder name="text">
             <folder name="x-markdown">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.Bundle"/>
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.resources.Bundle"/>
                 <folder name="FontsColors">
                     <folder name="NetBeans">
                         <folder name="Defaults">
                             <file name="FontAndColors.xml" url="FontAndColors.xml">
-                                <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.Bundle"/>
+                                <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.resources.Bundle"/>
                             </file>
                         </folder>
                     </folder>
                 </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="OptionsDialog">
+        <folder name="PreviewExamples">
+            <folder name="text">
+                <file name="x-markdown" url="MarkdownExample.md"/>
             </folder>
         </folder>
     </folder>
@@ -101,7 +108,7 @@
     <folder name="Services">
         <folder name="MIMEResolver">
             <file name="MarkdownResolver.xml" url="MarkdownResolver.xml">
-                <attr name="displayName" bundlevalue="flow.netbeans.markdown.Bundle#Services/MIMEResolver/MarkdownResolver.xml"/>
+                <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#Services/MIMEResolver/MarkdownResolver.xml"/>
             </file>
         </folder>
     </folder>
