@@ -155,6 +155,7 @@ public class MarkdownInlineVisitor implements Visitor {
 
     @Override
     public void visit(ReferenceNode node) {
+        visitChildren(node);
     }
 
     @Override

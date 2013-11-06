@@ -1,6 +1,7 @@
 package flow.netbeans.markdown.csl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.netbeans.modules.csl.api.StructureItem;
 import org.netbeans.modules.csl.api.StructureScanner;
 import org.netbeans.modules.csl.spi.ParserResult;
 import org.netbeans.modules.parsing.spi.ParseException;
+import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.pegdown.ast.Node;
 import org.pegdown.ast.RootNode;
@@ -30,9 +32,14 @@ public class MarkdownStructureScanner implements StructureScanner {
             try {
                 RootNode rootNode = result.getRootNode();
                 if (rootNode != null) {
-                    MarkdownTOCVisitor visitor = new MarkdownTOCVisitor(pr.getSnapshot().getSource().getFileObject());
+                    FileObject file = pr.getSnapshot().getSource().getFileObject();
+                    MarkdownTOCVisitor visitor = new MarkdownTOCVisitor(file);
                     rootNode.accept(visitor);
-                    items = visitor.getTOCEntryItems();
+                    MarkdownTOCRootItem tocRootItem
+                            = new MarkdownTOCRootItem(file, rootNode, visitor.getTOCEntryItems());
+                    MarkdownReferencesRootItem refsRootItem
+                            = new MarkdownReferencesRootItem(file, rootNode);
+                    items = Arrays.asList(tocRootItem, refsRootItem);
                 }
             }
             catch (ParseException ex) {
