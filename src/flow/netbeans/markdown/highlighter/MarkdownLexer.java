@@ -36,8 +36,9 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
         if (!inited) {
             synchronized (this) {
                 if (!inited) {
-                    inited = true;
+                    // TODO: Handle ParsingTimeoutException.
                     tokenizeInput();
+                    inited = true;
                 }
             }
         }
