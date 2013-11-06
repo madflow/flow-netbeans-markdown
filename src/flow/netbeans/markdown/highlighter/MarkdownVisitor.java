@@ -56,7 +56,16 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(HeaderNode node) {
-        addToken(MarkdownTokenId.HEADER, node);
+        final MarkdownTokenId tokenId;
+        switch (node.getLevel()) {
+            case 1: tokenId = MarkdownTokenId.HEADER1; break;
+            case 2: tokenId = MarkdownTokenId.HEADER2; break;
+            case 3: tokenId = MarkdownTokenId.HEADER3; break;
+            case 4: tokenId = MarkdownTokenId.HEADER4; break;
+            case 5: tokenId = MarkdownTokenId.HEADER5; break;
+            case 6: default: tokenId = MarkdownTokenId.HEADER6; break;
+        }
+        addToken(tokenId, node);
     }
 
     @Override

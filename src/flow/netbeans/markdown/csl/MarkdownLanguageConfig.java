@@ -11,12 +11,12 @@ public class MarkdownLanguageConfig extends DefaultLanguageConfig {
     public static final String MIME_TYPE = "text/x-markdown"; //NOI18N
 
     @Override
-    public Language getLexerLanguage() {
+    public Language<MarkdownTokenId> getLexerLanguage() {
         return MarkdownTokenId.language();
     }
 
     @Override
     public String getDisplayName() {
-        return "MARKDOWN"; //NOI18N
+        return "Markdown"; //NOI18N
     }
 }

@@ -1,7 +1,13 @@
-# Heading 1
-## Heading 2
+# First Level Header
+## Second Level Header
+### Third Level Header
+#### Fourth Level Header
+##### Fifth Level Header
+###### Sixth Level Header
 
 *Emphasis* and **strong emphasis**
+
+Inline `code` in a paragraph.
 
 > Blockquote
 
@@ -19,7 +25,7 @@
 
 [1]: http://daringfireball.net/projects/markdown/ "Markdown"
 
-## Extensions
+# Extensions
 
 https://help.github.com/articles/github-flavored-markdown or user@example.com
 
