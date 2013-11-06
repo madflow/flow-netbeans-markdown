@@ -10,6 +10,7 @@ import org.netbeans.modules.csl.api.ElementKind;
 import org.netbeans.modules.csl.api.HtmlFormatter;
 import org.netbeans.modules.csl.api.Modifier;
 import org.netbeans.modules.csl.api.StructureItem;
+import org.openide.filesystems.FileObject;
 import org.pegdown.ast.HeaderNode;
 
 /**
@@ -17,6 +18,7 @@ import org.pegdown.ast.HeaderNode;
  * @author Holger
  */
 public class MarkdownTOCEntryItem implements StructureItem {
+    private final FileObject file;
     private final HeaderNode node;
 
     private final String name;
@@ -29,8 +31,9 @@ public class MarkdownTOCEntryItem implements StructureItem {
 
     private final List<MarkdownTOCEntryItem> nestedItems;
 
-    public MarkdownTOCEntryItem(HeaderNode node, String sortText, int startIndex, int endIndex,
+    public MarkdownTOCEntryItem(FileObject file, HeaderNode node, String sortText, int startIndex, int endIndex,
             List<MarkdownTOCEntryItem> nestedItems) {
+        this.file = file;
         this.node = node;
         this.sortText = sortText;
         this.endIndex = endIndex;
@@ -61,7 +64,7 @@ public class MarkdownTOCEntryItem implements StructureItem {
     @Override
     public ElementHandle getElementHandle() {
         // TODO: This method should not return null!
-        return new MarkdownTOCEntryHandle(getName(), node.getStartIndex(), node.getEndIndex());
+        return new MarkdownTOCEntryHandle(file, getName(), startIndex, endIndex);
     }
 
     @Override
@@ -98,4 +101,31 @@ public class MarkdownTOCEntryItem implements StructureItem {
     public ImageIcon getCustomIcon() {
         return null;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + (this.file != null ? this.file.hashCode() : 0);
+        hash = 23 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MarkdownTOCEntryItem other = (MarkdownTOCEntryItem) obj;
+        if (this.file != other.file && (this.file == null || !this.file.equals(other.file))) {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
 }

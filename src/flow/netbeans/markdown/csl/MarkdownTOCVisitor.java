@@ -2,7 +2,9 @@
 package flow.netbeans.markdown.csl;
 
 import java.util.List;
+import org.netbeans.modules.csl.api.OffsetRange;
 import org.netbeans.modules.csl.api.StructureItem;
+import org.openide.filesystems.FileObject;
 import org.pegdown.ast.AbbreviationNode;
 import org.pegdown.ast.AutoLinkNode;
 import org.pegdown.ast.BlockQuoteNode;
@@ -49,12 +51,16 @@ import org.pegdown.ast.WikiLinkNode;
 public class MarkdownTOCVisitor implements Visitor {
     private final MarkdownTOCBuilder tocBuilder;
 
-    public MarkdownTOCVisitor() {
-        tocBuilder = new MarkdownTOCBuilder();
+    public MarkdownTOCVisitor(FileObject file) {
+        tocBuilder = new MarkdownTOCBuilder(file);
     }
 
-    public List<? extends StructureItem> getHeaderItems() {
+    public List<? extends StructureItem> getTOCEntryItems() {
         return tocBuilder.build();
+    }
+
+    public List<OffsetRange> getOffsetRanges() {
+        return tocBuilder.buildOffsetRanges();
     }
 
     @Override

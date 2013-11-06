@@ -3,8 +3,11 @@ package flow.netbeans.markdown.csl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.netbeans.modules.csl.api.OffsetRange;
 import org.netbeans.modules.csl.api.StructureItem;
+import org.openide.filesystems.FileObject;
 import org.pegdown.ast.HeaderNode;
+import org.pegdown.ast.Node;
 
 /**
  *
@@ -14,17 +17,19 @@ public class MarkdownTOCBuilder {
     private final Entry rootEntry;
 
     private Entry currentEntry;
+    private final FileObject file;
 
-    public MarkdownTOCBuilder() {
+    public MarkdownTOCBuilder(FileObject file) {
         rootEntry = new Entry();
         currentEntry = rootEntry;
+        this.file = file;
     }
 
     public void add(HeaderNode node) {
         if (currentEntry == rootEntry || node.getLevel() > currentEntry.node.getLevel()) {
             currentEntry = currentEntry.addChild(node);
         } else {
-            currentEntry.finish(node.getStartIndex());
+            currentEntry.finish(node.getStartIndex() - 1);
             while (currentEntry != rootEntry && node.getLevel() <= currentEntry.node.getLevel()) {
                 currentEntry = currentEntry.parent;
             }
@@ -40,7 +45,13 @@ public class MarkdownTOCBuilder {
         return rootEntry.buildNestedItems();
     }
 
-    private static class Entry {
+    public List<OffsetRange> buildOffsetRanges() {
+        final List<OffsetRange> ranges = new ArrayList<OffsetRange>();
+        rootEntry.buildNestedOffsetRanges(ranges);
+        return ranges;
+    }
+
+    private class Entry {
         private final Entry parent;
 
         private final int depth;
@@ -90,7 +101,7 @@ public class MarkdownTOCBuilder {
         }
 
         private MarkdownTOCEntryItem build() {
-            return new MarkdownTOCEntryItem(node, buildCounterPath(), startIndex, endIndex, buildNestedItems());
+            return new MarkdownTOCEntryItem(file, node, buildCounterPath(), startIndex, endIndex, buildNestedItems());
         }
 
         private String buildCounterPath() {
@@ -116,6 +127,23 @@ public class MarkdownTOCBuilder {
             if (parent != null) {
                 parent.finish(endIndex);
             }
+        }
+
+        private void buildNestedOffsetRanges(List<OffsetRange> ranges) {
+            for (Entry child : children) {
+                child.buildOffsetRanges(ranges);
+            }
+        }
+
+        private void buildOffsetRanges(List<OffsetRange> ranges) {
+            List<Node> childNodes = node.getChildren();
+            if (!childNodes.isEmpty()) {
+                int childrenEndIndex = childNodes.get(childNodes.size() - 1).getEndIndex();
+                if (endIndex > childrenEndIndex) {
+                    ranges.add(new OffsetRange(childrenEndIndex, endIndex));
+                }
+            }
+            buildNestedOffsetRanges(ranges);
         }
     }
 }
