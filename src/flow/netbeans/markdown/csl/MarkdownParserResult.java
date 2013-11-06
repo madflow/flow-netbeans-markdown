@@ -17,11 +17,13 @@ public class MarkdownParserResult extends ParserResult {
     private final RootNode rootNode;
 
     private boolean valid;
+    private final int extensions;
 
-    public MarkdownParserResult(Snapshot snapshot, RootNode rootNode) {
+    public MarkdownParserResult(Snapshot snapshot, RootNode rootNode, int extensions) {
         super(snapshot);
         valid = true;
         this.rootNode = rootNode;
+        this.extensions = extensions;
     }
 
     public RootNode getRootNode() throws ParseException {
@@ -29,6 +31,13 @@ public class MarkdownParserResult extends ParserResult {
             throw new ParseException();
         }
         return rootNode;
+    }
+
+    public int getExtensions() throws ParseException {
+        if (!valid) {
+            throw new ParseException();
+        }
+        return extensions;
     }
 
     @Override

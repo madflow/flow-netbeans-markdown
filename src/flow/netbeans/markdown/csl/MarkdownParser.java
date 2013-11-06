@@ -18,6 +18,7 @@ import org.pegdown.ast.RootNode;
 public class MarkdownParser extends Parser {
     private Snapshot snapshot;
     private RootNode rootNode;
+    private int extensions;
 
     public MarkdownParser() {
     }
@@ -28,15 +29,15 @@ public class MarkdownParser extends Parser {
 
         CharSequence text = snapshot.getText();
 
-        MarkdownGlobalOptions markdownOptions = MarkdownGlobalOptions.getInstance();
-        PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
+        this.extensions = MarkdownGlobalOptions.getInstance().getExtensionsValue();
+        PegDownProcessor markdownProcessor = new PegDownProcessor(extensions);
 
         rootNode = markdownProcessor.parser.parse(text.toString().toCharArray());
     }
 
     @Override
     public Result getResult(Task task) throws ParseException {
-        return new MarkdownParserResult(snapshot, rootNode);
+        return new MarkdownParserResult(snapshot, rootNode, extensions);
     }
 
     @Override

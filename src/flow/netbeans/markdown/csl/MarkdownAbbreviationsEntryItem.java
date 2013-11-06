@@ -1,7 +1,5 @@
-
 package flow.netbeans.markdown.csl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -12,45 +10,55 @@ import org.netbeans.modules.csl.api.HtmlFormatter;
 import org.netbeans.modules.csl.api.Modifier;
 import org.netbeans.modules.csl.api.StructureItem;
 import org.openide.filesystems.FileObject;
-import org.openide.util.NbBundle;
-import org.pegdown.ast.ReferenceNode;
-import org.pegdown.ast.RootNode;
+import org.pegdown.ast.AbbreviationNode;
 
 /**
  *
  * @author Holger
  */
-@NbBundle.Messages({
-    "TXT_MarkdownReferencesRootItem=References"
-})
-public class MarkdownReferencesRootItem implements StructureItem {
+public class MarkdownAbbreviationsEntryItem implements StructureItem {
     private final FileObject file;
 
-    private final RootNode node;
-    private final List<MarkdownReferencesEntryItem> nestedItems;
+    private final AbbreviationNode node;
 
-    public MarkdownReferencesRootItem(FileObject file, RootNode node) {
+    private final String name;
+
+    private final String expansion;
+
+    public MarkdownAbbreviationsEntryItem(FileObject file, AbbreviationNode node) {
         this.file = file;
         this.node = node;
-        nestedItems = new ArrayList<MarkdownReferencesEntryItem>();
-        for (ReferenceNode refNode : node.getReferences()) {
-            nestedItems.add(new MarkdownReferencesEntryItem(file, refNode));
+        MarkdownInlineVisitor visitor = new MarkdownInlineVisitor();
+        node.accept(visitor);
+        this.name = visitor.getPlainText();
+        if (node.getExpansion() != null) {
+            visitor = new MarkdownInlineVisitor();
+            node.getExpansion().accept(visitor);
+            this.expansion = visitor.getPlainText().trim();
+        }
+        else {
+            this.expansion = "";
         }
     }
 
     @Override
     public String getName() {
-        return Bundle.TXT_MarkdownReferencesRootItem();
+        return name;
     }
 
     @Override
     public String getSortText() {
-        return "2References";
+        return getName();
     }
 
     @Override
     public String getHtml(HtmlFormatter formatter) {
         formatter.appendText(getName());
+        if (!expansion.isEmpty()) {
+            formatter.appendHtml(" <font color='!controlShadow'>");
+            formatter.appendText(expansion);
+            formatter.appendHtml("</font>");
+        }
         return formatter.getText();
     }
 
@@ -61,7 +69,7 @@ public class MarkdownReferencesRootItem implements StructureItem {
 
     @Override
     public ElementKind getKind() {
-        return ElementKind.PACKAGE;
+        return ElementKind.CONSTANT;
     }
 
     @Override
@@ -71,22 +79,22 @@ public class MarkdownReferencesRootItem implements StructureItem {
 
     @Override
     public boolean isLeaf() {
-        return false;
+        return true;
     }
 
     @Override
     public List<? extends StructureItem> getNestedItems() {
-        return Collections.unmodifiableList(nestedItems);
+        return Collections.emptyList();
     }
 
     @Override
     public long getPosition() {
-        return 0;
+        return node.getStartIndex();
     }
 
     @Override
     public long getEndPosition() {
-        return 0;
+        return node.getEndIndex();
     }
 
     @Override
@@ -97,7 +105,8 @@ public class MarkdownReferencesRootItem implements StructureItem {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 61 * hash + (this.file != null ? this.file.hashCode() : 0);
+        hash = 29 * hash + (this.file != null ? this.file.hashCode() : 0);
+        hash = 29 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
 
@@ -109,8 +118,11 @@ public class MarkdownReferencesRootItem implements StructureItem {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final MarkdownReferencesRootItem other = (MarkdownReferencesRootItem) obj;
+        final MarkdownAbbreviationsEntryItem other = (MarkdownAbbreviationsEntryItem) obj;
         if (this.file != other.file && (this.file == null || !this.file.equals(other.file))) {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
         return true;

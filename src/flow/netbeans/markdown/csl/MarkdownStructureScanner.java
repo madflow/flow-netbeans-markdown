@@ -12,6 +12,7 @@ import org.netbeans.modules.csl.spi.ParserResult;
 import org.netbeans.modules.parsing.spi.ParseException;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
+import org.pegdown.Extensions;
 import org.pegdown.ast.Node;
 import org.pegdown.ast.RootNode;
 
@@ -31,6 +32,7 @@ public class MarkdownStructureScanner implements StructureScanner {
             MarkdownParserResult result = (MarkdownParserResult) pr;
             try {
                 RootNode rootNode = result.getRootNode();
+                int extensions = result.getExtensions();
                 if (rootNode != null) {
                     FileObject file = pr.getSnapshot().getSource().getFileObject();
                     MarkdownTOCVisitor visitor = new MarkdownTOCVisitor(file);
@@ -39,7 +41,14 @@ public class MarkdownStructureScanner implements StructureScanner {
                             = new MarkdownTOCRootItem(file, rootNode, visitor.getTOCEntryItems());
                     MarkdownReferencesRootItem refsRootItem
                             = new MarkdownReferencesRootItem(file, rootNode);
-                    items = Arrays.asList(tocRootItem, refsRootItem);
+
+                    if ((extensions & Extensions.ABBREVIATIONS) != 0) {
+                        MarkdownAbbreviationsRootItem abbrRootItem
+                                = new MarkdownAbbreviationsRootItem(file, rootNode);
+                        items = Arrays.asList(tocRootItem, refsRootItem, abbrRootItem);
+                    } else {
+                        items = Arrays.asList(tocRootItem, refsRootItem);
+                    }
                 }
             }
             catch (ParseException ex) {

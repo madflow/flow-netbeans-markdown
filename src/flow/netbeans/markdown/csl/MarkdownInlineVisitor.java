@@ -57,6 +57,7 @@ public class MarkdownInlineVisitor implements Visitor {
 
     @Override
     public void visit(AbbreviationNode node) {
+        visitChildren(node);
     }
 
     @Override

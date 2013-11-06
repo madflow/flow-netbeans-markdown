@@ -13,7 +13,7 @@ import org.netbeans.modules.csl.api.Modifier;
 import org.netbeans.modules.csl.api.StructureItem;
 import org.openide.filesystems.FileObject;
 import org.openide.util.NbBundle;
-import org.pegdown.ast.ReferenceNode;
+import org.pegdown.ast.AbbreviationNode;
 import org.pegdown.ast.RootNode;
 
 /**
@@ -21,31 +21,31 @@ import org.pegdown.ast.RootNode;
  * @author Holger
  */
 @NbBundle.Messages({
-    "TXT_MarkdownReferencesRootItem=References"
+    "TXT_MarkdownAbbreviationsRootItem=Abbreviations"
 })
-public class MarkdownReferencesRootItem implements StructureItem {
+public class MarkdownAbbreviationsRootItem implements StructureItem {
     private final FileObject file;
 
     private final RootNode node;
-    private final List<MarkdownReferencesEntryItem> nestedItems;
+    private final List<MarkdownAbbreviationsEntryItem> nestedItems;
 
-    public MarkdownReferencesRootItem(FileObject file, RootNode node) {
+    public MarkdownAbbreviationsRootItem(FileObject file, RootNode node) {
         this.file = file;
         this.node = node;
-        nestedItems = new ArrayList<MarkdownReferencesEntryItem>();
-        for (ReferenceNode refNode : node.getReferences()) {
-            nestedItems.add(new MarkdownReferencesEntryItem(file, refNode));
+        nestedItems = new ArrayList<MarkdownAbbreviationsEntryItem>();
+        for (AbbreviationNode abbrNode : node.getAbbreviations()) {
+            nestedItems.add(new MarkdownAbbreviationsEntryItem(file, abbrNode));
         }
     }
 
     @Override
     public String getName() {
-        return Bundle.TXT_MarkdownReferencesRootItem();
+        return Bundle.TXT_MarkdownAbbreviationsRootItem();
     }
 
     @Override
     public String getSortText() {
-        return "2References";
+        return "3Abbreviations";
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MarkdownReferencesRootItem implements StructureItem {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final MarkdownReferencesRootItem other = (MarkdownReferencesRootItem) obj;
+        final MarkdownAbbreviationsRootItem other = (MarkdownAbbreviationsRootItem) obj;
         if (this.file != other.file && (this.file == null || !this.file.equals(other.file))) {
             return false;
         }
