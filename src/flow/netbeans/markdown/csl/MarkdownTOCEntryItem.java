@@ -64,7 +64,8 @@ public class MarkdownTOCEntryItem implements StructureItem {
     @Override
     public ElementHandle getElementHandle() {
         // TODO: This method should not return null!
-        return new MarkdownTOCEntryHandle(file, getName(), startIndex, endIndex);
+//        return new MarkdownTOCEntryHandle(file, getName(), startIndex, endIndex);
+        return null;
     }
 
     @Override
