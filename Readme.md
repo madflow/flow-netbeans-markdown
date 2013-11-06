@@ -21,6 +21,14 @@ Source: <http://daringfireball.net/projects/markdown/>
 - Lets you customize the HTML output with CSS and alien intelligence (Options->Miscellaneous->Markdown->HTML Export)
 - Supports multiple extensions over standard markdown (see [PegDown][], Options->Miscellaneous->Markdown->Extensions)
 
+# Screenshots
+
+![Editor - Source view](editor-source.png "The Source view of the Markdown editor")
+
+![Editor - Preview view](editor-preview.png "The Preview view of the Markdown editor")
+
+![Navigator](navigator.png "The Navigator window showing the structure of a Markdown document")
+
 # Requirements
 
 - NetBeans >= 7.0
