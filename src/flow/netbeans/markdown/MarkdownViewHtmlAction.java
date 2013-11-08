@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.URL;
 import java.nio.charset.Charset;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -79,7 +78,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             out.print(full);
             out.close();
 
-            URLDisplayer.getDefault().showURL(new URL("file://" + temp.toString()));
+            URLDisplayer.getDefault().showURL(temp.toURI().toURL());
 
             temp.deleteOnExit();
         } catch (IOException ex) {
