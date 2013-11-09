@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontscolors PUBLIC "-//NetBeans//DTD Editor Fonts and Colors settings 1.1//EN" "http://www.netbeans.org/dtds/EditorFontsColors-1_1.dtd">
 <fontscolors>
-    <fontcolor name='autolink' default='keyword' />
+    <fontcolor name='autolink' default='link' />
     <fontcolor name='blockquote' default='comment' />
     <fontcolor name='bulletlist' default='keyword' />
     <fontcolor name='code' default='comment' />
     <fontcolor name='emph'>
         <font style="italic"/>
     </fontcolor>
-    <fontcolor name='expimage' default='keyword' />
-    <fontcolor name='explink' default='keyword' />
-    <fontcolor name='header' default='keyword'>
+    <fontcolor name='expimage' default='image' />
+    <fontcolor name='explink' default='link' />
+    <fontcolor name='header' default='keyword' foreColor="FF000000" bgColor="FFC0C0C0">
         <font style="bold"/>
     </fontcolor>
-    <fontcolor name='horizontalrule' default='keyword' />
+    <fontcolor name='header1' default='header' />
+    <fontcolor name='header2' default='header' bgColor="FFC8C8C8" />
+    <fontcolor name='header3' default='header' bgColor="FFD0D0D0" />
+    <fontcolor name='header4' default='header' bgColor="FFD8D8D8" />
+    <fontcolor name='header5' default='header' bgColor="FFE0E0E0" />
+    <fontcolor name='header6' default='header' bgColor="FFE8E8E8" />
+    <fontcolor name='horizontalrule' default='separator' />
     <fontcolor name='htmlblock' default='string' />
+    <fontcolor name='image' default='keyword' />
     <fontcolor name='inlinehtml' default='keyword' />
+    <fontcolor name='link' default='keyword' />
     <fontcolor name='listitem' default='keyword' />
-    <fontcolor name='maillink' default='keyword' />
+    <fontcolor name='maillink' default='link' />
     <fontcolor name='orderedlist' default='keyword' />
     <fontcolor name='plain'/>
     <fontcolor name='strong'>
         <font style="bold"/>
     </fontcolor>
-    <fontcolor name='bold'>
-        <font style="bold"/>
-    </fontcolor>
-    <fontcolor name='italic'>
-        <font style="italic"/>
-    </fontcolor>
     <fontcolor name='table' default='string' />
     <fontcolor name='text' />
     <fontcolor name='verbatim' default='comment' />
-    <fontcolor name='wikilink' default='keyword' />
+    <fontcolor name='wikilink' default='link' />
     <fontcolor name='definition' default='keyword' />
     <fontcolor name='definition_list' default='keyword' />
     <fontcolor name='definition_term' default='keyword' />
     <fontcolor name='reference' default='keyword' />
     <fontcolor name='quoted' default='keyword' />
-    <fontcolor name='ref_image' default='keyword' />
-    <fontcolor name='ref_link' default='keyword' />
+    <fontcolor name='ref_image' default='image' />
+    <fontcolor name='ref_link' default='link' />
     <fontcolor name='whitespace' default='whitespace' />
 
 </fontscolors>

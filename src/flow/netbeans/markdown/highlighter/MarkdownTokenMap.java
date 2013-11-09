@@ -3,7 +3,7 @@ package flow.netbeans.markdown.highlighter;
 
 import java.util.TreeMap;
 
-public class MarkdownTokenMap extends TreeMap {
+public class MarkdownTokenMap extends TreeMap<Number, MarkdownToken> {
 
     private int totalTokenLength = 0;
 
@@ -11,7 +11,8 @@ public class MarkdownTokenMap extends TreeMap {
         this.totalTokenLength = 0;
     }
     
-    public Object put(Number key, MarkdownToken token) {
+    @Override
+    public MarkdownToken put(Number key, MarkdownToken token) {
         this.totalTokenLength += token.getLength();
         return super.put(key, token);
     }

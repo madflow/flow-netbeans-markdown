@@ -7,7 +7,7 @@ public class MarkdownVisitor implements Visitor {
     
     private MarkdownTokenId currentToken = MarkdownTokenId.PLAIN;
     
-    private MarkdownTokenMap tokenMap = new MarkdownTokenMap();
+    private final MarkdownTokenMap tokenMap = new MarkdownTokenMap();
 
     @Override
     public void visit(AbbreviationNode node) {
@@ -51,12 +51,21 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(ExpLinkNode node) {
-        addToken(MarkdownTokenId.EXPIMAGE, node);
+        addToken(MarkdownTokenId.EXPLINK, node);
     }
 
     @Override
     public void visit(HeaderNode node) {
-        addToken(MarkdownTokenId.HEADER, node);
+        final MarkdownTokenId tokenId;
+        switch (node.getLevel()) {
+            case 1: tokenId = MarkdownTokenId.HEADER1; break;
+            case 2: tokenId = MarkdownTokenId.HEADER2; break;
+            case 3: tokenId = MarkdownTokenId.HEADER3; break;
+            case 4: tokenId = MarkdownTokenId.HEADER4; break;
+            case 5: tokenId = MarkdownTokenId.HEADER5; break;
+            case 6: default: tokenId = MarkdownTokenId.HEADER6; break;
+        }
+        addToken(tokenId, node);
     }
 
     @Override
@@ -168,7 +177,7 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(VerbatimNode node) {
-        addToken(MarkdownTokenId.BLOCKQUOTE, node);
+        addToken(MarkdownTokenId.VERBATIM, node);
     }
 
     @Override
@@ -189,8 +198,12 @@ public class MarkdownVisitor implements Visitor {
     
     @Override
     public void visit(RootNode node) {
-        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) abbreviationNode.accept(this);
-        for (ReferenceNode referenceNode : node.getReferences()) referenceNode.accept(this);
+        for (AbbreviationNode abbreviationNode : node.getAbbreviations()) {
+            abbreviationNode.accept(this);
+        }
+        for (ReferenceNode referenceNode : node.getReferences()) {
+            referenceNode.accept(this);
+        }
         visitChildren(node);
     }
     
@@ -214,7 +227,7 @@ public class MarkdownVisitor implements Visitor {
 
     @Override
     public void visit(StrongEmphSuperNode node) {
-            addToken((node.isStrong() ? MarkdownTokenId.BOLD : MarkdownTokenId.ITALIC), node);
+            addToken((node.isStrong() ? MarkdownTokenId.STRONG : MarkdownTokenId.EMPH), node);
             visitChildren(node);
     }
 

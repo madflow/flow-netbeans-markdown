@@ -36,8 +36,9 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
         if (!inited) {
             synchronized (this) {
                 if (!inited) {
-                    inited = true;
+                    // TODO: Handle ParsingTimeoutException.
                     tokenizeInput();
+                    inited = true;
                 }
             }
         }
@@ -76,7 +77,7 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
         LexerInput lexerInput = info.input();
         StringBuilder data = new StringBuilder();
         
-        // Read the complete input and feed the Pedgown Parser 
+        // Read the complete input and feed the PegDown Parser
         // Selected extensions over plain markdown are taken in account
         int i;
         while ((i = lexerInput.read()) != LexerInput.EOF) {
@@ -93,7 +94,7 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
         int j = 0;
         while (j <= inputLength) {
             if(tempMap.containsKey(j)) {
-                MarkdownToken currentToken = (MarkdownToken) tempMap.get(j);
+                MarkdownToken currentToken = tempMap.get(j);
                 tokenMap.put(j, currentToken);
                 j += currentToken.getLength();
                 continue;

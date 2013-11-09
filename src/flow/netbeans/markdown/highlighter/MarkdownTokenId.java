@@ -19,7 +19,12 @@ public enum MarkdownTokenId implements TokenId {
     EMPH("emph"),
     EXPIMAGE("expimage"),
     EXPLINK("explink"),
-    HEADER("header"),
+    HEADER1("header1"),
+    HEADER2("header2"),
+    HEADER3("header3"),
+    HEADER4("header4"),
+    HEADER5("header5"),
+    HEADER6("header6"),
     HORIZONTALRULE("horizontalrule"),
     HTMLBLOCK("htmlblock"),
     INLINEHTML("inlinehtml"),
@@ -28,8 +33,6 @@ public enum MarkdownTokenId implements TokenId {
     ORDEREDLIST("orderedlist"),
     PLAIN("plain"),
     STRONG("strong"),
-    BOLD("bold"),
-    ITALIC("italic"),
     TABLE("table"),
     TEXT("text"),
     VERBATIM("verbatim"),
@@ -43,7 +46,7 @@ public enum MarkdownTokenId implements TokenId {
     REF_LINK("ref_link"),
     WHITESPACE("whitespace");
         
-    private String name;
+    private final String name;
 
     private static final Language<MarkdownTokenId> LANGUAGE = new LanguageHierarchy<MarkdownTokenId>() {
 
