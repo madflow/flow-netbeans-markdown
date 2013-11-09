@@ -4,7 +4,7 @@ The plugin is still under development and not considered stable enough to be rel
 
 # What is Markdown?
 
-> Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML). 
+> Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).
 
 Source: <http://daringfireball.net/projects/markdown/>
 
@@ -51,11 +51,8 @@ You may also compile a binary yourself.
 # Authors
 
 - Florian Reiss <https://github.com/madflow/>
-
-# Contributions
-
 - junichi11 <https://github.com/junichi11>
-- Holger Stenger <https://github.com/stengerh/
+- Holger Stenger <https://github.com/stengerh/>
 
 Contributions are always welcome and greatly appreciated!
 
