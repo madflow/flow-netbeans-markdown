@@ -51,11 +51,11 @@ public class MarkdownLexerVisitor implements Visitor {
     }
 
     private void addLeafTreeToken(MarkdownTokenId id, Node node) {
-        builder.addLeafTreeToken(id, node);
+        builder.addLeafTreeToken(id, node.getStartIndex(), node.getEndIndex());
     }
 
     private void beginTreeToken(MarkdownTokenId id, Node node) {
-        builder.beginTreeToken(id, node);
+        builder.beginTreeToken(id, node.getStartIndex(), node.getEndIndex());
     }
 
     private void endTreeToken() {

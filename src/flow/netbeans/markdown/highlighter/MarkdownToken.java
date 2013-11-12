@@ -32,4 +32,9 @@ public class MarkdownToken {
     public int getLength() {
         return endIndex - startIndex;
     }
+
+    @Override
+    public String toString() {
+        return id + "(" + getLength() + ")[" + startIndex + "-" + endIndex + "]";
+    }
 }
