@@ -1,5 +1,21 @@
 package flow.netbeans.markdown.options;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import javax.swing.JEditorPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
+import javax.swing.text.EditorKit;
+import org.netbeans.api.editor.DialogBinding;
+import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileSystem;
+import org.openide.filesystems.FileUtil;
+import org.openide.loaders.DataObject;
+import org.openide.text.CloneableEditorSupport;
+import org.openide.util.Exceptions;
+
 public final class MarkdownPanel extends javax.swing.JPanel {
 
     private final MarkdownOptionsPanelController controller;
@@ -8,6 +24,23 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     MarkdownPanel(MarkdownOptionsPanelController controller) {
         this.controller = controller;
         initComponents();
+        setMimeType(HTML_TEMPLATE, "text/html", "html");
+
+        ActionListener actionListener = new ActionHandler();
+        ABBREVIATIONS.addActionListener(actionListener);
+        AUTOLINKS.addActionListener(actionListener);
+        DEFINITION_LISTS.addActionListener(actionListener);
+        FENCED_CODE_BLOCKS.addActionListener(actionListener);
+        HARDWRAPS.addActionListener(actionListener);
+        HTML_BLOCK_SUPPRESSION.addActionListener(actionListener);
+        INLINE_HTML_SUPPRESSION.addActionListener(actionListener);
+        QUOTES.addActionListener(actionListener);
+        SMARTS.addActionListener(actionListener);
+        TABLES.addActionListener(actionListener);
+        WIKILINKS.addActionListener(actionListener);
+
+        DocumentListener documentListener = new DocumentHandler();
+        HTML_TEMPLATE.getDocument().addDocumentListener(documentListener);
     }
 
     /**
@@ -18,7 +51,6 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBox1 = new javax.swing.JCheckBox();
         TABS = new javax.swing.JTabbedPane();
         EXTENSIONS_PANEL = new javax.swing.JPanel();
         EXTENSIONS_PANEL_HEADER = new javax.swing.JLabel();
@@ -36,21 +68,14 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         HTML_EXPORT_PANEL = new javax.swing.JPanel();
         HTML_PANEL_HEADER = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        HTML_TEMPLATE = new javax.swing.JTextArea();
+        HTML_TEMPLATE = new javax.swing.JEditorPane();
         MISC_PANEL = new javax.swing.JPanel();
         VIEW_HTML_ON_SAVE = new javax.swing.JCheckBox();
-
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox1, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.jCheckBox1.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(EXTENSIONS_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL_HEADER.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(SMARTS, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.SMARTS.text")); // NOI18N
         SMARTS.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.SMARTS.toolTipText")); // NOI18N
-        SMARTS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SMARTSActionPerformed(evt);
-            }
-        });
 
         org.openide.awt.Mnemonics.setLocalizedText(QUOTES, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.QUOTES.text")); // NOI18N
         QUOTES.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.QUOTES.toolTipText")); // NOI18N
@@ -89,7 +114,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
                         .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(INLINE_HTML_SUPPRESSION)
@@ -103,7 +128,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                             .addComponent(FENCED_CODE_BLOCKS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(HTML_BLOCK_SUPPRESSION, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(WIKILINKS, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 118, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         EXTENSIONS_PANELLayout.setVerticalGroup(
             EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,16 +157,13 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(INLINE_HTML_SUPPRESSION)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(WIKILINKS)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL.TabConstraints.tabTitle"), EXTENSIONS_PANEL); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(HTML_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.HTML_PANEL_HEADER.text")); // NOI18N
 
-        HTML_TEMPLATE.setColumns(20);
-        HTML_TEMPLATE.setRows(5);
-        HTML_TEMPLATE.setText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.HTML_TEMPLATE.text")); // NOI18N
         jScrollPane1.setViewportView(HTML_TEMPLATE);
 
         javax.swing.GroupLayout HTML_EXPORT_PANELLayout = new javax.swing.GroupLayout(HTML_EXPORT_PANEL);
@@ -151,18 +173,18 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(HTML_EXPORT_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(HTML_EXPORT_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(HTML_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                    .addComponent(HTML_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
                     .addGroup(HTML_EXPORT_PANELLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
-                        .addGap(8, 8, 8))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         HTML_EXPORT_PANELLayout.setVerticalGroup(
             HTML_EXPORT_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HTML_EXPORT_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(HTML_PANEL_HEADER)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -177,14 +199,14 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(390, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
         MISC_PANELLayout.setVerticalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(VIEW_HTML_ON_SAVE)
-                .addContainerGap(459, Short.MAX_VALUE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -199,15 +221,54 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(1, 1, 1)
-                .addComponent(TABS))
+                .addComponent(TABS)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SMARTSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SMARTSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SMARTSActionPerformed
+    private void setMimeType(JEditorPane editorPane, String mimeType, String extension) {
+        FileSystem fileSystem = FileUtil.createMemoryFileSystem();
+        try {
+            FileObject file = fileSystem.getRoot().createData("template", extension);
+            DataObject data = DataObject.find(file);
+            if (data != null) {
+                EditorKit kit = CloneableEditorSupport.getEditorKit(mimeType);
+                editorPane.setEditorKit(kit);
+                editorPane.getDocument().putProperty(Document.StreamDescriptionProperty, data);
+                DialogBinding.bindComponentToFile(file, 0, 0, editorPane);
+                editorPane.setText(" ");
+            }
+        }
+        catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
+
+    private class ActionHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            controller.changed();
+        }
+    }
+
+    private class DocumentHandler implements DocumentListener {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            controller.changed();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            controller.changed();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            controller.changed();
+        }
+    }
 
     void load() {
         // TODO read settings and initialize GUI
@@ -288,7 +349,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox HTML_BLOCK_SUPPRESSION;
     private javax.swing.JPanel HTML_EXPORT_PANEL;
     private javax.swing.JLabel HTML_PANEL_HEADER;
-    private javax.swing.JTextArea HTML_TEMPLATE;
+    private javax.swing.JEditorPane HTML_TEMPLATE;
     private javax.swing.JCheckBox INLINE_HTML_SUPPRESSION;
     private javax.swing.JPanel MISC_PANEL;
     private javax.swing.JCheckBox QUOTES;
@@ -297,7 +358,6 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JTabbedPane TABS;
     private javax.swing.JCheckBox VIEW_HTML_ON_SAVE;
     private javax.swing.JCheckBox WIKILINKS;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
