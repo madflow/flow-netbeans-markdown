@@ -79,8 +79,6 @@ public class MarkdownLexerVisitor implements Visitor {
         beginTreeToken(MarkdownTokenId.PLAIN, node);
         visitChildren(node);
         endTreeToken();
-        // Also pop the guard tree token.
-        endTreeToken();
     }
 
     @Override
@@ -258,7 +256,7 @@ public class MarkdownLexerVisitor implements Visitor {
 
     @Override
     public void visit(SpecialTextNode node) {
-        addLeafTreeToken(MarkdownTokenId.TEXT, node);
+        //addLeafTreeToken(MarkdownTokenId.TEXT, node);
     }
 
     @Override

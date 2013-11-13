@@ -58,15 +58,15 @@ public class MarkdownLexerTestBase {
     }
 
     protected File getGoldenFilesDir() {
-        return new File(getTestDataDir(), "/goldenfiles");
+        return new File(getTestDataDir(), "goldenfiles");
     }
 
     protected File getTestFilesDir() {
-        return new File(getTestDataDir(), "/testfiles");
+        return new File(getTestDataDir(), "testfiles");
     }
     
     protected File getGoldenFile(String name) {
-        return new File(getGoldenFilesDir(), "/" + name);
+        return new File(getGoldenFilesDir(), name);
     }
     
     protected String getGoldenFileContent(String name) throws IOException {
@@ -78,7 +78,7 @@ public class MarkdownLexerTestBase {
     }
     
     protected File getTestFile(String name) {
-        return new File(getTestFilesDir(), "/" + name);
+        return new File(getTestFilesDir(), name);
     }
 
     /**

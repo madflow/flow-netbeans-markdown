@@ -12,7 +12,6 @@ public class MarkdownLexerTest extends MarkdownLexerTestBase {
 
     @Test
     public void testCreate() {
-        System.out.println("create");
         String content = "\n";
         Language<MarkdownTokenId> language = MarkdownTokenId.language();
         TokenHierarchy<?> hierarchy = TokenHierarchy.create(content, language);
@@ -27,5 +26,15 @@ public class MarkdownLexerTest extends MarkdownLexerTestBase {
     @Test
     public void testHeadings() throws Exception {
         assertEquals(getGoldenFileContent("headings.pass"), getTestResult("headings.md"));
+    }
+
+    @Test
+    public void testNested() throws Exception {
+        assertEquals(getGoldenFileContent("nested.pass"), getTestResult("nested.md"));
+    }
+
+    @Test
+    public void testPlain() throws Exception {
+        assertEquals(getGoldenFileContent("plain.pass"), getTestResult("plain.md"));
     }
 }
