@@ -2,22 +2,21 @@
 package flow.netbeans.markdown.matchers;
 
 import flow.netbeans.markdown.highlighter.MarkdownToken;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.junit.internal.matchers.TypeSafeMatcher;
 
 /**
  *
  * @author Holger
  */
-class NonZeroLength extends BaseMatcher<MarkdownToken> {
+public class NonZeroLength extends TypeSafeMatcher<MarkdownToken> {
 
     public NonZeroLength() {
     }
 
     @Override
-    public boolean matches(Object item) {
-        MarkdownToken token = (MarkdownToken) item;
-        return token.getLength() > 0;
+    public boolean matchesSafely(MarkdownToken item) {
+        return item.getLength() > 0;
     }
 
     @Override

@@ -1,15 +1,15 @@
 package flow.netbeans.markdown.matchers;
 
 import java.util.Iterator;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.junit.internal.matchers.TypeSafeMatcher;
 
 /**
  *
  * @author Holger
  */
-public class EveryItem<T> extends BaseMatcher<Iterable<? extends T>> {
+public class EveryItem<T> extends TypeSafeMatcher<Iterable<? extends T>> {
     private final Matcher<T> itemMatcher;
 
     public EveryItem(Matcher<T> itemMatcher) {
@@ -17,10 +17,9 @@ public class EveryItem<T> extends BaseMatcher<Iterable<? extends T>> {
     }
 
     @Override
-    public boolean matches(Object item) {
-        Iterable<? extends T> iterable = (Iterable<? extends T>) item;
+    public boolean matchesSafely(Iterable<? extends T> item) {
         boolean result = true;
-        Iterator<? extends T> iterator = iterable.iterator();
+        Iterator<? extends T> iterator = item.iterator();
         while (result && iterator.hasNext()) {
             final T element = iterator.next();
             if (!itemMatcher.matches(element)) {

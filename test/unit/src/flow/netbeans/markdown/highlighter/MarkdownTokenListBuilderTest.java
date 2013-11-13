@@ -16,16 +16,16 @@ import org.junit.Before;
 public class MarkdownTokenListBuilderTest {
     private static final int DEFAULT_INPUT_LENGTH = 10;
 
-    private MarkdownTokenListBuilder sut;
+    private MarkdownTokenListBuilder builder;
 
     @Before
     public void createBuilder() {
-        sut = new MarkdownTokenListBuilder(DEFAULT_INPUT_LENGTH);
+        builder = new MarkdownTokenListBuilder(DEFAULT_INPUT_LENGTH);
     }
 
     @Test
     public void testNoToken() {
-        final List<MarkdownToken> tokens = sut.build();
+        final List<MarkdownToken> tokens = builder.build();
         
         assertThat(tokens, everyItem(nonZeroLength()));
         assertThat(totalLengthOf(tokens), equalTo(DEFAULT_INPUT_LENGTH));
@@ -35,9 +35,9 @@ public class MarkdownTokenListBuilderTest {
 
     @Test
     public void testSingleTokenWithFullCoverage() {
-        sut.addLeafTreeToken(CODE, 0, DEFAULT_INPUT_LENGTH);
+        builder.addLeafTreeToken(CODE, 0, DEFAULT_INPUT_LENGTH);
 
-        final List<MarkdownToken> tokens = sut.build();
+        final List<MarkdownToken> tokens = builder.build();
 
         assertThat(tokens, everyItem(nonZeroLength()));
         assertThat(totalLengthOf(tokens), equalTo(DEFAULT_INPUT_LENGTH));
@@ -48,9 +48,9 @@ public class MarkdownTokenListBuilderTest {
 
     @Test
     public void testSingleTokenWithoutFullCoverage() {
-        sut.addLeafTreeToken(CODE, 1, DEFAULT_INPUT_LENGTH - 1);
+        builder.addLeafTreeToken(CODE, 1, DEFAULT_INPUT_LENGTH - 1);
 
-        final List<MarkdownToken> tokens = sut.build();
+        final List<MarkdownToken> tokens = builder.build();
 
         assertThat(tokens, everyItem(nonZeroLength()));
         assertThat(totalLengthOf(tokens), equalTo(DEFAULT_INPUT_LENGTH));
@@ -62,11 +62,11 @@ public class MarkdownTokenListBuilderTest {
 
     @Test
     public void testNestedTokenWithLargerRangeThanOuterToken() {
-        sut.beginTreeToken(CODE, 1, DEFAULT_INPUT_LENGTH - 1);
-        sut.addLeafTreeToken(EMPH, 0, DEFAULT_INPUT_LENGTH);
-        sut.endTreeToken();
+        builder.beginTreeToken(CODE, 1, DEFAULT_INPUT_LENGTH - 1);
+        builder.addLeafTreeToken(EMPH, 0, DEFAULT_INPUT_LENGTH);
+        builder.endTreeToken();
 
-        final List<MarkdownToken> tokens = sut.build();
+        final List<MarkdownToken> tokens = builder.build();
 
         assertThat(tokens, everyItem(nonZeroLength()));
         assertThat(totalLengthOf(tokens), equalTo(DEFAULT_INPUT_LENGTH));
@@ -78,29 +78,39 @@ public class MarkdownTokenListBuilderTest {
 
     @Test
     public void testEmptyInput() {
-        sut = new MarkdownTokenListBuilder(0);
+        builder = new MarkdownTokenListBuilder(0);
 
-        List<MarkdownToken> tokens = sut.build();
+        List<MarkdownToken> tokens = builder.build();
 
         assertThat(tokens.size(), equalTo(0));
     }
 
     @Test(expected = IllegalStateException.class)
     public void testUnmatchedEndTokenCall() {
-        sut.endTreeToken();
+        builder.endTreeToken();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testUnmatchedBeginTokenCall() {
-        sut.beginTreeToken(CODE, 0, DEFAULT_INPUT_LENGTH);
+        builder.beginTreeToken(CODE, 0, DEFAULT_INPUT_LENGTH);
 
-        sut.build();
+        builder.build();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testBeginTokenCallAfterBuild() {
-        sut.build();
+        builder.build();
 
-        sut.beginTreeToken(CODE, 0, DEFAULT_INPUT_LENGTH);
+        builder.beginTreeToken(CODE, 0, DEFAULT_INPUT_LENGTH);
+    }
+
+    @Test
+    public void testBuildTwice() {
+        builder.build();
+        try {
+            builder.build();
+        } catch (IllegalStateException ex) {
+            fail("Failed to build twice");
+        }
     }
 }

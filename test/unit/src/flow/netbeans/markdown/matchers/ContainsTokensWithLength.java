@@ -4,14 +4,14 @@ package flow.netbeans.markdown.matchers;
 import flow.netbeans.markdown.highlighter.MarkdownToken;
 import java.util.Arrays;
 import java.util.Iterator;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.junit.internal.matchers.TypeSafeMatcher;
 
 /**
  *
  * @author Holger
  */
-class ContainsTokensWithLength extends BaseMatcher<Iterable<MarkdownToken>> {
+class ContainsTokensWithLength extends TypeSafeMatcher<Iterable<MarkdownToken>> {
     private final int[] lengths;
 
     public ContainsTokensWithLength(int... lengths) {
@@ -19,9 +19,8 @@ class ContainsTokensWithLength extends BaseMatcher<Iterable<MarkdownToken>> {
     }
 
     @Override
-    public boolean matches(Object item) {
-        Iterable<MarkdownToken> tokens = (Iterable<MarkdownToken>) item;
-        Iterator<MarkdownToken> iterator = tokens.iterator();
+    public boolean matchesSafely(Iterable<MarkdownToken> item) {
+        Iterator<MarkdownToken> iterator = item.iterator();
         boolean result = true;
         int index;
         for (index = 0; index < lengths.length && iterator.hasNext() && result; ++index) {

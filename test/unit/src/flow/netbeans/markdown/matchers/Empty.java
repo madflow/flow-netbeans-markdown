@@ -1,26 +1,20 @@
-
 package flow.netbeans.markdown.matchers;
 
 import java.util.Collection;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.junit.internal.matchers.TypeSafeMatcher;
 
 /**
  *
  * @author Holger
  */
-class Empty extends BaseMatcher<Collection<?>> {
-
+class Empty extends TypeSafeMatcher<Collection<?>> {
     public Empty() {
     }
 
     @Override
-    public boolean matches(Object item) {
-        if (item instanceof Collection<?>) {
-            final Collection<?> collection = (Collection<?>) item;
-            return collection.isEmpty();
-        }
-        return false;
+    public boolean matchesSafely(Collection<?> item) {
+        return item.isEmpty();
     }
 
     @Override
