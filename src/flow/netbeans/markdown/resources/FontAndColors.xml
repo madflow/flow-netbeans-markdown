@@ -32,7 +32,6 @@
         <font style="bold"/>
     </fontcolor>
     <fontcolor name='table' default='string' />
-    <fontcolor name='text' />
     <fontcolor name='verbatim' default='comment' />
     <fontcolor name='wikilink' default='link' />
     <fontcolor name='definition' default='keyword' />
