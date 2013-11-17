@@ -26,7 +26,7 @@ public class MarkdownTokenListBuilder {
         stack = new ArrayDeque<MarkdownLexerVisitor.MarkdownTreeToken>();
         tokens = new ArrayList<MarkdownToken>();
         // Push guard tree token.
-        stack.push(new MarkdownLexerVisitor.MarkdownTreeToken(MarkdownTokenId.WHITESPACE, stack.size(), 0,
+        stack.push(new MarkdownLexerVisitor.MarkdownTreeToken(MarkdownTokenId.PLAIN, stack.size(), 0,
                 totalLength));
     }
 
