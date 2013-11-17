@@ -7,8 +7,9 @@ import java.util.Deque;
 import java.util.List;
 
 /**
- *
- * @author Holger
+ * The {@link MarkdownTokenListBuilder} is used to build a list of tokens during a depth-first left-to-right traversal
+ * of a PegDown AST. This functionality was extracted from the {@link MarkdownLexerVisitor} to simplify unit testing.
+ * @author Holger Stenger
  */
 public class MarkdownTokenListBuilder {
     private final Deque<MarkdownLexerVisitor.MarkdownTreeToken> stack;
