@@ -1,37 +1,37 @@
 package flow.netbeans.markdown.highlighter;
 
 import flow.netbeans.markdown.options.MarkdownGlobalOptions;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.netbeans.api.lexer.Token;
 import org.netbeans.spi.lexer.Lexer;
 import org.netbeans.spi.lexer.LexerInput;
 import org.netbeans.spi.lexer.LexerRestartInfo;
+import org.pegdown.ParsingTimeoutException;
 import org.pegdown.PegDownProcessor;
 import org.pegdown.ast.RootNode;
 
 
 class MarkdownLexer implements Lexer<MarkdownTokenId> {
+    private static final Logger LOG = Logger.getLogger(MarkdownLexer.class.getName());
 
     static Lexer<MarkdownTokenId> create(LexerRestartInfo<MarkdownTokenId> info) {
         return new MarkdownLexer(info);
     }
     
-    private MarkdownVisitor markdownVisitor = new MarkdownVisitor();
-    private LexerRestartInfo<MarkdownTokenId> info;
-    private final LexerInput input;
+    private final LexerRestartInfo<MarkdownTokenId> info;
     boolean inited = false;
     private Iterator<MarkdownToken> tokenIterator = null;
-    private MarkdownTokenMap tokenMap;
-    RootNode rootNode;
 
     MarkdownLexer(LexerRestartInfo<MarkdownTokenId> info) {
         this.info = info;
-        this.input = info.input();
     }
 
     @Override
     public Token<MarkdownTokenId> nextToken() {
-        
         // Tokenize the input on the first nextToken() call
         if (!inited) {
             synchronized (this) {
@@ -43,25 +43,23 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
             }
         }
 
+        final int readLength = info.input().readLength();
+
         // Nothing here
-        if(input.readLength() <= 0) {
+        if(readLength <= 0) {
             return null;
         }
         
-        // There is something - but not tokenozed
-        if(rootNode.getChildren().isEmpty()) {
-            return info.tokenFactory().createToken(MarkdownTokenId.PLAIN);
-        }
-        
-        // Iterate over the Token Map and spit out netbeans tokens
-        while(tokenIterator.hasNext()) {
+        // Retrieve the next token from the iterator.
+        if(tokenIterator.hasNext()) {
             MarkdownToken token = tokenIterator.next();
             return info.tokenFactory().createToken(token.getId(), token.getLength());
         }
 
         //  Legacy safety net. @todo remove this
-        if(input.readLength() > 0) {
-            return info.tokenFactory().createToken(MarkdownTokenId.PLAIN, input.readLength());
+        if(readLength > 0) {
+            LOG.log(Level.WARNING, "Caught by legacy safety net");
+            return info.tokenFactory().createToken(MarkdownTokenId.PLAIN, readLength);
         }
         
         return null;
@@ -74,40 +72,39 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
     {
         MarkdownGlobalOptions markdownOptions = MarkdownGlobalOptions.getInstance();
         PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
-        LexerInput lexerInput = info.input();
-        StringBuilder data = new StringBuilder();
-        
+
         // Read the complete input and feed the PegDown Parser
         // Selected extensions over plain markdown are taken in account
-        int i;
-        while ((i = lexerInput.read()) != LexerInput.EOF) {
-            data.append((char) i);
+        char[] markdownSource = readAll(info.input());
+
+        int inputLength = markdownSource.length;
+
+        List<MarkdownToken> tokens;
+        try {
+            RootNode rootNode = markdownProcessor.parseMarkdown(markdownSource);
+
+            MarkdownTokenListBuilder builder = new MarkdownTokenListBuilder(inputLength);
+            MarkdownLexerVisitor visitor = new MarkdownLexerVisitor(builder);
+            rootNode.accept(visitor);
+            tokens = builder.build();
         }
-        int inputLength = data.length();
-        rootNode = markdownProcessor.parser.parse(data.toString().toCharArray());
-        rootNode.accept(markdownVisitor);
-        MarkdownTokenMap tempMap = markdownVisitor.getTokenMap();
-        
-        // The MarkdownVisitor does leave "gaps" in the tokenized input - so we fill theses 
-        // gaps with MarkdownTokenId.PLAIN tokens
-        tokenMap = new MarkdownTokenMap();
-        int j = 0;
-        while (j <= inputLength) {
-            if(tempMap.containsKey(j)) {
-                MarkdownToken currentToken = tempMap.get(j);
-                tokenMap.put(j, currentToken);
-                j += currentToken.getLength();
-                continue;
-            } else {
-               tokenMap.put(j, new MarkdownToken(MarkdownTokenId.PLAIN, 1));
-            }
-            j += 1;
+        catch (ParsingTimeoutException ex) {
+            LOG.log(Level.WARNING, "Time out while parsing Markdown source, falling back to no highlighting");
+            tokens = Collections.singletonList(new MarkdownToken(MarkdownTokenId.PLAIN, 0, inputLength));
         }
-        
-        // Shorthand iterator
-        tokenIterator = tokenMap.values().iterator();
+
+        tokenIterator = tokens.iterator();
     }
     
+    private char[] readAll(LexerInput lexerInput) {
+        StringBuilder sb = new StringBuilder();
+        int i;
+        while ((i = lexerInput.read()) != LexerInput.EOF) {
+            sb.append((char) i);
+        }
+        char[] markdownSource = sb.toString().toCharArray();
+        return markdownSource;
+    }
     
     @Override
     public Object state() {

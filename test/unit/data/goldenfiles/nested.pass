@@ -1,0 +1,5 @@
+token #0 PLAIN [a ]
+token #1 EMPH [*b ]
+token #2 STRONG [__c__]
+token #3 EMPH [ d*]
+token #4 PLAIN [ e\n]

@@ -34,7 +34,6 @@ public enum MarkdownTokenId implements TokenId {
     PLAIN("plain"),
     STRONG("strong"),
     TABLE("table"),
-    TEXT("text"),
     VERBATIM("verbatim"),
     WIKILINK("wikilink"),
     DEFINITION("definition"),
