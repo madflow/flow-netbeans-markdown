@@ -1,6 +1,6 @@
 A NetBeans IDE plugin which adds Markdown support. This plugin provides basic syntax highlighting, HTML preview and HTML export when editing a Markdown document.
 
-The plugin is still under development and not considered stable enough to be releases through the NetBeans plugin channel. Unit tests must be added ~~and the lexer implementation has to be revamped~~.
+The plugin is still under development and not considered stable enough to be releases through the NetBeans plugin channel. Unit tests must be added and the lexer implementation has to be revamped.
 
 # What is Markdown?
 
@@ -40,7 +40,7 @@ For the time being the packaged plugin archives can be downloaded from Github:
 
 [Releases Overview](https://github.com/madflow/flow-netbeans-markdown/releases)
 
-You may also compile a binary yourself.
+You may also compile a binary yourself with the **latest development code**.
 
  1. git clone git://github.com/madflow/flow-netbeans-markdown.git
  2. Open the folder with NetBeans (Open Project)
