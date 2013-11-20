@@ -56,7 +56,7 @@ public class MarkdownTokenListBuilderTest {
         assertThat(totalLengthOf(tokens), equalTo(DEFAULT_INPUT_LENGTH));
 
         assertThat(tokens.size(), equalTo(3));
-        assertThat(tokens, containsTokensWithId(WHITESPACE, CODE, WHITESPACE));
+        assertThat(tokens, containsTokensWithId(PLAIN, CODE, PLAIN));
         assertThat(tokens, containsTokensWithLength(1, DEFAULT_INPUT_LENGTH - 2, 1));
     }
 
@@ -72,7 +72,7 @@ public class MarkdownTokenListBuilderTest {
         assertThat(totalLengthOf(tokens), equalTo(DEFAULT_INPUT_LENGTH));
 
         assertThat(tokens.size(), equalTo(3));
-        assertThat(tokens, containsTokensWithId(WHITESPACE, EMPH, WHITESPACE));
+        assertThat(tokens, containsTokensWithId(PLAIN, EMPH, PLAIN));
         assertThat(tokens, containsTokensWithLength(1, DEFAULT_INPUT_LENGTH - 2, 1));
     }
 

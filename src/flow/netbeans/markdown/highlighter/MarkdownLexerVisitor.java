@@ -54,7 +54,7 @@ public class MarkdownLexerVisitor implements Visitor {
         builder.addLeafTreeToken(id, node.getStartIndex(), node.getEndIndex());
     }
 
-    private void beginTreeToken(MarkdownTokenId id, Node node) {
+    private void beginTreeToken(MarkdownTokenId id, SuperNode node) {
         builder.beginTreeToken(id, node.getStartIndex(), node.getEndIndex());
     }
 
@@ -188,7 +188,7 @@ public class MarkdownLexerVisitor implements Visitor {
 
     @Override
     public void visit(ListItemNode node) {
-        addLeafTreeToken(MarkdownTokenId.LISTITEM, node);
+        beginTreeToken(MarkdownTokenId.LISTITEM, node);
         visitChildren(node);
         endTreeToken();
     }
