@@ -45,7 +45,7 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
             PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
 
             FileObject f = context.getPrimaryFile();
-            String fileName = context.getPrimaryFile().getName();
+            String fileName = f.getName();
             String saveTo = markdownOptions.isSaveInSourceDir() ? f.getParent().getPath() : "user.home";
 
             String markdownSource = f.asText();
