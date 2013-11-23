@@ -6,6 +6,7 @@ package flow.netbeans.markdown;
 import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -44,16 +45,19 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
             PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
 
             FileObject f = context.getPrimaryFile();
+            String fileName = context.getPrimaryFile().getName();
+            String saveTo = markdownOptions.isSaveInSourceDir() ? f.getParent().getPath() : "user.home";
+
             String markdownSource = f.asText();
             String html = markdownProcessor.markdownToHtml(markdownSource);
             String full = markdownOptions.getHtmlTemplate()
                     .replace("{%CONTENT%}", html.toString())
-                    .replace("{%TITLE%}", context.getPrimaryFile().getName());
+                    .replace("{%TITLE%}", fileName);
 
-            JFileChooser fileChooser = new JFileChooser("user.home");
+            JFileChooser fileChooser = new JFileChooser(saveTo);
+            fileChooser.setSelectedFile(new File(fileName + ".html"));
             int option = fileChooser.showSaveDialog(fileChooser);
             int result = 0;
-            String fileName;
 
             if (option == JFileChooser.APPROVE_OPTION) {
                 fileName = fileChooser.getSelectedFile().toString();
@@ -70,7 +74,7 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
                     case JOptionPane.CANCEL_OPTION:
                         return;
                 }
-                
+
                 PrintStream out = new PrintStream(new FileOutputStream(fileName));
                 out.print(full);
                 out.close();
