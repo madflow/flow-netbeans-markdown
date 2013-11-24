@@ -23,6 +23,7 @@ public final class MarkdownGlobalOptions {
     private static final String INLINE_HTML_SUPPRESSION = "INLINE_HTML_SUPPRESSION"; // NOI18N
     private static final String HTML_TEMPLATE = "HTML_TEMPLATE"; // NOI18N
     private static final String VIEW_HTML_ON_SAVE = "VIEW_HTML_ON_SAVE"; // NOI18N
+	private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
 
     public static MarkdownGlobalOptions getInstance() {
         return INSTANCE;
@@ -219,6 +220,14 @@ public final class MarkdownGlobalOptions {
 
     public void setViewHtmlOnSave(boolean onSave) {
         getPreferences().putBoolean(VIEW_HTML_ON_SAVE, onSave);
+    }
+
+    public boolean isSaveInSourceDir() {
+        return getPreferences().getBoolean(SAVE_IN_SOURCE_DIR, false);
+    }
+
+    public void setSaveInSourceDir(boolean saveIn) {
+        getPreferences().putBoolean(SAVE_IN_SOURCE_DIR, saveIn);
     }
 
     private Preferences getPreferences() {

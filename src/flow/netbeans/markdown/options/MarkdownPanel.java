@@ -71,6 +71,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         HTML_TEMPLATE = new javax.swing.JEditorPane();
         MISC_PANEL = new javax.swing.JPanel();
         VIEW_HTML_ON_SAVE = new javax.swing.JCheckBox();
+        SAVE_IN_SOURCE_DIR = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(EXTENSIONS_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL_HEADER.text")); // NOI18N
 
@@ -192,21 +193,27 @@ public final class MarkdownPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(VIEW_HTML_ON_SAVE, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.VIEW_HTML_ON_SAVE.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(SAVE_IN_SOURCE_DIR, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.SAVE_IN_SOURCE_DIR.text")); // NOI18N
+
         javax.swing.GroupLayout MISC_PANELLayout = new javax.swing.GroupLayout(MISC_PANEL);
         MISC_PANEL.setLayout(MISC_PANELLayout);
         MISC_PANELLayout.setHorizontalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         MISC_PANELLayout.setVerticalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(VIEW_HTML_ON_SAVE)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SAVE_IN_SOURCE_DIR)
+                .addContainerGap(279, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -317,6 +324,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         options.setWikiLinks(WIKILINKS.isSelected());
         options.setHtmlTemplate(HTML_TEMPLATE.getText());
         options.setViewHtmlOnSave(VIEW_HTML_ON_SAVE.isSelected());
+        options.setSaveInSourceDir(SAVE_IN_SOURCE_DIR.isSelected());
     }
     
     public static String getDefaultHtmlTemplate()
@@ -353,6 +361,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox INLINE_HTML_SUPPRESSION;
     private javax.swing.JPanel MISC_PANEL;
     private javax.swing.JCheckBox QUOTES;
+    private javax.swing.JCheckBox SAVE_IN_SOURCE_DIR;
     private javax.swing.JCheckBox SMARTS;
     private javax.swing.JCheckBox TABLES;
     private javax.swing.JTabbedPane TABS;
