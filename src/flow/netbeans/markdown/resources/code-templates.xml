@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!DOCTYPE codetemplates PUBLIC "-//NetBeans//DTD Editor Code Templates settings 1.0//EN" "http://www.netbeans.org/dtds/EditorCodeTemplates-1_0.dtd">
+<codetemplates>
+    <codetemplate contexts="md-code" abbreviation="1">
+        <code><![CDATA[# ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="2">
+        <code><![CDATA[## ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="3">
+        <code><![CDATA[### ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="4">
+        <code><![CDATA[#### ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="5">
+        <code><![CDATA[##### ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="6">
+        <code><![CDATA[###### ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="s">
+        <code><![CDATA[**${text}** ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="sselection">
+        <code><![CDATA[**${selection}**${cursor}]]></code>
+        <description>Markdown **|**</description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="i">
+        <code><![CDATA[*${text}* ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="iselection">
+        <code><![CDATA[*${selection}*${cursor}]]></code>
+        <description>Markdown *|*</description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="hr">
+        <code><![CDATA[---]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="link">
+        <code><![CDATA[[${name}](${http://}) ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="linkt">
+        <code><![CDATA[[${name}](${http://} "${title}" ${cursor})]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="linkid">
+        <code><![CDATA[[${id}]: ${http://} ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="linkidt">
+        <code><![CDATA[[${id}]: ${http://} "${title}" ${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="img">
+        <code><![CDATA[![${alt}](${path})]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="imgt">
+        <code><![CDATA[![${alt}](${path} "${title}")]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="c">
+        <code><![CDATA[`${code}`${cursor}]]></code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="cselection">
+        <code><![CDATA[`${selection}`${cursor}]]></code>
+        <description>Markdown `|`</description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="tbl">
+        <code><![CDATA[
+|${name1}|${name2}|${name3}|
+|-----|-----|-----|
+|${valu1}|${valu2}|${valu3}|]]>
+        </code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="tbll">
+        <code><![CDATA[
+|${name1}|${name2}|${name3}|
+|:----|:----|:----|
+|${valu1}|${valu2}|${valu3}|]]>
+        </code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="tblc">
+        <code><![CDATA[
+|${name1}|${name2}|${name3}|
+|:---:|:---:|:---:|
+|${valu1}|${valu2}|${valu3}|]]>
+        </code>
+        <description></description>
+    </codetemplate>
+    <codetemplate contexts="md-code" abbreviation="tblr">
+        <code><![CDATA[
+|${name1}|${name2}|${name3}|
+|----:|----:|----:|
+|${valu1}|${valu2}|${valu3}|]]>
+        </code>
+        <description></description>
+    </codetemplate>
+</codetemplates>
