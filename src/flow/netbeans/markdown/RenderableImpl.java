@@ -6,10 +6,12 @@ import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import java.io.IOException;
 import java.util.Set;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
 import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
+import org.openide.util.Exceptions;
 import org.pegdown.ParsingTimeoutException;
 import org.pegdown.PegDownProcessor;
 import org.pegdown.ast.RootNode;
@@ -48,7 +50,8 @@ public class RenderableImpl implements Renderable {
                 final PreviewSerializer htmlSerializer
                         = new PreviewSerializer(sourceFile.toURL(), resolveImageUrls, resolveLinkUrls);
                 bodyText = htmlSerializer.toHtml(rootNode);
-            } else {
+            }
+            else {
                 bodyText = markdownProcessor.markdownToHtml(sourceText);
             }
         }
@@ -62,16 +65,9 @@ public class RenderableImpl implements Renderable {
         String sourceText = null;
         if (renderOptions.contains(RenderOption.PREFER_EDITOR)) {
             EditorCookie ec = context.getLookup().lookup(EditorCookie.class);
-            StyledDocument sourceDoc = ec.getDocument();
+            final StyledDocument sourceDoc = ec.getDocument();
             if (sourceDoc != null) {
-                synchronized (sourceDoc) {
-                    try {
-                        sourceText = sourceDoc.getText(0, sourceDoc.getLength());
-                    }
-                    catch (BadLocationException ex) {
-                        throw new IOException(ex);
-                    }
-                }
+                sourceText = getDocumentText(sourceDoc);
             }
         }
         if (sourceText == null) {
@@ -81,11 +77,29 @@ public class RenderableImpl implements Renderable {
         return sourceText;
     }
 
+    private String getDocumentText(final Document sourceDoc) {
+        final String[] sourceTextRef = {null};
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sourceTextRef[0] = sourceDoc.getText(0, sourceDoc.getLength());
+                }
+                catch (BadLocationException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+        };
+        sourceDoc.render(r);
+        return sourceTextRef[0];
+    }
+
     private String getHtmlTemplate(Set<RenderOption> renderOptions, MarkdownGlobalOptions markdownOptions) {
         String htmlTemplate;
         if (renderOptions.contains(RenderOption.SWING_COMPATIBLE)) {
             htmlTemplate = SWING_TEMPLATE;
-        } else {
+        }
+        else {
             htmlTemplate = markdownOptions.getHtmlTemplate();
         }
         return htmlTemplate;
