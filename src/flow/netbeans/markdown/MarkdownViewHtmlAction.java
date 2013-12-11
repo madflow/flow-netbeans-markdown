@@ -1,6 +1,7 @@
 package flow.netbeans.markdown;
 
-import flow.netbeans.markdown.options.MarkdownGlobalOptions;
+import flow.netbeans.markdown.api.RenderOption;
+import flow.netbeans.markdown.api.Renderable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,19 +9,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
+import java.util.EnumSet;
+import java.util.Set;
 import org.netbeans.api.queries.FileEncodingQuery;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.HtmlBrowser.URLDisplayer;
-import org.openide.cookies.EditorCookie;
-import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
-import org.pegdown.PegDownProcessor;
 
 @ActionID(category = "File",
         id = "flow.netbeans.markdown.MarkdownViewHtmlAction")
@@ -35,55 +33,32 @@ public final class MarkdownViewHtmlAction implements ActionListener {
 
     private final MarkdownDataObject context;
 
-    public MarkdownViewHtmlAction(MarkdownDataObject context) throws IOException {
+    public MarkdownViewHtmlAction(MarkdownDataObject context) {
         this.context = context;
     }
 
     @Override
     public void actionPerformed(ActionEvent ev) {
         try {
-            MarkdownGlobalOptions markdownOptions = MarkdownGlobalOptions.getInstance();
-            PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
+            Renderable renderable = context.getLookup().lookup(Renderable.class);
 
-            // get document
-            EditorCookie ec = context.getLookup().lookup(EditorCookie.class);
-            StyledDocument document = ec.getDocument();
+            Set<RenderOption> renderOptions = EnumSet.of(
+                    RenderOption.PREFER_EDITOR,
+                    RenderOption.RESOLVE_IMAGE_URLS);
+            String htmlText = renderable.renderAsHtml(renderOptions);
 
-            // get file object
-            FileObject f = context.getPrimaryFile();
-            if (f == null) {
-                return;
-            }
-
-            String markdownSource;
-            if (document != null) {
-                markdownSource = document.getText(0, document.getLength());
-            } else {
-                markdownSource = f.asText();
-            }
-            String html = markdownProcessor.markdownToHtml(markdownSource);
-            String full = markdownOptions.getHtmlTemplate()
-                    .replace("{%CONTENT%}", html.toString())
-                    .replace("{%TITLE%}", context.getPrimaryFile().getName());
             File temp = File.createTempFile("preview-" + context.getPrimaryFile().getName(), ".html");
 
-            PrintStream out;
-            if (document != null) {
-                // get file encoding
-                Charset encoding = FileEncodingQuery.getEncoding(f);
-                out = new PrintStream(new FileOutputStream(temp), false, encoding.name());
-            } else {
-                out = new PrintStream(new FileOutputStream(temp));
-            }
-            out.print(full);
+            // get file encoding
+            Charset encoding = FileEncodingQuery.getEncoding(context.getPrimaryFile());
+            PrintStream out = new PrintStream(new FileOutputStream(temp), false, encoding.name());
+            out.print(htmlText);
             out.close();
 
             URLDisplayer.getDefault().showURL(temp.toURI().toURL());
 
             temp.deleteOnExit();
         } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (BadLocationException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

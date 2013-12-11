@@ -13,14 +13,26 @@ import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
+import org.openide.util.lookup.AbstractLookup;
+import org.openide.util.lookup.InstanceContent;
+import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 
 public class MarkdownDataObject extends MultiDataObject {
     private static final long serialVersionUID = 1L;
 
+    private final Lookup lookup;
+
+    private final InstanceContent lookupContent;
+
     public MarkdownDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
         super(pf, loader);
         registerEditor(MarkdownLanguageConfig.MIME_TYPE, true);
+
+        lookupContent = new InstanceContent();
+        lookupContent.add(new RenderableImpl(this));
+        
+        lookup = new ProxyLookup(getCookieSet().getLookup(), new AbstractLookup(lookupContent));
     }
 
     @Override
@@ -30,7 +42,7 @@ public class MarkdownDataObject extends MultiDataObject {
 
     @Override
     public Lookup getLookup() {
-        return getCookieSet().getLookup();
+        return lookup;
     }
 
     @Override
