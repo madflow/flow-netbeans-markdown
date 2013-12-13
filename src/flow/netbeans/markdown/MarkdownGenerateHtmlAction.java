@@ -3,23 +3,23 @@
  */
 package flow.netbeans.markdown;
 
-import flow.netbeans.markdown.options.MarkdownGlobalOptions;
+import flow.netbeans.markdown.api.RenderOption;
+import flow.netbeans.markdown.api.Renderable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Collections;
+import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
-import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
-import org.pegdown.PegDownProcessor;
 
 @ActionID(category = "File",
         id = "flow.netbeans.markdown.GenerateHtmlAction")
@@ -41,23 +41,15 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ev) {
         try {
-            MarkdownGlobalOptions markdownOptions = MarkdownGlobalOptions.getInstance();
-            PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
+            Renderable renderable = context.getLookup().lookup(Renderable.class);
 
-            FileObject f = context.getPrimaryFile();
-            String fileName = f.getName();
-            String saveTo = markdownOptions.isSaveInSourceDir() ? f.getParent().getPath() : "user.home";
+            Set<RenderOption> renderOptions = Collections.emptySet();
+            String htmlText = renderable.renderAsHtml(renderOptions);
 
-            String markdownSource = f.asText();
-            String html = markdownProcessor.markdownToHtml(markdownSource);
-            String full = markdownOptions.getHtmlTemplate()
-                    .replace("{%CONTENT%}", html.toString())
-                    .replace("{%TITLE%}", fileName);
-
-            JFileChooser fileChooser = new JFileChooser(saveTo);
-            fileChooser.setSelectedFile(new File(fileName + ".html"));
+            JFileChooser fileChooser = new JFileChooser("user.home");
             int option = fileChooser.showSaveDialog(fileChooser);
             int result = 0;
+            String fileName;
 
             if (option == JFileChooser.APPROVE_OPTION) {
                 fileName = fileChooser.getSelectedFile().toString();
@@ -74,9 +66,9 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
                     case JOptionPane.CANCEL_OPTION:
                         return;
                 }
-
+                
                 PrintStream out = new PrintStream(new FileOutputStream(fileName));
-                out.print(full);
+                out.print(htmlText);
                 out.close();
             }
         } catch (IOException ex) {

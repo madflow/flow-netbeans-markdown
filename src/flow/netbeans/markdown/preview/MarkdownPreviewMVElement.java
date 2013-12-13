@@ -1,18 +1,24 @@
 package flow.netbeans.markdown.preview;
 
+import flow.netbeans.markdown.MarkdownDataObject;
+import flow.netbeans.markdown.MarkdownViewHtmlAction;
+import flow.netbeans.markdown.api.RenderOption;
+import flow.netbeans.markdown.api.Renderable;
 import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
-import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.EnumSet;
+import java.util.Set;
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.JToolBar;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLDocument;
 import org.netbeans.core.spi.multiview.CloseOperationState;
@@ -22,17 +28,16 @@ import org.openide.awt.UndoRedo;
 import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
-import org.openide.text.NbDocument;
 import org.openide.util.Exceptions;
+import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.RequestProcessor;
 import org.openide.windows.TopComponent;
-import org.pegdown.PegDownProcessor;
 
 /**
  *
- * @author Holger
+ * @author Holger Stenger
  */
 @NbBundle.Messages("Preview=Preview")
 @MultiViewElement.Registration(
@@ -53,7 +58,7 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
 
     private final JTextPane previewTextPane;
 
-    private final JPanel toolbar;
+    private final JToolBar toolbar;
 
     private final RequestProcessor.Task updateTask;
 
@@ -69,22 +74,7 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
         this.context = context;
         this.callback = null;
         this.sourceDoc = null;
-        this.sourceDocListener = new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                updatePreview();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                updatePreview();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                updatePreview();
-            }
-        };
+        this.sourceDocListener = new DocumentHandler();
         this.updateTask = RP.create(new Runnable() {
             @Override
             public void run() {
@@ -108,7 +98,10 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
         previewScrollPane = new JScrollPane(previewTextPane);
         previewScrollPane.setBorder(BorderFactory.createEmptyBorder());
 
-        toolbar = new JPanel();
+        toolbar = new JToolBar();
+        toolbar.setFloatable(false);
+        toolbar.addSeparator();
+        toolbar.add(new PreviewExternalAction(context));
     }
 
     @Override
@@ -193,47 +186,33 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
     private void doUpdatePreview() {
         final StyledDocument localSourceDoc = getSourceDocument();
         if (localSourceDoc != null) {
-            final String sourceText = getSourceText(localSourceDoc);
-            if (sourceText != null) {
-                final String previewText = convertToHtml(sourceText);
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (sourceFile != null) {
-                            previewTextPane.setText(sourceText);
-                            HTMLDocument previewDoc = (HTMLDocument) previewTextPane.getDocument();
-                            previewDoc.setBase(sourceFile.toURL());
-                        }
-                        previewTextPane.setText(previewText);
+            final String previewText = renderPreview();
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (sourceFile != null) {
+                        HTMLDocument previewDoc = (HTMLDocument) previewTextPane.getDocument();
+                        previewDoc.setBase(sourceFile.toURL());
                     }
-                });
-            }
+                    previewTextPane.setText(previewText);
+                }
+            });
         }
     }
 
-    private String convertToHtml(final String sourceText) {
-        MarkdownGlobalOptions markdownOptions = MarkdownGlobalOptions.getInstance();
-        PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
-        String bodyText = markdownProcessor.markdownToHtml(sourceText);
-        final String previewText = "<html>\n<head>\n</head>\n<body>\n" + bodyText + "</body>\n</html>";
+    private String renderPreview() {
+        Renderable renderable = context.lookup(Renderable.class);
+        String previewText;
+        try {
+            Set<RenderOption> renderOptions = EnumSet.of(
+                    RenderOption.PREFER_EDITOR,
+                    RenderOption.RESOLVE_IMAGE_URLS,
+                    RenderOption.SWING_COMPATIBLE);
+            previewText = renderable.renderAsHtml(renderOptions);
+        } catch (IOException ex) {
+            previewText = "Preview rendering failed: " + ex.getMessage();
+        }
         return previewText;
-    }
-
-    private String getSourceText(final StyledDocument localSourceDoc) {
-        final String[] sourceTexts = new String[] {null};
-        NbDocument.runAtomic(localSourceDoc, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final String sourceText = localSourceDoc.getText(0, localSourceDoc.getLength());
-                    sourceTexts[0] = sourceText;
-                }
-                catch (BadLocationException ex) {
-                    Exceptions.printStackTrace(ex);
-                }
-            }
-        });
-        return sourceTexts[0];
     }
 
     @Override
@@ -253,5 +232,44 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
     @Override
     public CloseOperationState canCloseElement() {
         return CloseOperationState.STATE_OK;
+    }
+
+    private class DocumentHandler implements DocumentListener {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            updatePreview();
+}
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            updatePreview();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            updatePreview();
+        }
+    }
+
+    @NbBundle.Messages({
+        "NAME_PreviewExternalAction=Preview in external browser"
+    })
+    private static class PreviewExternalAction extends AbstractAction {
+        private static final String ICON_PATH = "flow/netbeans/markdown/resources/action-view.png";
+
+        private final Lookup context;
+
+        public PreviewExternalAction(Lookup context) {
+            super(Bundle.NAME_PreviewExternalAction(), ImageUtilities.loadImageIcon(ICON_PATH, false));
+            putValue(Action.SHORT_DESCRIPTION, Bundle.NAME_PreviewExternalAction());
+            this.context = context;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MarkdownDataObject dataObject = context.lookup(MarkdownDataObject.class);
+            MarkdownViewHtmlAction viewAction = new MarkdownViewHtmlAction(dataObject);
+            viewAction.actionPerformed(null);
+        }
     }
 }
