@@ -94,6 +94,18 @@
                         </folder>
                     </folder>
                 </folder>
+<!--                <folder name="TokenListProvider">
+                    <file name="flow-netbeans-markdown-spellchecker-MarkdownTokenListProvider.instance"/>
+                </folder>
+                -->
+                <folder name="Hints">
+                    <file name="org-netbeans-modules-spellchecker-hints-DictionaryBasedHintsProvider.instance">
+                        <attr name="instanceCreate" methodvalue="org.netbeans.modules.spellchecker.hints.DictionaryBasedHintsProvider.create" />
+                    </file>
+                </folder>
+                <folder name="CompletionProviders">
+                    <file name="org-netbeans-modules-spellchecker-completion-WordCompletion.instance"/>
+                </folder>
             </folder>
         </folder>
     </folder>
@@ -119,5 +131,10 @@
                 <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#Services/MIMEResolver/MarkdownResolver.xml"/>
             </file>
         </folder>
+    </folder>
+    <folder name="Spellcheckers">
+        <file name="Markdown">
+            <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#text/x-markdown"/>
+        </file>
     </folder>
 </filesystem>
