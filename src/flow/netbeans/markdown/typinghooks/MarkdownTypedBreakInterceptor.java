@@ -16,6 +16,14 @@ import org.openide.text.NbDocument;
  */
 public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
 
+    private static final String INSERT_REGEX = "^((?<indent>\t+|\\s{4,})*((?<hl>[-*] |[#]+ |(?<number>\\d+)\\. ).+|.*))$"; // NOI18N
+    private static final String AFTER_INSERT_REGEX = "^(?<indent>\t+|\\s{4,})*(?<hl>[-*] |[#]+ |(?<number>\\d+)\\. )$"; // NOI18N
+    private static final String HEADER_LIST_GROUP = "hl"; // NOI18N
+    private static final String NUMBER_GROUP = "number"; // NOI18N
+    private static final String INDENT_GROUP = "indent"; // NOI18N
+    private static final Pattern INSERT_PATTERN = Pattern.compile(INSERT_REGEX);
+    private static final Pattern AFTER_INSERT_PATTERN = Pattern.compile(AFTER_INSERT_REGEX);
+
     @Override
     public boolean beforeInsert(Context context) throws BadLocationException {
         return false;
@@ -29,20 +37,21 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
         int lineOffset = NbDocument.findLineOffset(document, lineNumber);
         String lineText = document.getText(lineOffset, caretOffset - lineOffset);
 
-        if (lineText.matches("^\\s{4,}$")) { // NOI18N
-            return;
-        }
-
         StringBuilder sb = new StringBuilder("\n"); // NOI18N
-        Pattern pattern = Pattern.compile("^([-*] |[#]+ |(\\d+)\\. |\t+|\\s{4,}).+$"); // NOI18N
-        Matcher matcher = pattern.matcher(lineText);
+        Matcher matcher = INSERT_PATTERN.matcher(lineText);
         if (matcher.find()) {
-            String numberText = matcher.group(2);
+            String numberText = matcher.group(NUMBER_GROUP);
+            String hlText = matcher.group(HEADER_LIST_GROUP);
+            String indentText = matcher.group(INDENT_GROUP);
+            if (indentText != null) {
+                sb.append(indentText);
+            }
+
             if (numberText != null) {
                 int number = Integer.parseInt(numberText);
                 sb.append(++number).append(". "); // NOI18N
-            } else {
-                sb.append(matcher.group(1));
+            } else if (hlText != null) {
+                sb.append(hlText);
             }
         }
         context.setText(sb.toString(), 0, sb.length());
@@ -55,8 +64,16 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
         int lineNumber = NbDocument.findLineNumber(document, caretOffset);
         int lineOffset = NbDocument.findLineOffset(document, lineNumber);
         String lineText = document.getText(lineOffset, caretOffset - lineOffset);
-        if (lineText.matches("^([-*] |[#]+ |\\d+\\. |\t+|\\s{4,})$")) { // NOI18N
-            document.remove(lineOffset, lineText.length());
+
+        // remove empty list and header
+        // e.g. If user presses enter key when caret position is after "- " (i.e. "- [here]"), "- " is removed.
+        Matcher matcher = AFTER_INSERT_PATTERN.matcher(lineText);
+        if (matcher.find()) {
+            String hlText = matcher.group(HEADER_LIST_GROUP);
+            if (hlText != null) {
+                int length = hlText.length();
+                document.remove(caretOffset - length, length);
+            }
         }
     }
 
