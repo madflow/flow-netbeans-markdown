@@ -5,4 +5,27 @@
 <project name="flow.netbeans.markdown" default="netbeans" basedir=".">
     <description>Builds, tests, and runs the project flow.netbeans.markdown.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <target name="compile-ext">
+        <mkdir dir="build/classes-ext"/>
+        <nb-javac srcdir="src-ext" destdir="build/classes-ext" debug="${build.compiler.debug}" debuglevel="${build.compiler.debuglevel}" encoding="UTF-8"
+                  deprecation="${build.compiler.deprecation}" optimize="${build.compiler.optimize}" source="${javac.source}" target="${javac.target}" includeantruntime="false">
+            <classpath>
+                <path path="${module.classpath}"/>
+                <path location="${cluster}/${module.jar}"/>
+                <path path="${src-ext.cp.extra}"/>
+            </classpath>
+            <compilerarg line="${javac.compilerargs}"/>
+            <processorpath refid="processor.cp"/>
+        </nb-javac>
+    </target>
+    
+    <target name="jar-ext" depends="compile-ext">
+        <mkdir dir="${cluster}/modules/ext"/>
+        <jar jarfile="${cluster}/modules/ext/flow-netbeans-markdown-ext.jar">
+            <fileset dir="build/classes-ext"/>
+        </jar>
+    </target>
+        
+    <target name="netbeans-extra" depends="release,jar-ext"/>
 </project>

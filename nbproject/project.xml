@@ -7,6 +7,15 @@
             <standalone/>
             <module-dependencies>
                 <dependency>
+                    <code-name-base>org.netbeans.api.annotations.common</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <release-version>1</release-version>
+                        <specification-version>1.21.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.netbeans.core.multiview</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -155,6 +164,14 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>org.openide.modules</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>7.39.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.openide.nodes</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -233,6 +250,12 @@
                 <runtime-relative-path>ext/asm-util-4.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/asm-util-4.1.jar</binary-origin>
             </class-path-extension>
+            <extra-compilation-unit>
+                <package-root>src-ext</package-root>
+                <classpath>${module.classpath}:${cluster}/${module.jar}:${src-ext.cp.extra}</classpath>
+                <built-to>build/classes-ext</built-to>
+                <built-to>${cluster}/modules/flow-netbeans-markdown-ext.jar</built-to>
+            </extra-compilation-unit>
         </data>
     </configuration>
 </project>
