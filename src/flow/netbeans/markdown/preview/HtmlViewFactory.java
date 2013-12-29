@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.modules.InstalledFileLocator;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -123,13 +124,17 @@ public class HtmlViewFactory {
         }
 
         private URLClassLoader createClassLoader(List<File> fxPath, File extPath) throws UnsupportedOperationException {
-            try {
+            ClassLoader cl = Lookup.getDefault().lookup(ClassLoader.class);
+            if (cl == null) {
+                cl = HtmlViewFactory.class.getClassLoader();
+            }
+        try {
                 List<URL> urls = new ArrayList<URL>();
                 urls.add(extPath.toURI().toURL());
                 for (File file : fxPath) {
                     urls.add(file.toURI().toURL());
                 }
-                return new URLClassLoader(urls.toArray(new URL[urls.size()]), HtmlViewFactory.class.getClassLoader());
+                return new URLClassLoader(urls.toArray(new URL[urls.size()]), cl);
             } catch (MalformedURLException ex) {
                 throw new UnsupportedOperationException(ex);
             }

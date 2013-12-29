@@ -75,6 +75,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         VIEW_HTML_ON_SAVE = new javax.swing.JCheckBox();
         SAVE_IN_SOURCE_DIR = new javax.swing.JCheckBox();
         FX_HTML_VIEW_ENABLED = new javax.swing.JCheckBox();
+        FX_HTML_VIEW_WARNING_TEXT = new javax.swing.JTextPane();
 
         org.openide.awt.Mnemonics.setLocalizedText(EXTENSIONS_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL_HEADER.text")); // NOI18N
 
@@ -200,6 +201,12 @@ public final class MarkdownPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(FX_HTML_VIEW_ENABLED, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.FX_HTML_VIEW_ENABLED.text")); // NOI18N
 
+        FX_HTML_VIEW_WARNING_TEXT.setEditable(false);
+        FX_HTML_VIEW_WARNING_TEXT.setBorder(null);
+        FX_HTML_VIEW_WARNING_TEXT.setFont(FX_HTML_VIEW_WARNING_TEXT.getFont().deriveFont((FX_HTML_VIEW_WARNING_TEXT.getFont().getStyle() | java.awt.Font.ITALIC)));
+        FX_HTML_VIEW_WARNING_TEXT.setText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.FX_HTML_VIEW_WARNING_TEXT.text")); // NOI18N
+        FX_HTML_VIEW_WARNING_TEXT.setOpaque(false);
+
         javax.swing.GroupLayout MISC_PANELLayout = new javax.swing.GroupLayout(MISC_PANEL);
         MISC_PANEL.setLayout(MISC_PANELLayout);
         MISC_PANELLayout.setHorizontalGroup(
@@ -212,7 +219,10 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                             .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(FX_HTML_VIEW_ENABLED, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+                    .addComponent(FX_HTML_VIEW_ENABLED, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MISC_PANELLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(FX_HTML_VIEW_WARNING_TEXT, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         MISC_PANELLayout.setVerticalGroup(
@@ -224,7 +234,9 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(SAVE_IN_SOURCE_DIR)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FX_HTML_VIEW_ENABLED)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FX_HTML_VIEW_WARNING_TEXT, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -368,6 +380,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JLabel EXTENSIONS_PANEL_HEADER;
     private javax.swing.JCheckBox FENCED_CODE_BLOCKS;
     private javax.swing.JCheckBox FX_HTML_VIEW_ENABLED;
+    private javax.swing.JTextPane FX_HTML_VIEW_WARNING_TEXT;
     private javax.swing.JCheckBox HARDWRAPS;
     private javax.swing.JCheckBox HTML_BLOCK_SUPPRESSION;
     private javax.swing.JPanel HTML_EXPORT_PANEL;

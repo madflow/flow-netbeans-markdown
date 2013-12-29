@@ -232,7 +232,7 @@ public final class MarkdownGlobalOptions {
     }
 
     public boolean isFXHtmlViewEnabled() {
-        return getPreferences().getBoolean(FX_HTML_VIEW_ENABLED, true);
+        return getPreferences().getBoolean(FX_HTML_VIEW_ENABLED, false);
     }
 
     public void setFXHtmlViewEnabled(boolean fxHtmlViewEnabled) {
