@@ -250,12 +250,6 @@
                 <runtime-relative-path>ext/asm-util-4.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/asm-util-4.1.jar</binary-origin>
             </class-path-extension>
-            <extra-compilation-unit>
-                <package-root>src-ext</package-root>
-                <classpath>${module.classpath}:${cluster}/${module.jar}:${src-ext.cp.extra}</classpath>
-                <built-to>build/classes-ext</built-to>
-                <built-to>${cluster}/modules/flow-netbeans-markdown-ext.jar</built-to>
-            </extra-compilation-unit>
         </data>
     </configuration>
 </project>
