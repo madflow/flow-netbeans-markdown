@@ -6,6 +6,25 @@ A NetBeans IDE plugin which adds Markdown support. This plugin provides basic sy
 
 Source: <http://daringfireball.net/projects/markdown/>
 
+# Installation
+
+For the time being the packaged plugin archives can be downloaded from Github:
+
+[Releases Overview](https://github.com/madflow/flow-netbeans-markdown/releases)
+
+You may also compile a binary yourself with the **latest development code**.
+
+ 1. git clone git://github.com/madflow/flow-netbeans-markdown.git
+ 2. Open the folder with NetBeans (Open Project)
+ 3. (Configure Target Platform if needed)
+ 4. Choose "Create NBM" from the project menu
+ 5. Install the plugin with: Tools -> Plugins -> Downloaded
+ 
+# Requirements
+
+- NetBeans >= 7.0
+- "NetBeans Plugin Development" plugin must be installed if you want to compile your own binary package.
+
 # Plugin features
 
 - Adds Markdown to your "New File" wizard
@@ -26,25 +45,6 @@ Source: <http://daringfireball.net/projects/markdown/>
 ![Editor - Preview view](editor-preview.png "The Preview view of the Markdown editor")
 
 ![Navigator](navigator.png "The Navigator window showing the structure of a Markdown document")
-
-# Requirements
-
-- NetBeans >= 7.0
-- "NetBeans Plugin Development" plugin must be installed if you want to compile your own binary package.
-
-# Installation
-
-For the time being the packaged plugin archives can be downloaded from Github:
-
-[Releases Overview](https://github.com/madflow/flow-netbeans-markdown/releases)
-
-You may also compile a binary yourself with the **latest development code**.
-
- 1. git clone git://github.com/madflow/flow-netbeans-markdown.git
- 2. Open the folder with NetBeans (Open Project)
- 3. (Configure Target Platform if needed)
- 4. Choose "Create NBM" from the project menu
- 5. Install the plugin with: Tools -> Plugins -> Downloaded
 
 # Authors
 
