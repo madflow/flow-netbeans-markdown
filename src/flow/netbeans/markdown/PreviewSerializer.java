@@ -3,14 +3,8 @@ package flow.netbeans.markdown;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
-import org.pegdown.ast.AutoLinkNode;
-import org.pegdown.ast.ExpLinkNode;
-import org.pegdown.ast.MailLinkNode;
-import org.pegdown.ast.RefLinkNode;
 import org.pegdown.ast.SuperNode;
-import org.pegdown.ast.WikiLinkNode;
 
 /**
  *

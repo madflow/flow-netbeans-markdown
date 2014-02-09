@@ -74,7 +74,8 @@ public class MarkdownTokenList implements TokenList {
      * Finds the index of the first letter character at or after the given index.
      * @param content The character sequence to search.
      * @param fromIndex The index to begin searching.
-     * @return The index of a letter character of the length of the character sequence if no letter character was found.
+     * @return The index of a letter character of the length of the character sequence 
+     * if no letter character was found.
      */
     private int findNextWordStart(CharSequence content, int fromIndex) {
         return findNextWordBoundary(content, fromIndex, false);
@@ -84,8 +85,8 @@ public class MarkdownTokenList implements TokenList {
      * Finds the index of the first non-letter character at or after the given index.
      * @param content The character sequence to search.
      * @param fromIndex The index to begin searching.
-     * @return The index of a non-letter character of the length of the character sequence if no non-letter character
-     * was found.
+     * @return The index of a non-letter character of the length of the character 
+     * sequence if no non-letter character was found.
      */
     private int findCurrentWordEnd(CharSequence content, int fromIndex) {
         return findNextWordBoundary(content, fromIndex, true);
@@ -95,9 +96,10 @@ public class MarkdownTokenList implements TokenList {
      * Finds the index of the first letter of the word which contains the given index.
      * @param content The character sequence to search.
      * @param fromIndex The index to begin searching.
-     * @return The index of the first letter character which is preceded by a non-letter character or the start of the
-     * character sequence if the given index points to a letter character. The given index if it points to a non-letter
-     * character or is outside the range of valid indices.
+     * @return The index of the first letter character which is preceded by a non-letter 
+     * character or the start of the character sequence if the given index points 
+     * to a letter character. The given index if it points to a non-letter character 
+     * or is outside the range of valid indices.
      */
     private int findCurrentWordStart(CharSequence content, int fromIndex) {
         int index = fromIndex;

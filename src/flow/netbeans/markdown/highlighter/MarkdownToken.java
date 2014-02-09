@@ -6,11 +6,6 @@ public class MarkdownToken {
     private final int startIndex;
     private final int endIndex;
     
-    @Deprecated
-    public MarkdownToken(MarkdownTokenId id, int length) {
-        this(id, 0, length);
-    }
-
     public MarkdownToken(MarkdownTokenId id, int startIndex, int endIndex) {
         this.id = id;
         this.startIndex = startIndex;

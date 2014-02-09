@@ -11,42 +11,40 @@ import org.netbeans.spi.lexer.LexerRestartInfo;
 
 public enum MarkdownTokenId implements TokenId {
 
-    ABBREVIATION("abbreviation"),
-    AUTOLINK("autolink"),
-    BLOCKQUOTE("blockquote"),
-    BULLETLIST("bulletlist"),
-    CODE("code"),
-    EMPH("emph"),
-    EXPIMAGE("expimage"),
-    EXPLINK("explink"),
-    HEADER1("header1"),
-    HEADER2("header2"),
-    HEADER3("header3"),
-    HEADER4("header4"),
-    HEADER5("header5"),
-    HEADER6("header6"),
-    HORIZONTALRULE("horizontalrule"),
-    HTMLBLOCK("htmlblock"),
-    INLINEHTML("inlinehtml"),
-    LISTITEM("listitem"),
-    MAILLINK("maillink"),
-    ORDEREDLIST("orderedlist"),
-    PLAIN("plain"),
-    STRONG("strong"),
-    TABLE("table"),
-    VERBATIM("verbatim"),
-    WIKILINK("wikilink"),
-    DEFINITION("definition"),
-    DEFINITION_LIST("definition_list"),
-    DEFINITION_TERM("definition_term"),
-    REFERENCE("reference"),
-    QUOTED("quoted"),
-    REF_IMAGE("ref_image"),
-    REF_LINK("ref_link"),
-    WHITESPACE("whitespace");
+    ABBREVIATION,
+    AUTOLINK,
+    BLOCKQUOTE,
+    BULLETLIST,
+    CODE,
+    EMPH,
+    EXPIMAGE,
+    EXPLINK,
+    HEADER1,
+    HEADER2,
+    HEADER3,
+    HEADER4,
+    HEADER5,
+    HEADER6,
+    HORIZONTALRULE,
+    HTMLBLOCK,
+    INLINEHTML,
+    LISTITEM,
+    MAILLINK,
+    ORDEREDLIST,
+    PLAIN,
+    STRONG,
+    TABLE,
+    VERBATIM,
+    WIKILINK,
+    DEFINITION,
+    DEFINITION_LIST,
+    DEFINITION_TERM,
+    REFERENCE,
+    QUOTED,
+    REF_IMAGE,
+    REF_LINK,
+    WHITESPACE;
         
-    private final String name;
-
     private static final Language<MarkdownTokenId> LANGUAGE = new LanguageHierarchy<MarkdownTokenId>() {
 
         @Override
@@ -65,13 +63,9 @@ public enum MarkdownTokenId implements TokenId {
         }
     }.language();
 
-    MarkdownTokenId(String name) {
-        this.name = name;
-    }
-
     @Override
     public String primaryCategory() {
-        return name;
+        return this.name().toLowerCase();
     }
 
     public static Language<MarkdownTokenId> language() {
