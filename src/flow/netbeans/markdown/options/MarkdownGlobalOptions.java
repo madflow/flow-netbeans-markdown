@@ -23,7 +23,8 @@ public final class MarkdownGlobalOptions {
     private static final String INLINE_HTML_SUPPRESSION = "INLINE_HTML_SUPPRESSION"; // NOI18N
     private static final String HTML_TEMPLATE = "HTML_TEMPLATE"; // NOI18N
     private static final String VIEW_HTML_ON_SAVE = "VIEW_HTML_ON_SAVE"; // NOI18N
-	private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
+    private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
+    private static final String FX_HTML_VIEW_ENABLED = "FX_HTML_VIEW_ENABLED"; // NOI18N
 
     public static MarkdownGlobalOptions getInstance() {
         return INSTANCE;
@@ -228,6 +229,14 @@ public final class MarkdownGlobalOptions {
 
     public void setSaveInSourceDir(boolean saveIn) {
         getPreferences().putBoolean(SAVE_IN_SOURCE_DIR, saveIn);
+    }
+
+    public boolean isFXHtmlViewEnabled() {
+        return getPreferences().getBoolean(FX_HTML_VIEW_ENABLED, true);
+    }
+
+    public void setFXHtmlViewEnabled(boolean fxHtmlViewEnabled) {
+        getPreferences().putBoolean(FX_HTML_VIEW_ENABLED, fxHtmlViewEnabled);
     }
 
     private Preferences getPreferences() {

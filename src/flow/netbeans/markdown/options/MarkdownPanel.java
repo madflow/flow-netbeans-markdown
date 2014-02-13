@@ -38,6 +38,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         SMARTS.addActionListener(actionListener);
         TABLES.addActionListener(actionListener);
         WIKILINKS.addActionListener(actionListener);
+        SAVE_IN_SOURCE_DIR.addActionListener(actionListener);
+        FX_HTML_VIEW_ENABLED.addActionListener(actionListener);
 
         DocumentListener documentListener = new DocumentHandler();
         HTML_TEMPLATE.getDocument().addDocumentListener(documentListener);
@@ -72,6 +74,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         MISC_PANEL = new javax.swing.JPanel();
         VIEW_HTML_ON_SAVE = new javax.swing.JCheckBox();
         SAVE_IN_SOURCE_DIR = new javax.swing.JCheckBox();
+        FX_HTML_VIEW_ENABLED = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(EXTENSIONS_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL_HEADER.text")); // NOI18N
 
@@ -195,16 +198,19 @@ public final class MarkdownPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(SAVE_IN_SOURCE_DIR, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.SAVE_IN_SOURCE_DIR.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(FX_HTML_VIEW_ENABLED, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.FX_HTML_VIEW_ENABLED.text")); // NOI18N
+
         javax.swing.GroupLayout MISC_PANELLayout = new javax.swing.GroupLayout(MISC_PANEL);
         MISC_PANEL.setLayout(MISC_PANELLayout);
         MISC_PANELLayout.setHorizontalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FX_HTML_VIEW_ENABLED)
+                    .addComponent(SAVE_IN_SOURCE_DIR)
+                    .addComponent(VIEW_HTML_ON_SAVE))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
         MISC_PANELLayout.setVerticalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +219,9 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(VIEW_HTML_ON_SAVE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SAVE_IN_SOURCE_DIR)
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FX_HTML_VIEW_ENABLED)
+                .addContainerGap(256, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -299,6 +307,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         WIKILINKS.setSelected(options.isWikiLinks());
         HTML_TEMPLATE.setText(options.getHtmlTemplate());
         VIEW_HTML_ON_SAVE.setSelected(options.isViewHtmlOnSave());
+        SAVE_IN_SOURCE_DIR.setSelected(options.isSaveInSourceDir());
+        FX_HTML_VIEW_ENABLED.setSelected(options.isFXHtmlViewEnabled());
     }
 
     void store() {
@@ -325,6 +335,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         options.setHtmlTemplate(HTML_TEMPLATE.getText());
         options.setViewHtmlOnSave(VIEW_HTML_ON_SAVE.isSelected());
         options.setSaveInSourceDir(SAVE_IN_SOURCE_DIR.isSelected());
+        options.setFXHtmlViewEnabled(FX_HTML_VIEW_ENABLED.isSelected());
     }
     
     public static String getDefaultHtmlTemplate()
@@ -353,6 +364,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JPanel EXTENSIONS_PANEL;
     private javax.swing.JLabel EXTENSIONS_PANEL_HEADER;
     private javax.swing.JCheckBox FENCED_CODE_BLOCKS;
+    private javax.swing.JCheckBox FX_HTML_VIEW_ENABLED;
     private javax.swing.JCheckBox HARDWRAPS;
     private javax.swing.JCheckBox HTML_BLOCK_SUPPRESSION;
     private javax.swing.JPanel HTML_EXPORT_PANEL;
