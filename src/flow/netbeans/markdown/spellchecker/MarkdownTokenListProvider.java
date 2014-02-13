@@ -11,7 +11,8 @@ import org.netbeans.modules.spellchecker.spi.language.TokenListProvider;
  *
  * @author Holger Stenger
  */
-@MimeRegistration(mimeType = MarkdownLanguageConfig.MIME_TYPE, service = TokenListProvider.class, position = 1000)
+@MimeRegistration(mimeType = MarkdownLanguageConfig.MIME_TYPE, 
+                  service = TokenListProvider.class, position = 1000)
 public class MarkdownTokenListProvider implements TokenListProvider {
 
     public MarkdownTokenListProvider() {
