@@ -1,14 +1,22 @@
 package flow.netbeans.markdown.typinghooks;
 
 import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
+import flow.netbeans.markdown.highlighter.MarkdownTokenId;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import org.netbeans.api.editor.mimelookup.MimePath;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
+import org.netbeans.api.lexer.Token;
+import org.netbeans.api.lexer.TokenHierarchy;
+import org.netbeans.api.lexer.TokenSequence;
 import org.netbeans.spi.editor.typinghooks.TypedBreakInterceptor;
 import org.openide.text.NbDocument;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -17,7 +25,7 @@ import org.openide.text.NbDocument;
 public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
 
     private static final String INSERT_REGEX = "^((?<indent>\t+|\\s{4,})*((?<hl>[-*] |[#]+ |(?<number>\\d+)\\. ).+|.*))$"; // NOI18N
-    private static final String AFTER_INSERT_REGEX = "^(?<indent>\t+|\\s{4,})*(?<hl>[-*] |[#]+ |(?<number>\\d+)\\. )$"; // NOI18N
+    private static final String AFTER_INSERT_REGEX = "^(?<indent>\t+|\\s{4,})*(?<hl>[-*] |[#]+ |(?<number>\\s\\d+)\\. )$"; // NOI18N
     private static final String HEADER_LIST_GROUP = "hl"; // NOI18N
     private static final String NUMBER_GROUP = "number"; // NOI18N
     private static final String INDENT_GROUP = "indent"; // NOI18N
@@ -59,7 +67,7 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
 
     @Override
     public void afterInsert(Context context) throws BadLocationException {
-        StyledDocument document = (StyledDocument) context.getDocument();
+        final StyledDocument document = (StyledDocument) context.getDocument();
         int caretOffset = context.getCaretOffset();
         int lineNumber = NbDocument.findLineNumber(document, caretOffset);
         int lineOffset = NbDocument.findLineOffset(document, lineNumber);
@@ -75,6 +83,63 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
                 document.remove(caretOffset - length, length);
             }
         }
+        TokenHierarchy<StyledDocument> tokenHierarchy = TokenHierarchy.get(document);
+        TokenSequence<MarkdownTokenId> ts = tokenHierarchy.tokenSequence(MarkdownTokenId.language());
+        ts.move(caretOffset);
+        final HashMap<Integer, Integer> orderedListMap = new HashMap<Integer, Integer>();
+        ts.moveNext();
+        boolean isFirst = true;
+        int number = 0;
+        while (ts.moveNext()) {
+            Token<MarkdownTokenId> token = ts.token();
+            MarkdownTokenId id = token.id();
+            if (id == MarkdownTokenId.ORDEREDLIST) {
+                int offset = ts.offset();
+                String numberText = token.text().toString();
+                if (numberText.startsWith("\n")) { // NOI18N
+                    numberText = numberText.replace("\n", ""); // NOI18N
+                    offset++;
+                }
+                int dotIndex = numberText.indexOf("."); // NOI18N
+                if (dotIndex == -1) {
+                    continue;
+                }
+                numberText = numberText.substring(0, dotIndex);
+                int currentNumber = Integer.parseInt(numberText);
+                if (isFirst) {
+                    number = currentNumber;
+                    isFirst = false;
+                    continue;
+                }
+                if (currentNumber == number) {
+                    number++;
+                    orderedListMap.put(offset, number);
+                    continue;
+                }
+                break;
+            }
+        }
+        final LinkedList<Integer> keyList = new LinkedList<Integer>(orderedListMap.keySet());
+        Collections.sort(keyList);
+        Collections.reverse(keyList);
+        NbDocument.runAtomic(document, new Runnable() {
+
+            @Override
+            public void run() {
+                for (Integer offset : keyList) {
+                    try {
+                        Integer number = orderedListMap.get(offset);
+                        Integer oldNumber = number - 1;
+                        int removeLength = oldNumber.toString().length();
+                        document.remove(offset, removeLength);
+                        document.insertString(offset, number.toString(), null);
+                    } catch (BadLocationException ex) {
+                        Exceptions.printStackTrace(ex);
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
