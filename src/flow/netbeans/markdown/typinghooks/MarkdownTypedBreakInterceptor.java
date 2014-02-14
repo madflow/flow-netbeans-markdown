@@ -24,8 +24,8 @@ import org.openide.util.Exceptions;
  */
 public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
 
-    private static final String INSERT_REGEX = "^((?<indent>\t+|\\s{4,})*((?<hl>[-*] |[#]+ |(?<number>\\d+)\\. ).+|.*))$"; // NOI18N
-    private static final String AFTER_INSERT_REGEX = "^(?<indent>\t+|\\s{4,})*(?<hl>[-*] |[#]+ |(?<number>\\s\\d+)\\. )$"; // NOI18N
+    private static final String INSERT_REGEX = "^((?<indent>\t+|\\s{4,})*((?<hl>[-*+>] |(?<number>\\d+)\\. ).+|.*))$"; // NOI18N
+    private static final String AFTER_INSERT_REGEX = "^(?<indent>\t+|\\s{4,})*(?<hl>[-*+>] |(?<number>\\s\\d+)\\. )$"; // NOI18N
     private static final String HEADER_LIST_GROUP = "hl"; // NOI18N
     private static final String NUMBER_GROUP = "number"; // NOI18N
     private static final String INDENT_GROUP = "indent"; // NOI18N
