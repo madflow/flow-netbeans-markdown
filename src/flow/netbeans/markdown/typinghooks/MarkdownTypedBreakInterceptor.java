@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
 import org.netbeans.api.editor.mimelookup.MimePath;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
@@ -73,7 +75,7 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
         int lineOffset = NbDocument.findLineOffset(document, lineNumber);
         String lineText = document.getText(lineOffset, caretOffset - lineOffset);
 
-        // remove empty list and header
+        // remove empty list
         // e.g. If user presses enter key when caret position is after "- " (i.e. "- [here]"), "- " is removed.
         Matcher matcher = AFTER_INSERT_PATTERN.matcher(lineText);
         if (matcher.find()) {
@@ -83,8 +85,14 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
                 document.remove(caretOffset - length, length);
             }
         }
-        TokenHierarchy<StyledDocument> tokenHierarchy = TokenHierarchy.get(document);
-        TokenSequence<MarkdownTokenId> ts = tokenHierarchy.tokenSequence(MarkdownTokenId.language());
+
+        // get token sequence
+        TokenSequence<MarkdownTokenId> ts = getTokenSequence(document);
+        if (ts == null) {
+            return;
+        }
+
+        // reorder ordered list number
         ts.move(caretOffset);
         final HashMap<Integer, Integer> orderedListMap = new HashMap<Integer, Integer>();
         ts.moveNext();
@@ -144,6 +152,19 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
 
     @Override
     public void cancelled(Context context) {
+    }
+
+    private TokenSequence<MarkdownTokenId> getTokenSequence(Document document) {
+        TokenHierarchy<Document> tokenHierarchy = TokenHierarchy.get(document);
+        AbstractDocument ad = (AbstractDocument) document;
+        ad.readLock();
+        TokenSequence<MarkdownTokenId> ts;
+        try {
+            ts = tokenHierarchy.tokenSequence(MarkdownTokenId.language());
+        } finally {
+            ad.readUnlock();
+        }
+        return ts;
     }
 
     @MimeRegistration(mimeType = MarkdownLanguageConfig.MIME_TYPE, service = TypedBreakInterceptor.Factory.class)
