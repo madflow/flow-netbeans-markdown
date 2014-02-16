@@ -7,8 +7,9 @@ import java.util.Deque;
 import java.util.List;
 
 /**
- * The {@link MarkdownTokenListBuilder} is used to build a list of tokens during a depth-first left-to-right traversal
- * of a PegDown AST. This functionality was extracted from the {@link MarkdownLexerVisitor} to simplify unit testing.
+ * The {@link MarkdownTokenListBuilder} is used to build a list of tokens during
+ * a depth-first left-to-right traversal of a PegDown AST. This functionality 
+ * was extracted from the {@link MarkdownLexerVisitor} to simplify unit testing.
  * @author Holger Stenger
  */
 public class MarkdownTokenListBuilder {
@@ -17,10 +18,12 @@ public class MarkdownTokenListBuilder {
     private final List<MarkdownToken> tokens;
 
     /**
-     * Creates a {@link MarkdownTokenListBuilder}. The total length of the tokens created by the builder will be equal
-     * to the given total length. If the first added token does not start at position {@code 0}, the builder will insert
-     * a synthetic token to fill the gap. Likewise, if the last added token does not end at position
-     * {@code totalLength}, the builder will insert a synthetic token to fill the gap.
+     * Creates a {@link MarkdownTokenListBuilder}. The total length of the tokens 
+     * created by the builder will be equal to the given total length. If the first 
+     * added token does not start at position {@code 0}, the builder will insert
+     * a synthetic token to fill the gap. Likewise, if the last added token does 
+     * not end at position {@code totalLength}, the builder will insert a synthetic 
+     * token to fill the gap.
      * @param totalLength The total length of the created tokens.
      */
     public MarkdownTokenListBuilder(int totalLength) {
@@ -32,9 +35,9 @@ public class MarkdownTokenListBuilder {
     }
 
     /**
-     * Add a token which contains no nested tokens. This method is equivalent to a call to
-     * {@link #beginTreeToken(flow.netbeans.markdown.highlighter.MarkdownTokenId, int, int)} directly followed by a call
-     * to {@link #endTreeToken()}.
+     * Add a token which contains no nested tokens. This method is equivalent to 
+     * a call to {@link #beginTreeToken(flow.netbeans.markdown.highlighter.MarkdownTokenId, int, int)} 
+     * directly followed by a call to {@link #endTreeToken()}.
      * @param id The token id.
      * @param startIndex The start index of the token (inclusive).
      * @param endIndex The end index of the token (exclusive).
@@ -45,8 +48,8 @@ public class MarkdownTokenListBuilder {
     }
 
     /**
-     * Begins a token which can contain nested tokens. The call to this method has to be matched with a call to
-     * {@link #endTreeToken()}.
+     * Begins a token which can contain nested tokens. The call to this method has 
+     * to be matched with a call to {@link #endTreeToken()}.
      * @param id The token id.
      * @param startIndex The start index of the token (inclusive).
      * @param endIndex The end index of the token (exclusive).

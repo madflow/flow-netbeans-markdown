@@ -68,8 +68,7 @@ class MarkdownLexer implements Lexer<MarkdownTokenId> {
     /**
      * Tokenizes the input
      */
-    private void tokenizeInput()
-    {
+    private void tokenizeInput() {
         MarkdownGlobalOptions markdownOptions = MarkdownGlobalOptions.getInstance();
         PegDownProcessor markdownProcessor = new PegDownProcessor(markdownOptions.getExtensionsValue());
 
