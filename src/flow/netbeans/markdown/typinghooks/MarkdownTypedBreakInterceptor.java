@@ -1,24 +1,14 @@
 package flow.netbeans.markdown.typinghooks;
 
 import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
-import flow.netbeans.markdown.highlighter.MarkdownTokenId;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
 import org.netbeans.api.editor.mimelookup.MimePath;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
-import org.netbeans.api.lexer.Token;
-import org.netbeans.api.lexer.TokenHierarchy;
-import org.netbeans.api.lexer.TokenSequence;
 import org.netbeans.spi.editor.typinghooks.TypedBreakInterceptor;
 import org.openide.text.NbDocument;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -86,85 +76,13 @@ public class MarkdownTypedBreakInterceptor implements TypedBreakInterceptor {
             }
         }
 
-        // get token sequence
-        TokenSequence<MarkdownTokenId> ts = getTokenSequence(document);
-        if (ts == null) {
-            return;
-        }
-
-        // reorder ordered list number
-        ts.move(caretOffset);
-        final HashMap<Integer, Integer> orderedListMap = new HashMap<Integer, Integer>();
-        ts.moveNext();
-        boolean isFirst = true;
-        int number = 0;
-        while (ts.moveNext()) {
-            Token<MarkdownTokenId> token = ts.token();
-            MarkdownTokenId id = token.id();
-            if (id == MarkdownTokenId.ORDEREDLIST) {
-                int offset = ts.offset();
-                String numberText = token.text().toString();
-                if (numberText.startsWith("\n")) { // NOI18N
-                    numberText = numberText.replace("\n", ""); // NOI18N
-                    offset++;
-                }
-                int dotIndex = numberText.indexOf("."); // NOI18N
-                if (dotIndex == -1) {
-                    continue;
-                }
-                numberText = numberText.substring(0, dotIndex);
-                int currentNumber = Integer.parseInt(numberText);
-                if (isFirst) {
-                    number = currentNumber;
-                    isFirst = false;
-                    continue;
-                }
-                if (currentNumber == number) {
-                    number++;
-                    orderedListMap.put(offset, number);
-                    continue;
-                }
-                break;
-            }
-        }
-        final LinkedList<Integer> keyList = new LinkedList<Integer>(orderedListMap.keySet());
-        Collections.sort(keyList);
-        Collections.reverse(keyList);
-        NbDocument.runAtomic(document, new Runnable() {
-
-            @Override
-            public void run() {
-                for (Integer offset : keyList) {
-                    try {
-                        Integer number = orderedListMap.get(offset);
-                        Integer oldNumber = number - 1;
-                        int removeLength = oldNumber.toString().length();
-                        document.remove(offset, removeLength);
-                        document.insertString(offset, number.toString(), null);
-                    } catch (BadLocationException ex) {
-                        Exceptions.printStackTrace(ex);
-                    }
-                }
-            }
-        });
-
+        // reorder ordered list
+        OrderedListReorderer reorderer = new OrderedListReorderer(context.getComponent(), document, caretOffset);
+        reorderer.reorder(true);
     }
 
     @Override
     public void cancelled(Context context) {
-    }
-
-    private TokenSequence<MarkdownTokenId> getTokenSequence(Document document) {
-        TokenHierarchy<Document> tokenHierarchy = TokenHierarchy.get(document);
-        AbstractDocument ad = (AbstractDocument) document;
-        ad.readLock();
-        TokenSequence<MarkdownTokenId> ts;
-        try {
-            ts = tokenHierarchy.tokenSequence(MarkdownTokenId.language());
-        } finally {
-            ad.readUnlock();
-        }
-        return ts;
     }
 
     @MimeRegistration(mimeType = MarkdownLanguageConfig.MIME_TYPE, service = TypedBreakInterceptor.Factory.class)
