@@ -37,6 +37,7 @@ You may also compile a binary yourself with the **latest development code**.
 - Enables HTML preview of your saved file in your configured web browser
 - Lets you customize the HTML output with CSS and alien intelligence (Options->Miscellaneous->Markdown->HTML Export)
 - Supports multiple extensions over standard markdown (see [PegDown][], Options->Miscellaneous->Markdown->Extensions)
+- Supports auto operations(additoin and removal) for lists (Options->Miscellaneous->Markdown->Miscellaneous)
 
 # Screenshots
 
