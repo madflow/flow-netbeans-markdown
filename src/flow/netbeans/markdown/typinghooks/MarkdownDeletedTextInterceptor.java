@@ -2,6 +2,7 @@ package flow.netbeans.markdown.typinghooks;
 
 import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
 import flow.netbeans.markdown.highlighter.MarkdownTokenId;
+import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import flow.netbeans.markdown.utils.MarkdownDocUtil;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -19,6 +20,10 @@ public class MarkdownDeletedTextInterceptor implements DeletedTextInterceptor {
 
     @Override
     public boolean beforeRemove(Context context) throws BadLocationException {
+        if (!isEnabled()) {
+            return false;
+        }
+
         char ch = context.getText().charAt(0);
         if (ch != '.' && ch != ' ') { // NOI18N
             return false;
@@ -60,6 +65,10 @@ public class MarkdownDeletedTextInterceptor implements DeletedTextInterceptor {
 
     @Override
     public void cancelled(Context context) {
+    }
+
+    private boolean isEnabled() {
+        return MarkdownGlobalOptions.getInstance().isTypingHooks();
     }
 
     @MimeRegistration(mimeType = MarkdownLanguageConfig.MIME_TYPE, service = DeletedTextInterceptor.Factory.class)

@@ -5,7 +5,8 @@ import org.openide.util.NbPreferences;
 import org.pegdown.Extensions;
 
 /**
- * @see https://github.com/nicoulaj/idea-markdown/blob/master/src/main/java/net/nicoulaj/idea/markdown/settings/MarkdownGlobalSettings.java
+ * @see
+ * https://github.com/nicoulaj/idea-markdown/blob/master/src/main/java/net/nicoulaj/idea/markdown/settings/MarkdownGlobalSettings.java
  */
 public final class MarkdownGlobalOptions {
 
@@ -23,7 +24,13 @@ public final class MarkdownGlobalOptions {
     private static final String INLINE_HTML_SUPPRESSION = "INLINE_HTML_SUPPRESSION"; // NOI18N
     private static final String HTML_TEMPLATE = "HTML_TEMPLATE"; // NOI18N
     private static final String VIEW_HTML_ON_SAVE = "VIEW_HTML_ON_SAVE"; // NOI18N
-	private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
+    private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
+    // typing hooks
+    private static final String TYPING_HOOKS = "TYPING_HOOKS"; // NOI18N
+    private static final String AUTO_ADDITION_LIST = "AUTO_ADDITION_LIST"; // NOI18N
+    private static final String REMOVE_EMPTY_LIST = "REMOVE_EMPTY_LIST"; // NOI18N
+    private static final String REORDER_ORDERED_LIST = "REORDER_ORDERED_LIST"; // NOI18N
+    private static final String REMOVE_ORDERED_LIST = "REMOVE_ORDERED_LIST"; // NOI18N
 
     public static MarkdownGlobalOptions getInstance() {
         return INSTANCE;
@@ -228,6 +235,47 @@ public final class MarkdownGlobalOptions {
 
     public void setSaveInSourceDir(boolean saveIn) {
         getPreferences().putBoolean(SAVE_IN_SOURCE_DIR, saveIn);
+    }
+
+    // typing hooks
+    public boolean isTypingHooks() {
+        return getPreferences().getBoolean(TYPING_HOOKS, false);
+    }
+
+    public void setTypingHooks(boolean isTypingHooks) {
+        getPreferences().putBoolean(TYPING_HOOKS, isTypingHooks);
+    }
+
+    public boolean isAutoAdditionList() {
+        return getPreferences().getBoolean(AUTO_ADDITION_LIST, false);
+    }
+
+    public void setAutoAdditionList(boolean isAutoAdditionList) {
+        getPreferences().putBoolean(AUTO_ADDITION_LIST, isAutoAdditionList);
+    }
+
+    public boolean isRemoveEmptyList() {
+        return getPreferences().getBoolean(REMOVE_EMPTY_LIST, false);
+    }
+
+    public void setRemoveEmptyList(boolean isRemoveEmptyList) {
+        getPreferences().putBoolean(REMOVE_EMPTY_LIST, isRemoveEmptyList);
+    }
+
+    public boolean isReorderOrderedListNumber() {
+        return getPreferences().getBoolean(REORDER_ORDERED_LIST, false);
+    }
+
+    public void setReorderOrderedListNumber(boolean isReorder) {
+        getPreferences().putBoolean(REORDER_ORDERED_LIST, isReorder);
+    }
+
+    public boolean isRemoveOrderedListNumber() {
+        return getPreferences().getBoolean(REMOVE_ORDERED_LIST, false);
+    }
+
+    public void setRemoveOrderedListNumber(boolean isRemoveOrderedList) {
+        getPreferences().putBoolean(REMOVE_ORDERED_LIST, isRemoveOrderedList);
     }
 
     private Preferences getPreferences() {

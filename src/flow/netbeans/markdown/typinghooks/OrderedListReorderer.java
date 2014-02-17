@@ -1,10 +1,12 @@
 package flow.netbeans.markdown.typinghooks;
 
 import flow.netbeans.markdown.highlighter.MarkdownTokenId;
+import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import flow.netbeans.markdown.utils.MarkdownDocUtil;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -48,12 +50,19 @@ public class OrderedListReorderer {
      * @param removeLength length for removing
      */
     public void reorder(final boolean isInserted, final int removeOffset, final int removeLength) {
-        final Map<Integer, Integer> orderedListMap = getOrderedListMap(isInserted);
+        final List<Integer> keyList;
+        final Map<Integer, Integer> orderedListMap;
 
-        // sort
-        final LinkedList<Integer> keyList = new LinkedList<Integer>(orderedListMap.keySet());
-        Collections.sort(keyList);
-        Collections.reverse(keyList);
+        if (isReorderOrderedListNumber()) {
+            orderedListMap = getOrderedListMap(isInserted);
+            keyList = new LinkedList<Integer>(orderedListMap.keySet());
+            // sort
+            Collections.sort(keyList);
+            Collections.reverse(keyList);
+        } else {
+            orderedListMap = Collections.emptyMap();
+            keyList = Collections.emptyList();
+        }
 
         // reorder
         NbDocument.runAtomic((StyledDocument) document, new Runnable() {
@@ -77,13 +86,16 @@ public class OrderedListReorderer {
                 }
 
                 // remove
-                if (removeOffset >= 0 && removeLength > 0) {
-                    try {
-                        document.remove(removeOffset, removeLength);
-                    } catch (BadLocationException ex) {
-                        Exceptions.printStackTrace(ex);
+                if (isRemoveOrderedListNumber()) {
+                    if (removeOffset >= 0 && removeLength > 0) {
+                        try {
+                            document.remove(removeOffset, removeLength);
+                        } catch (BadLocationException ex) {
+                            Exceptions.printStackTrace(ex);
+                        }
                     }
                 }
+
             }
         });
     }
@@ -159,5 +171,13 @@ public class OrderedListReorderer {
             break;
         }
         return orderedListMap;
+    }
+
+    private boolean isReorderOrderedListNumber() {
+        return MarkdownGlobalOptions.getInstance().isReorderOrderedListNumber();
+    }
+
+    private boolean isRemoveOrderedListNumber() {
+        return MarkdownGlobalOptions.getInstance().isRemoveOrderedListNumber();
     }
 }
