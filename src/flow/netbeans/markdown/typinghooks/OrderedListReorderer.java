@@ -133,11 +133,13 @@ public class OrderedListReorderer {
                 offset++;
                 // exists indent
                 boolean isSameIndent = true;
-                for (int i = 0; i < numberText.length(); i++) {
+                int indentStringLength = indentString.length();
+                int numberTextlength = numberText.length();
+                for (int i = 0; i < numberTextlength; i++) {
                     char ch = numberText.charAt(i);
                     if (ch == ' ' || ch == '\t') { // NOI18N
                         offset++;
-                        if (indentString.charAt(i) != ch) {
+                        if (i < indentStringLength && indentString.charAt(i) != ch) {
                             isSameIndent = false;
                             break;
                         }
