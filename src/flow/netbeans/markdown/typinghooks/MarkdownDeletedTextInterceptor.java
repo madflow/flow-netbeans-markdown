@@ -47,11 +47,31 @@ public class MarkdownDeletedTextInterceptor implements DeletedTextInterceptor {
             return false;
         }
 
-        int removeLength = token.text().length() + 1;
-        int removeOffset = ts.offset() - 1;
+        String tokenText = token.text().toString();
+        // may text is ' '
+        if (tokenText.matches("\\d+\\.")) { // NOI18N
+            return false;
+        }
 
+        // compute offset and length for removing
+        int removeStartOffset = ts.offset();
+        int removeLength = tokenText.length();
+        if (ts.movePrevious()) {
+            Token<MarkdownTokenId> previousToken = ts.token();
+            if (previousToken != null) {
+                String previousText = previousToken.text().toString();
+                int lastIndexOfNewLine = previousText.lastIndexOf('\n'); // NOI18N
+                if (lastIndexOfNewLine != -1) {
+                    removeStartOffset = ts.offset() + lastIndexOfNewLine;
+                    int indent = previousToken.length() - lastIndexOfNewLine;
+                    removeLength = removeLength + indent;
+                }
+            }
+        }
+
+        // reorder
         OrderedListReorderer reorderer = new OrderedListReorderer(context.getComponent(), document, caretOffset);
-        reorderer.reorder(false, removeOffset, removeLength);
+        reorderer.reorder(false, removeStartOffset, removeLength);
         return true;
     }
 

@@ -107,6 +107,9 @@ public class OrderedListReorderer {
             return Collections.emptyMap();
         }
 
+        // getindent string
+        String indentString = MarkdownDocUtil.getIndentString(document, caretOffset);
+
         // reorder ordered list number
         ts.move(caretOffset);
         final HashMap<Integer, Integer> orderedListMap = new HashMap<Integer, Integer>();
@@ -128,6 +131,24 @@ public class OrderedListReorderer {
             if (numberText.startsWith("\n")) { // NOI18N
                 numberText = numberText.replace("\n", ""); // NOI18N
                 offset++;
+                // exists indent
+                boolean isSameIndent = true;
+                for (int i = 0; i < numberText.length(); i++) {
+                    char ch = numberText.charAt(i);
+                    if (ch == ' ' || ch == '\t') { // NOI18N
+                        offset++;
+                        if (indentString.charAt(i) != ch) {
+                            isSameIndent = false;
+                            break;
+                        }
+                        continue;
+                    }
+                    break;
+                }
+                if (!isSameIndent) {
+                    break;
+                }
+                numberText = numberText.trim();
             }
             int dotIndex = numberText.indexOf("."); // NOI18N
             if (dotIndex == -1) {
