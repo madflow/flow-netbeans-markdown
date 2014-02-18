@@ -237,7 +237,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                             .addComponent(REMOVE_EMPTY_LIST)
                             .addComponent(REORDER_ORDERED_LIST_NUMBER)
                             .addComponent(REMOVE_ORDERED_LIST_NUMBER))))
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         MISC_PANELLayout.setVerticalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
