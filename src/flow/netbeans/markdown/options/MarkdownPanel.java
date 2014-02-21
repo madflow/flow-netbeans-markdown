@@ -72,6 +72,11 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         MISC_PANEL = new javax.swing.JPanel();
         VIEW_HTML_ON_SAVE = new javax.swing.JCheckBox();
         SAVE_IN_SOURCE_DIR = new javax.swing.JCheckBox();
+        TYPING_HOOKS = new javax.swing.JCheckBox();
+        AUTO_ADDITION_LIST = new javax.swing.JCheckBox();
+        REMOVE_EMPTY_LIST = new javax.swing.JCheckBox();
+        REORDER_ORDERED_LIST_NUMBER = new javax.swing.JCheckBox();
+        REMOVE_ORDERED_LIST_NUMBER = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(EXTENSIONS_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL_HEADER.text")); // NOI18N
 
@@ -195,16 +200,44 @@ public final class MarkdownPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(SAVE_IN_SOURCE_DIR, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.SAVE_IN_SOURCE_DIR.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(TYPING_HOOKS, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.TYPING_HOOKS.text_1")); // NOI18N
+        TYPING_HOOKS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TYPING_HOOKSActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(AUTO_ADDITION_LIST, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.AUTO_ADDITION_LIST.text")); // NOI18N
+        AUTO_ADDITION_LIST.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.AUTO_ADDITION_LIST.toolTipText")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(REMOVE_EMPTY_LIST, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REMOVE_EMPTY_LIST.text")); // NOI18N
+        REMOVE_EMPTY_LIST.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REMOVE_EMPTY_LIST.toolTipText")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(REORDER_ORDERED_LIST_NUMBER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REORDER_ORDERED_LIST_NUMBER.text")); // NOI18N
+        REORDER_ORDERED_LIST_NUMBER.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REORDER_ORDERED_LIST_NUMBER.toolTipText")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(REMOVE_ORDERED_LIST_NUMBER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REMOVE_ORDERED_LIST_NUMBER.text_1")); // NOI18N
+        REMOVE_ORDERED_LIST_NUMBER.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REMOVE_ORDERED_LIST_NUMBER.toolTipText")); // NOI18N
+
         javax.swing.GroupLayout MISC_PANELLayout = new javax.swing.GroupLayout(MISC_PANEL);
         MISC_PANEL.setLayout(MISC_PANELLayout);
         MISC_PANELLayout.setHorizontalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.PREFERRED_SIZE, 255, Short.MAX_VALUE))
+                    .addComponent(TYPING_HOOKS)
+                    .addGroup(MISC_PANELLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AUTO_ADDITION_LIST)
+                            .addComponent(REMOVE_EMPTY_LIST)
+                            .addComponent(REORDER_ORDERED_LIST_NUMBER)
+                            .addComponent(REMOVE_ORDERED_LIST_NUMBER))))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         MISC_PANELLayout.setVerticalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +246,17 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(VIEW_HTML_ON_SAVE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SAVE_IN_SOURCE_DIR)
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(TYPING_HOOKS)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AUTO_ADDITION_LIST)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(REMOVE_EMPTY_LIST)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(REORDER_ORDERED_LIST_NUMBER)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(REMOVE_ORDERED_LIST_NUMBER)
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -235,6 +278,10 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TYPING_HOOKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TYPING_HOOKSActionPerformed
+        setTypinghooksEnabled(TYPING_HOOKS.isSelected());
+    }//GEN-LAST:event_TYPING_HOOKSActionPerformed
+
     private void setMimeType(JEditorPane editorPane, String mimeType, String extension) {
         FileSystem fileSystem = FileUtil.createMemoryFileSystem();
         try {
@@ -247,13 +294,13 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 DialogBinding.bindComponentToFile(file, 0, 0, editorPane);
                 editorPane.setText(" ");
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }
 
     private class ActionHandler implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             controller.changed();
@@ -261,6 +308,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     }
 
     private class DocumentHandler implements DocumentListener {
+
         @Override
         public void insertUpdate(DocumentEvent e) {
             controller.changed();
@@ -299,6 +347,13 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         WIKILINKS.setSelected(options.isWikiLinks());
         HTML_TEMPLATE.setText(options.getHtmlTemplate());
         VIEW_HTML_ON_SAVE.setSelected(options.isViewHtmlOnSave());
+        // typing hooks
+        TYPING_HOOKS.setSelected(options.isTypingHooks());
+        AUTO_ADDITION_LIST.setSelected(options.isAutoAdditionList());
+        REMOVE_EMPTY_LIST.setSelected(options.isRemoveEmptyList());
+        REORDER_ORDERED_LIST_NUMBER.setSelected(options.isReorderOrderedListNumber());
+        REMOVE_ORDERED_LIST_NUMBER.setSelected(options.isRemoveOrderedListNumber());
+        setTypinghooksEnabled(options.isTypingHooks());
     }
 
     void store() {
@@ -325,10 +380,15 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         options.setHtmlTemplate(HTML_TEMPLATE.getText());
         options.setViewHtmlOnSave(VIEW_HTML_ON_SAVE.isSelected());
         options.setSaveInSourceDir(SAVE_IN_SOURCE_DIR.isSelected());
+        // typing hooks
+        options.setTypingHooks(TYPING_HOOKS.isSelected());
+        options.setAutoAdditionList(AUTO_ADDITION_LIST.isSelected());
+        options.setRemoveEmptyList(REMOVE_EMPTY_LIST.isSelected());
+        options.setReorderOrderedListNumber(REORDER_ORDERED_LIST_NUMBER.isSelected());
+        options.setRemoveOrderedListNumber(REMOVE_ORDERED_LIST_NUMBER.isSelected());
     }
-    
-    public static String getDefaultHtmlTemplate()
-    {
+
+    public static String getDefaultHtmlTemplate() {
         return "<!DOCTYPE html>\n"
                 + "<html>\n"
                 + "<head>\n"
@@ -346,9 +406,16 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         return true;
     }
 
+    private void setTypinghooksEnabled(boolean isEnabled) {
+        AUTO_ADDITION_LIST.setEnabled(isEnabled);
+        REMOVE_EMPTY_LIST.setEnabled(isEnabled);
+        REORDER_ORDERED_LIST_NUMBER.setEnabled(isEnabled);
+        REMOVE_ORDERED_LIST_NUMBER.setEnabled(isEnabled);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox ABBREVIATIONS;
     private javax.swing.JCheckBox AUTOLINKS;
+    private javax.swing.JCheckBox AUTO_ADDITION_LIST;
     private javax.swing.JCheckBox DEFINITION_LISTS;
     private javax.swing.JPanel EXTENSIONS_PANEL;
     private javax.swing.JLabel EXTENSIONS_PANEL_HEADER;
@@ -361,10 +428,14 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox INLINE_HTML_SUPPRESSION;
     private javax.swing.JPanel MISC_PANEL;
     private javax.swing.JCheckBox QUOTES;
+    private javax.swing.JCheckBox REMOVE_EMPTY_LIST;
+    private javax.swing.JCheckBox REMOVE_ORDERED_LIST_NUMBER;
+    private javax.swing.JCheckBox REORDER_ORDERED_LIST_NUMBER;
     private javax.swing.JCheckBox SAVE_IN_SOURCE_DIR;
     private javax.swing.JCheckBox SMARTS;
     private javax.swing.JCheckBox TABLES;
     private javax.swing.JTabbedPane TABS;
+    private javax.swing.JCheckBox TYPING_HOOKS;
     private javax.swing.JCheckBox VIEW_HTML_ON_SAVE;
     private javax.swing.JCheckBox WIKILINKS;
     private javax.swing.JScrollPane jScrollPane1;
