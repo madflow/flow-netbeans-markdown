@@ -195,6 +195,10 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
                         previewDoc.setBase(sourceFile.toURL());
                     }
                     previewTextPane.setText(previewText);
+                    previewScrollPane.getVerticalScrollBar()
+                            .setValue(previewScrollPane.getVerticalScrollBar().getMinimum());
+                    previewScrollPane.getHorizontalScrollBar()
+                            .setValue(previewScrollPane.getHorizontalScrollBar().getMinimum());
                 }
             });
         }
