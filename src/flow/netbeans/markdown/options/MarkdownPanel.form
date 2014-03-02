@@ -300,25 +300,31 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="VIEW_HTML_ON_SAVE" max="32767" attributes="0"/>
-                              <Component id="SAVE_IN_SOURCE_DIR" pref="255" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="TYPING_HOOKS" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="AUTO_ADDITION_LIST" min="-2" max="-2" attributes="0"/>
-                                  <Component id="REMOVE_EMPTY_LIST" min="-2" max="-2" attributes="0"/>
-                                  <Component id="REORDER_ORDERED_LIST_NUMBER" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="REMOVE_ORDERED_LIST_NUMBER" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="VIEW_HTML_ON_SAVE" max="32767" attributes="0"/>
+                                      <Component id="SAVE_IN_SOURCE_DIR" pref="255" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="TYPING_HOOKS" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="AUTO_ADDITION_LIST" min="-2" max="-2" attributes="0"/>
+                                          <Component id="REMOVE_EMPTY_LIST" min="-2" max="-2" attributes="0"/>
+                                          <Component id="REORDER_ORDERED_LIST_NUMBER" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="REMOVE_ORDERED_LIST_NUMBER" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="FX_HTML_VIEW_ENABLED" alignment="0" pref="467" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="135" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -329,7 +335,9 @@
                       <Component id="VIEW_HTML_ON_SAVE" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="SAVE_IN_SOURCE_DIR" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="FX_HTML_VIEW_ENABLED" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="TYPING_HOOKS" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="AUTO_ADDITION_LIST" min="-2" max="-2" attributes="0"/>
@@ -339,7 +347,7 @@
                       <Component id="REORDER_ORDERED_LIST_NUMBER" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="REMOVE_ORDERED_LIST_NUMBER" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="214" max="32767" attributes="0"/>
+                      <EmptySpace pref="196" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -406,6 +414,13 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="flow/netbeans/markdown/options/Bundle.properties" key="MarkdownPanel.REMOVE_ORDERED_LIST_NUMBER.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="FX_HTML_VIEW_ENABLED">
+              <Properties>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="flow/netbeans/markdown/options/Bundle.properties" key="MarkdownPanel.FX_HTML_VIEW_ENABLED.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
             </Component>

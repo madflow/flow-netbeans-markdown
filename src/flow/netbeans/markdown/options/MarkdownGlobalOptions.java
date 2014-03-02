@@ -25,12 +25,14 @@ public final class MarkdownGlobalOptions {
     private static final String HTML_TEMPLATE = "HTML_TEMPLATE"; // NOI18N
     private static final String VIEW_HTML_ON_SAVE = "VIEW_HTML_ON_SAVE"; // NOI18N
     private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
+
     // typing hooks
     private static final String TYPING_HOOKS = "TYPING_HOOKS"; // NOI18N
     private static final String AUTO_ADDITION_LIST = "AUTO_ADDITION_LIST"; // NOI18N
     private static final String REMOVE_EMPTY_LIST = "REMOVE_EMPTY_LIST"; // NOI18N
     private static final String REORDER_ORDERED_LIST = "REORDER_ORDERED_LIST"; // NOI18N
     private static final String REMOVE_ORDERED_LIST = "REMOVE_ORDERED_LIST"; // NOI18N
+    private static final String FX_HTML_VIEW_ENABLED = "FX_HTML_VIEW_ENABLED"; // NOI18N
 
     public static MarkdownGlobalOptions getInstance() {
         return INSTANCE;
@@ -276,6 +278,14 @@ public final class MarkdownGlobalOptions {
 
     public void setRemoveOrderedListNumber(boolean isRemoveOrderedList) {
         getPreferences().putBoolean(REMOVE_ORDERED_LIST, isRemoveOrderedList);
+    }
+    
+    public boolean isFXHtmlViewEnabled() {
+        return getPreferences().getBoolean(FX_HTML_VIEW_ENABLED, true);
+    }
+
+    public void setFXHtmlViewEnabled(boolean fxHtmlViewEnabled) {
+        getPreferences().putBoolean(FX_HTML_VIEW_ENABLED, fxHtmlViewEnabled);
     }
 
     private Preferences getPreferences() {

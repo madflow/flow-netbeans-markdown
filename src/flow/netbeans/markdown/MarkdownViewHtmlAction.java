@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.EnumSet;
 import java.util.Set;
@@ -48,6 +49,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             String htmlText = renderable.renderAsHtml(renderOptions);
 
             File temp = File.createTempFile("preview-" + context.getPrimaryFile().getName(), ".html");
+            temp.deleteOnExit();
 
             // get file encoding
             Charset encoding = FileEncodingQuery.getEncoding(context.getPrimaryFile());
@@ -55,9 +57,8 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             out.print(htmlText);
             out.close();
 
-            URLDisplayer.getDefault().showURL(temp.toURI().toURL());
-
-            temp.deleteOnExit();
+            URL url = temp.toURI().toURL();
+            URLDisplayer.getDefault().showURLExternal(url);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }

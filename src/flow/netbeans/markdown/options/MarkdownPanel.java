@@ -38,6 +38,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         SMARTS.addActionListener(actionListener);
         TABLES.addActionListener(actionListener);
         WIKILINKS.addActionListener(actionListener);
+        SAVE_IN_SOURCE_DIR.addActionListener(actionListener);
+        FX_HTML_VIEW_ENABLED.addActionListener(actionListener);
 
         DocumentListener documentListener = new DocumentHandler();
         HTML_TEMPLATE.getDocument().addDocumentListener(documentListener);
@@ -77,6 +79,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         REMOVE_EMPTY_LIST = new javax.swing.JCheckBox();
         REORDER_ORDERED_LIST_NUMBER = new javax.swing.JCheckBox();
         REMOVE_ORDERED_LIST_NUMBER = new javax.swing.JCheckBox();
+        FX_HTML_VIEW_ENABLED = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(EXTENSIONS_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL_HEADER.text")); // NOI18N
 
@@ -219,6 +222,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(REMOVE_ORDERED_LIST_NUMBER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REMOVE_ORDERED_LIST_NUMBER.text_1")); // NOI18N
         REMOVE_ORDERED_LIST_NUMBER.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.REMOVE_ORDERED_LIST_NUMBER.toolTipText")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(FX_HTML_VIEW_ENABLED, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.FX_HTML_VIEW_ENABLED.text")); // NOI18N
+
         javax.swing.GroupLayout MISC_PANELLayout = new javax.swing.GroupLayout(MISC_PANEL);
         MISC_PANEL.setLayout(MISC_PANELLayout);
         MISC_PANELLayout.setHorizontalGroup(
@@ -226,18 +231,22 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.PREFERRED_SIZE, 255, Short.MAX_VALUE))
-                    .addComponent(TYPING_HOOKS)
                     .addGroup(MISC_PANELLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AUTO_ADDITION_LIST)
-                            .addComponent(REMOVE_EMPTY_LIST)
-                            .addComponent(REORDER_ORDERED_LIST_NUMBER)
-                            .addComponent(REMOVE_ORDERED_LIST_NUMBER))))
-                .addContainerGap(135, Short.MAX_VALUE))
+                            .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.PREFERRED_SIZE, 255, Short.MAX_VALUE))
+                            .addComponent(TYPING_HOOKS)
+                            .addGroup(MISC_PANELLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(AUTO_ADDITION_LIST)
+                                    .addComponent(REMOVE_EMPTY_LIST)
+                                    .addComponent(REORDER_ORDERED_LIST_NUMBER)
+                                    .addComponent(REMOVE_ORDERED_LIST_NUMBER))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(FX_HTML_VIEW_ENABLED, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
+                .addContainerGap())
         );
         MISC_PANELLayout.setVerticalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,7 +255,9 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(VIEW_HTML_ON_SAVE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SAVE_IN_SOURCE_DIR)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FX_HTML_VIEW_ENABLED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TYPING_HOOKS)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AUTO_ADDITION_LIST)
@@ -256,7 +267,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(REORDER_ORDERED_LIST_NUMBER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(REMOVE_ORDERED_LIST_NUMBER)
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -355,6 +366,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         REORDER_ORDERED_LIST_NUMBER.setSelected(options.isReorderOrderedListNumber());
         REMOVE_ORDERED_LIST_NUMBER.setSelected(options.isRemoveOrderedListNumber());
         setTypinghooksEnabled(options.isTypingHooks());
+        FX_HTML_VIEW_ENABLED.setSelected(options.isFXHtmlViewEnabled());
     }
 
     void store() {
@@ -387,6 +399,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         options.setRemoveEmptyList(REMOVE_EMPTY_LIST.isSelected());
         options.setReorderOrderedListNumber(REORDER_ORDERED_LIST_NUMBER.isSelected());
         options.setRemoveOrderedListNumber(REMOVE_ORDERED_LIST_NUMBER.isSelected());
+        options.setFXHtmlViewEnabled(FX_HTML_VIEW_ENABLED.isSelected());
     }
 
     public static String getDefaultHtmlTemplate() {
@@ -421,6 +434,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JPanel EXTENSIONS_PANEL;
     private javax.swing.JLabel EXTENSIONS_PANEL_HEADER;
     private javax.swing.JCheckBox FENCED_CODE_BLOCKS;
+    private javax.swing.JCheckBox FX_HTML_VIEW_ENABLED;
     private javax.swing.JCheckBox HARDWRAPS;
     private javax.swing.JCheckBox HTML_BLOCK_SUPPRESSION;
     private javax.swing.JPanel HTML_EXPORT_PANEL;
