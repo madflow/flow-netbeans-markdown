@@ -5,6 +5,7 @@ package flow.netbeans.markdown;
 
 import flow.netbeans.markdown.api.RenderOption;
 import flow.netbeans.markdown.api.Renderable;
+import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
@@ -20,6 +21,7 @@ import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
+
 
 @ActionID(category = "File",
         id = "flow.netbeans.markdown.GenerateHtmlAction")
@@ -45,8 +47,10 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
 
             Set<RenderOption> renderOptions = Collections.emptySet();
             String htmlText = renderable.renderAsHtml(renderOptions);
-
-            JFileChooser fileChooser = new JFileChooser("user.home");
+            String saveTo = MarkdownGlobalOptions.getInstance()
+                    .isSaveInSourceDir() ? context.getPrimaryFile()
+                            .getParent().getPath() : "user.home";
+            JFileChooser fileChooser = new JFileChooser(saveTo);
             int option = fileChooser.showSaveDialog(fileChooser);
             int result = 0;
             String fileName;

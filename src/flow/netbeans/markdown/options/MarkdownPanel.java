@@ -347,6 +347,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         WIKILINKS.setSelected(options.isWikiLinks());
         HTML_TEMPLATE.setText(options.getHtmlTemplate());
         VIEW_HTML_ON_SAVE.setSelected(options.isViewHtmlOnSave());
+        SAVE_IN_SOURCE_DIR.setSelected(options.isSaveInSourceDir());
         // typing hooks
         TYPING_HOOKS.setSelected(options.isTypingHooks());
         AUTO_ADDITION_LIST.setSelected(options.isAutoAdditionList());
