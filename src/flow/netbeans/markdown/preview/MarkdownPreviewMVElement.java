@@ -94,7 +94,7 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
         previewTextPane.setEditable(false);
         previewTextPane.setContentType("text/html");
         previewTextPane.setText("<html><head></head><body></body></html>");
-
+        
         previewScrollPane = new JScrollPane(previewTextPane);
         previewScrollPane.setBorder(BorderFactory.createEmptyBorder());
 
@@ -195,10 +195,7 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
                         previewDoc.setBase(sourceFile.toURL());
                     }
                     previewTextPane.setText(previewText);
-                    previewScrollPane.getVerticalScrollBar()
-                            .setValue(previewScrollPane.getVerticalScrollBar().getMinimum());
-                    previewScrollPane.getHorizontalScrollBar()
-                            .setValue(previewScrollPane.getHorizontalScrollBar().getMinimum());
+                    previewTextPane.setCaretPosition(0);
                 }
             });
         }
