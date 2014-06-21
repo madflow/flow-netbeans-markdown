@@ -19,10 +19,10 @@ You may also compile a binary yourself with the **latest development code**.
  3. (Configure Target Platform if needed)
  4. Choose "Create NBM" from the project menu
  5. Install the plugin with: Tools -> Plugins -> Downloaded
- 
+
 # Requirements
 
-- NetBeans >= 7.0
+- NetBeans >= 8.0
 - "NetBeans Plugin Development" plugin must be installed if you want to compile your own binary package.
 
 # Plugin features
@@ -32,7 +32,7 @@ You may also compile a binary yourself with the **latest development code**.
 - Provides code folding based on headers
 - Provides bread crumbs in the editor based on headers
 - Provides a table of contents in the Navigator window
-- Enables basic preview of the currently edited file in the IDE
+- Enables full fledged preview in the editor window
 - Exports your saved file content to an HTML document
 - Enables HTML preview of your saved file in your configured web browser
 - Lets you customize the HTML output with CSS and alien intelligence (Options->Miscellaneous->Markdown->HTML Export)
@@ -43,9 +43,9 @@ You may also compile a binary yourself with the **latest development code**.
 
 ![Editor - Source view](editor-source.png "The Source view of the Markdown editor")
 
-![Editor - Preview view](editor-preview.png "The Preview view of the Markdown editor")
+***
 
-![Navigator](navigator.png "The Navigator window showing the structure of a Markdown document")
+![Editor - Preview view](editor-preview.png "The Preview view of the Markdown editor")
 
 # Authors
 
@@ -58,7 +58,6 @@ Contributions are always welcome and greatly appreciated!
 # Resources
 
 - [PegDown][] : A pure-Java Markdown processor based on a parboiled PEG parser supporting a number of extensions.
-- https://bitbucket.org/tcolar/fantomide : Fantom plugin/IDE using Netbeans. Example for implementing a Lexer with a parboiled parser.
 - http://daringfireball.net/projects/markdown/ : Home of the Markdown (Basics, Syntax)
 - http://openiconlibrary.sourceforge.net/ : Icons
 
