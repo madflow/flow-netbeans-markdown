@@ -54,20 +54,23 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="EXTENSIONS_PANEL_HEADER" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="INLINE_HTML_SUPPRESSION" min="-2" max="-2" attributes="0"/>
-                                  <Component id="SMARTS" max="32767" attributes="0"/>
-                                  <Component id="QUOTES" max="32767" attributes="0"/>
-                                  <Component id="ABBREVIATIONS" max="32767" attributes="0"/>
-                                  <Component id="HARDWRAPS" max="32767" attributes="0"/>
-                                  <Component id="AUTOLINKS" max="32767" attributes="0"/>
-                                  <Component id="TABLES" max="32767" attributes="0"/>
-                                  <Component id="DEFINITION_LISTS" max="32767" attributes="0"/>
-                                  <Component id="FENCED_CODE_BLOCKS" max="32767" attributes="0"/>
-                                  <Component id="HTML_BLOCK_SUPPRESSION" max="32767" attributes="0"/>
-                                  <Component id="WIKILINKS" alignment="0" min="-2" pref="412" max="-2" attributes="0"/>
+                          <Component id="EXTENSIONS_PANEL_HEADER" alignment="0" pref="479" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="INLINE_HTML_SUPPRESSION" min="-2" max="-2" attributes="0"/>
+                                      <Component id="SMARTS" max="32767" attributes="0"/>
+                                      <Component id="QUOTES" max="32767" attributes="0"/>
+                                      <Component id="ABBREVIATIONS" max="32767" attributes="0"/>
+                                      <Component id="HARDWRAPS" max="32767" attributes="0"/>
+                                      <Component id="AUTOLINKS" max="32767" attributes="0"/>
+                                      <Component id="TABLES" max="32767" attributes="0"/>
+                                      <Component id="DEFINITION_LISTS" max="32767" attributes="0"/>
+                                      <Component id="FENCED_CODE_BLOCKS" max="32767" attributes="0"/>
+                                      <Component id="HTML_BLOCK_SUPPRESSION" max="32767" attributes="0"/>
+                                      <Component id="WIKILINKS" alignment="0" min="-2" pref="412" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="STRIKETHROUGH" alignment="0" min="-2" pref="412" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -102,6 +105,8 @@
                       <Component id="INLINE_HTML_SUPPRESSION" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="WIKILINKS" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="STRIKETHROUGH" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -225,6 +230,19 @@
                 </Property>
               </Properties>
             </Component>
+            <Component class="javax.swing.JCheckBox" name="STRIKETHROUGH">
+              <Properties>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="flow/netbeans/markdown/options/Bundle.properties" key="MarkdownPanel.STRIKETHROUGH.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="flow/netbeans/markdown/options/Bundle.properties" key="MarkdownPanel.STRIKETHROUGH.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="STRIKETHROUGHActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="HTML_EXPORT_PANEL">
@@ -259,7 +277,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="HTML_PANEL_HEADER" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="290" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="407" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -347,7 +365,7 @@
                       <Component id="REORDER_ORDERED_LIST_NUMBER" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="REMOVE_ORDERED_LIST_NUMBER" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="196" max="32767" attributes="0"/>
+                      <EmptySpace pref="222" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

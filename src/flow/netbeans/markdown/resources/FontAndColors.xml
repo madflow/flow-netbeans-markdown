@@ -42,5 +42,5 @@
     <fontcolor name='ref_image' default='image' />
     <fontcolor name='ref_link' default='link' />
     <fontcolor name='whitespace' default='whitespace' />
-
+    <fontcolor name='strikethrough' strikeThrough="black" />
 </fontscolors>

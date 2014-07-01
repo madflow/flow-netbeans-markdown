@@ -30,6 +30,7 @@ import org.pegdown.ast.ReferenceNode;
 import org.pegdown.ast.RootNode;
 import org.pegdown.ast.SimpleNode;
 import org.pegdown.ast.SpecialTextNode;
+import org.pegdown.ast.StrikeNode;
 import org.pegdown.ast.StrongEmphSuperNode;
 import org.pegdown.ast.SuperNode;
 import org.pegdown.ast.TableBodyNode;
@@ -214,5 +215,9 @@ public class MarkdownTOCVisitor implements Visitor {
 
     @Override
     public void visit(Node node) {
+    }
+
+    @Override
+    public void visit(StrikeNode node) {
     }
 }

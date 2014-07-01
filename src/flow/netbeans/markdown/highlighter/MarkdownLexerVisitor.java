@@ -25,6 +25,7 @@ import org.pegdown.ast.ReferenceNode;
 import org.pegdown.ast.RootNode;
 import org.pegdown.ast.SimpleNode;
 import org.pegdown.ast.SpecialTextNode;
+import org.pegdown.ast.StrikeNode;
 import org.pegdown.ast.StrongEmphSuperNode;
 import org.pegdown.ast.SuperNode;
 import org.pegdown.ast.TableBodyNode;
@@ -326,6 +327,13 @@ public class MarkdownLexerVisitor implements Visitor {
     @Override
     public void visit(Node node) {
         addLeafTreeToken(MarkdownTokenId.PLAIN, node);
+    }
+
+    @Override
+    public void visit(StrikeNode node) {
+        beginTreeToken(MarkdownTokenId.STRIKETHROUGH, node);
+        visitChildren(node);
+        endTreeToken();
     }
 
     protected static class MarkdownTreeToken {

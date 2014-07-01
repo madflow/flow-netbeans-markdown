@@ -45,7 +45,6 @@ public class PreviewSerializer extends ToHtmlSerializer {
         }
     }
 
-    @Override
     protected void printImageTag(SuperNode imageNode, String url) {
         printer.print("<img src=\"").print(resolveImageUrl(url)).print("\"  alt=\"")
                 .printEncoded(printChildrenToString(imageNode)).print("\"/>");

@@ -20,6 +20,7 @@ public final class MarkdownGlobalOptions {
     private static final String AUTOLINKS = "AUTOLINKS"; // NOI18N
     private static final String WIKILINKS = "WIKILINKS"; // NOI18N
     private static final String TABLES = "TABLES"; // NOI18N
+    private static final String STRIKETHROUGH = "STRIKETHROUGH"; // NOI18N
     private static final String HTML_BLOCK_SUPPRESSION = "HTML_BLOCK_SUPPRESSION"; // NOI18N
     private static final String INLINE_HTML_SUPPRESSION = "INLINE_HTML_SUPPRESSION"; // NOI18N
     private static final String HTML_TEMPLATE = "HTML_TEMPLATE"; // NOI18N
@@ -53,6 +54,7 @@ public final class MarkdownGlobalOptions {
         smarts = isSmarts();
         tables = isTables();
         wikiLinks = isWikiLinks();
+        strikeThrough = isStrikeThrough();
     }
 
     /**
@@ -99,6 +101,11 @@ public final class MarkdownGlobalOptions {
      */
     private boolean tables = false;
     /**
+     * Whether the "StrikeThrough" extension should be
+     * enabled.
+     */
+    private boolean strikeThrough = false;
+    /**
      * Whether the "Suppress HTML blocks" extension should be enabled.
      */
     private boolean suppressHTMLBlocks = false;
@@ -114,6 +121,7 @@ public final class MarkdownGlobalOptions {
      */
     public int getExtensionsValue() {
         bindPreferences();
+        
         return (smarts ? Extensions.SMARTS : 0)
                 + (quotes ? Extensions.QUOTES : 0)
                 + (abbreviations ? Extensions.ABBREVIATIONS : 0)
@@ -124,7 +132,8 @@ public final class MarkdownGlobalOptions {
                 + (definitions ? Extensions.DEFINITIONS : 0)
                 + (fencedCodeBlocks ? Extensions.FENCED_CODE_BLOCKS : 0)
                 + (suppressHTMLBlocks ? Extensions.SUPPRESS_HTML_BLOCKS : 0)
-                + (suppressInlineHTML ? Extensions.SUPPRESS_INLINE_HTML : 0);
+                + (suppressInlineHTML ? Extensions.SUPPRESS_INLINE_HTML : 0)
+                + (strikeThrough ? Extensions.STRIKETHROUGH : 0);
     }
 
     public boolean isSmarts() {
@@ -197,6 +206,14 @@ public final class MarkdownGlobalOptions {
 
     public void setTables(boolean tables) {
         getPreferences().putBoolean(TABLES, tables);
+    }
+    
+    public boolean isStrikeThrough() {
+        return getPreferences().getBoolean(STRIKETHROUGH, false);
+    }
+
+    public void setStrikeThrough(boolean strikeThrough) {
+        getPreferences().putBoolean(STRIKETHROUGH, strikeThrough);
     }
 
     public boolean isSuppressHTMLBlocks() {

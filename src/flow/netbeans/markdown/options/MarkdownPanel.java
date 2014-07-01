@@ -37,6 +37,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         QUOTES.addActionListener(actionListener);
         SMARTS.addActionListener(actionListener);
         TABLES.addActionListener(actionListener);
+        STRIKETHROUGH.addActionListener(actionListener);
         WIKILINKS.addActionListener(actionListener);
         SAVE_IN_SOURCE_DIR.addActionListener(actionListener);
         FX_HTML_VIEW_ENABLED.addActionListener(actionListener);
@@ -67,6 +68,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         HTML_BLOCK_SUPPRESSION = new javax.swing.JCheckBox();
         INLINE_HTML_SUPPRESSION = new javax.swing.JCheckBox();
         WIKILINKS = new javax.swing.JCheckBox();
+        STRIKETHROUGH = new javax.swing.JCheckBox();
         HTML_EXPORT_PANEL = new javax.swing.JPanel();
         HTML_PANEL_HEADER = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,6 +118,14 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(WIKILINKS, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.WIKILINKS.text")); // NOI18N
         WIKILINKS.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.WIKILINKS.toolTipText")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(STRIKETHROUGH, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.STRIKETHROUGH.text")); // NOI18N
+        STRIKETHROUGH.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.STRIKETHROUGH.toolTipText")); // NOI18N
+        STRIKETHROUGH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                STRIKETHROUGHActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout EXTENSIONS_PANELLayout = new javax.swing.GroupLayout(EXTENSIONS_PANEL);
         EXTENSIONS_PANEL.setLayout(EXTENSIONS_PANELLayout);
         EXTENSIONS_PANELLayout.setHorizontalGroup(
@@ -123,20 +133,22 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                     .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
-                        .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(INLINE_HTML_SUPPRESSION)
-                            .addComponent(SMARTS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(QUOTES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ABBREVIATIONS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(HARDWRAPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(AUTOLINKS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TABLES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DEFINITION_LISTS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(FENCED_CODE_BLOCKS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(HTML_BLOCK_SUPPRESSION, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(WIKILINKS, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(INLINE_HTML_SUPPRESSION)
+                                .addComponent(SMARTS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(QUOTES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ABBREVIATIONS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(HARDWRAPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(AUTOLINKS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TABLES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(DEFINITION_LISTS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(FENCED_CODE_BLOCKS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(HTML_BLOCK_SUPPRESSION, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(WIKILINKS, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(STRIKETHROUGH, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         EXTENSIONS_PANELLayout.setVerticalGroup(
@@ -166,6 +178,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(INLINE_HTML_SUPPRESSION)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(WIKILINKS)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(STRIKETHROUGH)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -193,7 +207,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(HTML_PANEL_HEADER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -267,7 +281,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(REORDER_ORDERED_LIST_NUMBER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(REMOVE_ORDERED_LIST_NUMBER)
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -292,6 +306,10 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private void TYPING_HOOKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TYPING_HOOKSActionPerformed
         setTypinghooksEnabled(TYPING_HOOKS.isSelected());
     }//GEN-LAST:event_TYPING_HOOKSActionPerformed
+
+    private void STRIKETHROUGHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STRIKETHROUGHActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_STRIKETHROUGHActionPerformed
 
     private void setMimeType(JEditorPane editorPane, String mimeType, String extension) {
         FileSystem fileSystem = FileUtil.createMemoryFileSystem();
@@ -356,6 +374,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         SMARTS.setSelected(options.isSmarts());
         TABLES.setSelected(options.isTables());
         WIKILINKS.setSelected(options.isWikiLinks());
+        STRIKETHROUGH.setSelected(options.isStrikeThrough());
         HTML_TEMPLATE.setText(options.getHtmlTemplate());
         VIEW_HTML_ON_SAVE.setSelected(options.isViewHtmlOnSave());
         SAVE_IN_SOURCE_DIR.setSelected(options.isSaveInSourceDir());
@@ -390,6 +409,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         options.setSmarts(SMARTS.isSelected());
         options.setTables(TABLES.isSelected());
         options.setWikiLinks(WIKILINKS.isSelected());
+        options.setStrikeThrough(STRIKETHROUGH.isSelected());
         options.setHtmlTemplate(HTML_TEMPLATE.getText());
         options.setViewHtmlOnSave(VIEW_HTML_ON_SAVE.isSelected());
         options.setSaveInSourceDir(SAVE_IN_SOURCE_DIR.isSelected());
@@ -448,6 +468,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox REORDER_ORDERED_LIST_NUMBER;
     private javax.swing.JCheckBox SAVE_IN_SOURCE_DIR;
     private javax.swing.JCheckBox SMARTS;
+    private javax.swing.JCheckBox STRIKETHROUGH;
     private javax.swing.JCheckBox TABLES;
     private javax.swing.JTabbedPane TABS;
     private javax.swing.JCheckBox TYPING_HOOKS;
