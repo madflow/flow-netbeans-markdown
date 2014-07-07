@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -45,7 +46,9 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
         try {
             Renderable renderable = context.getLookup().lookup(Renderable.class);
 
-            Set<RenderOption> renderOptions = Collections.emptySet();
+            Set<RenderOption> renderOptions = EnumSet.of(
+                    RenderOption.PREFER_EDITOR,
+                    RenderOption.RESOLVE_IMAGE_URLS);
             String htmlText = renderable.renderAsHtml(renderOptions);
             String saveTo = MarkdownGlobalOptions.getInstance()
                     .isSaveInSourceDir() ? context.getPrimaryFile()
