@@ -77,7 +77,9 @@
         <folder name="text">
             <folder name="x-markdown">
                 <folder name="CodeTemplates">
-                    <file name="code-templates.xml" url="code-templates.xml"/>
+                    <folder name="Defaults">
+                        <file name="code-templates.xml" url="code-templates.xml"/>
+                    </folder>
                 </folder>
                 <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.resources.Bundle"/>
                 <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#Editors/text/x-markdown"/>
