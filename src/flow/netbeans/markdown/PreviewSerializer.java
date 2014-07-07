@@ -3,6 +3,7 @@ package flow.netbeans.markdown;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
 import org.pegdown.ast.SuperNode;
 
@@ -47,6 +48,21 @@ public class PreviewSerializer extends ToHtmlSerializer {
 
     protected void printImageTag(SuperNode imageNode, String url) {
         printer.print("<img src=\"").print(resolveImageUrl(url)).print("\"  alt=\"")
-                .printEncoded(printChildrenToString(imageNode)).print("\"/>");
+                .printEncoded(printChildrenToString(imageNode)).print("\" />");
+    }
+    
+    @Override
+    protected void printImageTag(LinkRenderer.Rendering rendering) {
+        printer.print("<img");
+        printAttribute("src", resolveImageUrl(rendering.href));
+        printAttribute("alt", rendering.text);
+        for (LinkRenderer.Attribute attr : rendering.attributes) {
+            printAttribute(attr.name, attr.value);
+        }
+        printer.print(" />");
+    }
+    
+    private void printAttribute(String name, String value) {
+        printer.print(' ').print(name).print('=').print('"').print(value).print('"');
     }
 }
