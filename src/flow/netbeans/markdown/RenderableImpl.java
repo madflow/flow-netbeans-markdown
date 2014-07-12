@@ -12,6 +12,7 @@ import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
+import org.pegdown.LinkRenderer;
 import org.pegdown.ParsingTimeoutException;
 import org.pegdown.PegDownProcessor;
 import org.pegdown.ast.RootNode;
@@ -52,7 +53,10 @@ public class RenderableImpl implements Renderable {
                 bodyText = htmlSerializer.toHtml(rootNode);
             }
             else {
-                bodyText = markdownProcessor.markdownToHtml(sourceText);
+                RootNode rootNode = markdownProcessor.parseMarkdown(sourceText.toCharArray());
+                final ExportSerializer htmlSerializer
+                        = new ExportSerializer(new LinkRenderer());
+                bodyText = htmlSerializer.toHtml(rootNode);
             }
         }
         catch (ParsingTimeoutException ex) {

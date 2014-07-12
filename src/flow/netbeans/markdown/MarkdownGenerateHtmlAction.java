@@ -46,9 +46,7 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
         try {
             Renderable renderable = context.getLookup().lookup(Renderable.class);
 
-            Set<RenderOption> renderOptions = EnumSet.of(
-                    RenderOption.PREFER_EDITOR,
-                    RenderOption.RESOLVE_IMAGE_URLS);
+            Set<RenderOption> renderOptions = Collections.emptySet();
             String htmlText = renderable.renderAsHtml(renderOptions);
             String saveTo = MarkdownGlobalOptions.getInstance()
                     .isSaveInSourceDir() ? context.getPrimaryFile()
