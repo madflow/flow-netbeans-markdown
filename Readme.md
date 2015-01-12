@@ -20,6 +20,13 @@ You may also compile a binary yourself with the **latest development code**.
  4. Choose "Create NBM" from the project menu
  5. Install the plugin with: Tools -> Plugins -> Downloaded
 
+If you just want Markdown-Support - you can **download a pre-packaged release**:
+
+ - https://github.com/madflow/flow-netbeans-markdown/releases (list of all releases)
+ - https://github.com/madflow/flow-netbeans-markdown/releases/download/2.0/flow-netbeans-markdown.nbm (**note:** version 2.0)
+
+Install the plugin with: `Tools -> Plugins -> Downloaded`
+
 # Requirements
 
 - NetBeans >= 8.0
