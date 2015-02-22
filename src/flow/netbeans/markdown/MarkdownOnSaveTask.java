@@ -33,6 +33,12 @@ public final class MarkdownOnSaveTask implements OnSaveTask{
             MarkdownViewHtmlAction viewAction = new MarkdownViewHtmlAction(dataObject);
             viewAction.actionPerformed(null);
         }
+
+        // export html
+        if (MarkdownGlobalOptions.getInstance().isExportOnSave()) {
+            MarkdownGenerateHtmlAction exportAction = new MarkdownGenerateHtmlAction(dataObject);
+            exportAction.exportOnSave();
+        }
     }
 
     @Override
