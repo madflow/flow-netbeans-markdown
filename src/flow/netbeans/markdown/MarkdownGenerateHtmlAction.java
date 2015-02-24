@@ -8,6 +8,7 @@ import flow.netbeans.markdown.api.Renderable;
 import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -20,6 +21,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 
@@ -37,8 +39,25 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
 
     private final MarkdownDataObject context;
 
-    public MarkdownGenerateHtmlAction(MarkdownDataObject context) throws IOException {
+    public MarkdownGenerateHtmlAction(MarkdownDataObject context) {
         this.context = context;
+    }
+
+    public void exportOnSave() {
+        try {
+            Renderable renderable = context.getLookup().lookup(Renderable.class);
+            Set<RenderOption> renderOptions = EnumSet.of(RenderOption.PREFER_EDITOR);
+            String htmlText = renderable.renderAsHtml(renderOptions);
+
+            FileObject markdownFile = context.getPrimaryFile();
+            String htmlFile = markdownFile.getParent().getPath() + File.separator + markdownFile.getName() + ".html";
+
+            PrintStream out = new PrintStream(new FileOutputStream(htmlFile));
+            out.print(htmlText);
+            out.close();
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 
     @Override
@@ -47,14 +66,17 @@ public final class MarkdownGenerateHtmlAction implements ActionListener {
             Renderable renderable = context.getLookup().lookup(Renderable.class);
 
             Set<RenderOption> renderOptions = Collections.emptySet();
+            FileObject markdownFile = context.getPrimaryFile();
+
+            String fileName = markdownFile.getName();
             String htmlText = renderable.renderAsHtml(renderOptions);
-            String saveTo = MarkdownGlobalOptions.getInstance()
-                    .isSaveInSourceDir() ? context.getPrimaryFile()
-                            .getParent().getPath() : "user.home";
+            String saveTo = MarkdownGlobalOptions.getInstance().isSaveInSourceDir() ? markdownFile.getParent().getPath() : "user.home";
+
             JFileChooser fileChooser = new JFileChooser(saveTo);
+            fileChooser.setSelectedFile(new File(fileName + ".html"));
+
             int option = fileChooser.showSaveDialog(fileChooser);
             int result = 0;
-            String fileName;
 
             if (option == JFileChooser.APPROVE_OPTION) {
                 fileName = fileChooser.getSelectedFile().toString();

@@ -1,9 +1,13 @@
 package flow.netbeans.markdown.options;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import javax.swing.JCheckBox;
 import javax.swing.JEditorPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
@@ -26,24 +30,22 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         initComponents();
         setMimeType(HTML_TEMPLATE, "text/html", "html");
 
-        ActionListener actionListener = new ActionHandler();
-        ABBREVIATIONS.addActionListener(actionListener);
-        AUTOLINKS.addActionListener(actionListener);
-        DEFINITION_LISTS.addActionListener(actionListener);
-        FENCED_CODE_BLOCKS.addActionListener(actionListener);
-        HARDWRAPS.addActionListener(actionListener);
-        HTML_BLOCK_SUPPRESSION.addActionListener(actionListener);
-        INLINE_HTML_SUPPRESSION.addActionListener(actionListener);
-        QUOTES.addActionListener(actionListener);
-        SMARTS.addActionListener(actionListener);
-        TABLES.addActionListener(actionListener);
-        STRIKETHROUGH.addActionListener(actionListener);
-        WIKILINKS.addActionListener(actionListener);
-        SAVE_IN_SOURCE_DIR.addActionListener(actionListener);
-        FX_HTML_VIEW_ENABLED.addActionListener(actionListener);
+        bindDefaultAction(this.getComponents(), new ActionHandler());
 
         DocumentListener documentListener = new DocumentHandler();
         HTML_TEMPLATE.getDocument().addDocumentListener(documentListener);
+    }
+
+    private void bindDefaultAction(Component[] comps, ActionListener actionListener) {
+        for (Component comp : comps) {
+            if (comp instanceof JTabbedPane) {
+                bindDefaultAction(((JTabbedPane)comp).getComponents(), actionListener);
+            } else if(comp instanceof JPanel) {
+                bindDefaultAction(((JPanel)comp).getComponents(), actionListener);
+            } else if (comp instanceof JCheckBox) {
+                ((JCheckBox)comp).addActionListener(actionListener);
+            }
+        }
     }
 
     /**
@@ -82,6 +84,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         REORDER_ORDERED_LIST_NUMBER = new javax.swing.JCheckBox();
         REMOVE_ORDERED_LIST_NUMBER = new javax.swing.JCheckBox();
         FX_HTML_VIEW_ENABLED = new javax.swing.JCheckBox();
+        EXPORT_ON_SAVE = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(EXTENSIONS_PANEL_HEADER, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXTENSIONS_PANEL_HEADER.text")); // NOI18N
 
@@ -120,11 +123,6 @@ public final class MarkdownPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(STRIKETHROUGH, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.STRIKETHROUGH.text")); // NOI18N
         STRIKETHROUGH.setToolTipText(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.STRIKETHROUGH.toolTipText")); // NOI18N
-        STRIKETHROUGH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                STRIKETHROUGHActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout EXTENSIONS_PANELLayout = new javax.swing.GroupLayout(EXTENSIONS_PANEL);
         EXTENSIONS_PANEL.setLayout(EXTENSIONS_PANELLayout);
@@ -133,7 +131,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+                    .addComponent(EXTENSIONS_PANEL_HEADER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(EXTENSIONS_PANELLayout.createSequentialGroup()
                         .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(EXTENSIONS_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -207,7 +205,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(HTML_PANEL_HEADER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -216,6 +214,11 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(VIEW_HTML_ON_SAVE, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.VIEW_HTML_ON_SAVE.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(SAVE_IN_SOURCE_DIR, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.SAVE_IN_SOURCE_DIR.text")); // NOI18N
+        SAVE_IN_SOURCE_DIR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SAVE_IN_SOURCE_DIRActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(TYPING_HOOKS, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.TYPING_HOOKS.text_1")); // NOI18N
         TYPING_HOOKS.addActionListener(new java.awt.event.ActionListener() {
@@ -238,6 +241,12 @@ public final class MarkdownPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(FX_HTML_VIEW_ENABLED, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.FX_HTML_VIEW_ENABLED.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(EXPORT_ON_SAVE, org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.EXPORT_ON_SAVE.text_1")); // NOI18N
+        EXPORT_ON_SAVE.setEnabled(false);
+        EXPORT_ON_SAVE.setMaximumSize(new java.awt.Dimension(215, 23));
+        EXPORT_ON_SAVE.setMinimumSize(new java.awt.Dimension(215, 23));
+        EXPORT_ON_SAVE.setPreferredSize(new java.awt.Dimension(215, 23));
+
         javax.swing.GroupLayout MISC_PANELLayout = new javax.swing.GroupLayout(MISC_PANEL);
         MISC_PANEL.setLayout(MISC_PANELLayout);
         MISC_PANELLayout.setHorizontalGroup(
@@ -245,22 +254,27 @@ public final class MarkdownPanel extends javax.swing.JPanel {
             .addGroup(MISC_PANELLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MISC_PANELLayout.createSequentialGroup()
-                        .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.PREFERRED_SIZE, 255, Short.MAX_VALUE))
-                            .addComponent(TYPING_HOOKS)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MISC_PANELLayout.createSequentialGroup()
+                        .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(VIEW_HTML_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SAVE_IN_SOURCE_DIR, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(6, 6, 6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MISC_PANELLayout.createSequentialGroup()
+                        .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(FX_HTML_VIEW_ENABLED, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TYPING_HOOKS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(MISC_PANELLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(AUTO_ADDITION_LIST)
-                                    .addComponent(REMOVE_EMPTY_LIST)
-                                    .addComponent(REORDER_ORDERED_LIST_NUMBER)
-                                    .addComponent(REMOVE_ORDERED_LIST_NUMBER))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(FX_HTML_VIEW_ENABLED, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
-                .addContainerGap())
+                                .addGap(21, 21, 21)
+                                .addGroup(MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(REMOVE_ORDERED_LIST_NUMBER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(REORDER_ORDERED_LIST_NUMBER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(REMOVE_EMPTY_LIST, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(AUTO_ADDITION_LIST, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))))
+                        .addContainerGap())
+                    .addGroup(MISC_PANELLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(EXPORT_ON_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         MISC_PANELLayout.setVerticalGroup(
             MISC_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,6 +283,8 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(VIEW_HTML_ON_SAVE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SAVE_IN_SOURCE_DIR)
+                .addGap(0, 0, 0)
+                .addComponent(EXPORT_ON_SAVE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FX_HTML_VIEW_ENABLED)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -281,7 +297,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
                 .addComponent(REORDER_ORDERED_LIST_NUMBER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(REMOVE_ORDERED_LIST_NUMBER)
-                .addContainerGap(222, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
         TABS.addTab(org.openide.util.NbBundle.getMessage(MarkdownPanel.class, "MarkdownPanel.MISC_PANEL.TabConstraints.tabTitle"), MISC_PANEL); // NOI18N
@@ -290,16 +306,11 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(TABS)
-                .addContainerGap())
+            .addComponent(TABS)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addComponent(TABS)
-                .addContainerGap())
+            .addComponent(TABS)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -307,9 +318,14 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         setTypinghooksEnabled(TYPING_HOOKS.isSelected());
     }//GEN-LAST:event_TYPING_HOOKSActionPerformed
 
-    private void STRIKETHROUGHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STRIKETHROUGHActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_STRIKETHROUGHActionPerformed
+    private void SAVE_IN_SOURCE_DIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SAVE_IN_SOURCE_DIRActionPerformed
+        if (SAVE_IN_SOURCE_DIR.isSelected()) {
+            EXPORT_ON_SAVE.setEnabled(true);
+        } else {
+            EXPORT_ON_SAVE.setSelected(false);
+            EXPORT_ON_SAVE.setEnabled(false);
+        }
+    }//GEN-LAST:event_SAVE_IN_SOURCE_DIRActionPerformed
 
     private void setMimeType(JEditorPane editorPane, String mimeType, String extension) {
         FileSystem fileSystem = FileUtil.createMemoryFileSystem();
@@ -377,7 +393,11 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         STRIKETHROUGH.setSelected(options.isStrikeThrough());
         HTML_TEMPLATE.setText(options.getHtmlTemplate());
         VIEW_HTML_ON_SAVE.setSelected(options.isViewHtmlOnSave());
-        SAVE_IN_SOURCE_DIR.setSelected(options.isSaveInSourceDir());
+        if (options.isSaveInSourceDir()) {
+            SAVE_IN_SOURCE_DIR.setSelected(true);
+            EXPORT_ON_SAVE.setEnabled(true);
+        }
+        EXPORT_ON_SAVE.setSelected(options.isExportOnSave());
         // typing hooks
         TYPING_HOOKS.setSelected(options.isTypingHooks());
         AUTO_ADDITION_LIST.setSelected(options.isAutoAdditionList());
@@ -413,6 +433,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
         options.setHtmlTemplate(HTML_TEMPLATE.getText());
         options.setViewHtmlOnSave(VIEW_HTML_ON_SAVE.isSelected());
         options.setSaveInSourceDir(SAVE_IN_SOURCE_DIR.isSelected());
+        options.setExportOnSave(EXPORT_ON_SAVE.isSelected());
         // typing hooks
         options.setTypingHooks(TYPING_HOOKS.isSelected());
         options.setAutoAdditionList(AUTO_ADDITION_LIST.isSelected());
@@ -451,6 +472,7 @@ public final class MarkdownPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox AUTOLINKS;
     private javax.swing.JCheckBox AUTO_ADDITION_LIST;
     private javax.swing.JCheckBox DEFINITION_LISTS;
+    private javax.swing.JCheckBox EXPORT_ON_SAVE;
     private javax.swing.JPanel EXTENSIONS_PANEL;
     private javax.swing.JLabel EXTENSIONS_PANEL_HEADER;
     private javax.swing.JCheckBox FENCED_CODE_BLOCKS;

@@ -26,6 +26,7 @@ public final class MarkdownGlobalOptions {
     private static final String HTML_TEMPLATE = "HTML_TEMPLATE"; // NOI18N
     private static final String VIEW_HTML_ON_SAVE = "VIEW_HTML_ON_SAVE"; // NOI18N
     private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
+    private static final String EXPORT_ON_SAVE = "EXPORT_ON_SAVE"; // NOI18N
 
     // typing hooks
     private static final String TYPING_HOOKS = "TYPING_HOOKS"; // NOI18N
@@ -254,6 +255,14 @@ public final class MarkdownGlobalOptions {
 
     public void setSaveInSourceDir(boolean saveIn) {
         getPreferences().putBoolean(SAVE_IN_SOURCE_DIR, saveIn);
+    }
+
+    public boolean isExportOnSave() {
+        return getPreferences().getBoolean(EXPORT_ON_SAVE, false);
+    }
+
+    public void setExportOnSave(boolean export) {
+        getPreferences().putBoolean(EXPORT_ON_SAVE, export);
     }
 
     // typing hooks
