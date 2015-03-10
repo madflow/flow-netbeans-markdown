@@ -52,9 +52,10 @@ You may also compile a binary yourself with the **latest development code**.
 
 # Authors
 
-- Florian Reiss <https://github.com/madflow/>
+- Florian Reiss <https://github.com/madflow>
 - junichi11 <https://github.com/junichi11>
-- Holger Stenger <https://github.com/stengerh/>
+- Holger Stenger <https://github.com/stengerh>
+- Radosław Kowalewski <https://github.com/srsbiz>
 
 Contributions are always welcome and greatly appreciated!
 
