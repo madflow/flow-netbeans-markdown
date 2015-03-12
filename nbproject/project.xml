@@ -231,20 +231,20 @@
             </test-dependencies>
             <public-packages/>
             <class-path-extension>
-                <runtime-relative-path>ext/parboiled-java-1.1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/parboiled-java-1.1.6.jar</binary-origin>
+                <runtime-relative-path>ext/parboiled-java-1.1.7.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/parboiled-java-1.1.7.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/pegdown-1.4.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/pegdown-1.4.2.jar</binary-origin>
+                <runtime-relative-path>ext/pegdown-1.5.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/pegdown-1.5.0.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/asm-util-4.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/asm-util-4.1.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/parboiled-core-1.1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/parboiled-core-1.1.6.jar</binary-origin>
+                <runtime-relative-path>ext/parboiled-core-1.1.7.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/parboiled-core-1.1.7.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/asm-4.1.jar</runtime-relative-path>
