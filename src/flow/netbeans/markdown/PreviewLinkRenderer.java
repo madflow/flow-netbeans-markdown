@@ -62,11 +62,23 @@ public class PreviewLinkRenderer extends LinkRenderer {
         return uriText;
     }
 
+    /**
+     * Transforms the rendered href URL
+     *
+     * @param rendering
+     * @return
+     */
     private LinkRenderer.Rendering transform(LinkRenderer.Rendering rendering) {
         if (resolveLinkUrls && (rendering.href != null)) {
-            rendering.href = resolveUrl(rendering.href);
+            LinkRenderer.Rendering resolvedRendering = new LinkRenderer.Rendering(
+                resolveUrl(rendering.href), rendering.text);
+            for (LinkRenderer.Attribute attr : rendering.attributes) {
+              resolvedRendering.withAttribute(attr);
+            }
+            return resolvedRendering;
+        } else {
+          return rendering;
         }
-        return rendering;
     }
 
 }
