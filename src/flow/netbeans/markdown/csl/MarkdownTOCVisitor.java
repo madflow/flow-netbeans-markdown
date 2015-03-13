@@ -6,6 +6,7 @@ import org.netbeans.modules.csl.api.OffsetRange;
 import org.netbeans.modules.csl.api.StructureItem;
 import org.openide.filesystems.FileObject;
 import org.pegdown.ast.AbbreviationNode;
+import org.pegdown.ast.AnchorLinkNode;
 import org.pegdown.ast.AutoLinkNode;
 import org.pegdown.ast.BlockQuoteNode;
 import org.pegdown.ast.BulletListNode;
@@ -66,6 +67,10 @@ public class MarkdownTOCVisitor implements Visitor {
 
     @Override
     public void visit(AbbreviationNode node) {
+    }
+
+    @Override
+    public void visit(AnchorLinkNode node) {
     }
 
     @Override

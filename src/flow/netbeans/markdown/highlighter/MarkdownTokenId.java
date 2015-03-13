@@ -12,6 +12,7 @@ import org.netbeans.spi.lexer.LexerRestartInfo;
 public enum MarkdownTokenId implements TokenId {
 
     ABBREVIATION,
+    ANCHORLINK,
     AUTOLINK,
     BLOCKQUOTE,
     BULLETLIST,
@@ -45,7 +46,7 @@ public enum MarkdownTokenId implements TokenId {
     REF_LINK,
     WHITESPACE,
     STRIKETHROUGH;
-        
+
     private static final Language<MarkdownTokenId> LANGUAGE = new LanguageHierarchy<MarkdownTokenId>() {
 
         @Override

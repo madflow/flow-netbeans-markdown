@@ -2,6 +2,7 @@
 package flow.netbeans.markdown.csl;
 
 import org.pegdown.ast.AbbreviationNode;
+import org.pegdown.ast.AnchorLinkNode;
 import org.pegdown.ast.AutoLinkNode;
 import org.pegdown.ast.BlockQuoteNode;
 import org.pegdown.ast.BulletListNode;
@@ -59,6 +60,11 @@ public class MarkdownInlineVisitor implements Visitor {
     @Override
     public void visit(AbbreviationNode node) {
         visitChildren(node);
+    }
+
+    @Override
+    public void visit(AnchorLinkNode node) {
+        plainText.append(node.getText());
     }
 
     @Override
@@ -258,7 +264,7 @@ public class MarkdownInlineVisitor implements Visitor {
     public void visit(Node node) {
         visitChildren(node);
     }
-    
+
     @Override
     public void visit(StrikeNode node) {
         visitChildren(node);

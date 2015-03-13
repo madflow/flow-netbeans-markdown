@@ -1,6 +1,7 @@
 package flow.netbeans.markdown.highlighter;
 
 import org.pegdown.ast.AbbreviationNode;
+import org.pegdown.ast.AnchorLinkNode;
 import org.pegdown.ast.AutoLinkNode;
 import org.pegdown.ast.BlockQuoteNode;
 import org.pegdown.ast.BulletListNode;
@@ -88,6 +89,11 @@ public class MarkdownLexerVisitor implements Visitor {
         visitChildren(node);
         visitNode(node.getExpansion());
         endTreeToken();
+    }
+
+    @Override
+    public void visit(AnchorLinkNode node) {
+        addLeafTreeToken(MarkdownTokenId.ANCHORLINK, node);
     }
 
     @Override
