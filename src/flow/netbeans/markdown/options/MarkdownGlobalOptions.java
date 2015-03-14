@@ -11,6 +11,16 @@ import org.pegdown.Extensions;
 public final class MarkdownGlobalOptions {
 
     private static final MarkdownGlobalOptions INSTANCE = new MarkdownGlobalOptions();
+
+    /** The default for whether to use a custom preview refresh interval. */
+    private static final boolean DEFAULT_USE_CUSTOM_PREVIEW_REFRESH_INTERVAL = false;
+    /** The default preview refresh interval in milliseconds. */
+    private static final int DEFAULT_PREVIEW_REFRESH_INTERVAL = 1000;
+    /** The minimum preview refresh interval in milliseconds. */
+    static final int MIN_PREVIEW_INTERVAL = 10;
+    /** The maximum preview refresh interval in milliseconds. */
+    static final int MAX_PREVIEW_INTERVAL = 10000;
+
     private static final String SMARTS = "SMARTS"; // NOI18N
     private static final String QUOTES = "QUOTES"; // NOI18N
     private static final String ABBREVIATIONS = "ABBREVIATIONS"; // NOI18N
@@ -27,6 +37,8 @@ public final class MarkdownGlobalOptions {
     private static final String VIEW_HTML_ON_SAVE = "VIEW_HTML_ON_SAVE"; // NOI18N
     private static final String SAVE_IN_SOURCE_DIR = "SAVE_IN_SOURCE_DIR"; // NOI18N
     private static final String EXPORT_ON_SAVE = "EXPORT_ON_SAVE"; // NOI18N
+    private static final String USE_CUSTOM_PREVIEW_REFRESH_INTERVAL = "USE_CUSTOM_PREVIEW_INTERVAL";
+    private static final String CUSTOM_PREVIEW_REFRESH_INTERVAL = "CUSTOM_PREVIEW_INTERVAL";
 
     // typing hooks
     private static final String TYPING_HOOKS = "TYPING_HOOKS"; // NOI18N
@@ -122,7 +134,7 @@ public final class MarkdownGlobalOptions {
      */
     public int getExtensionsValue() {
         bindPreferences();
-        
+
         return (smarts ? Extensions.SMARTS : 0)
                 + (quotes ? Extensions.QUOTES : 0)
                 + (abbreviations ? Extensions.ABBREVIATIONS : 0)
@@ -208,7 +220,7 @@ public final class MarkdownGlobalOptions {
     public void setTables(boolean tables) {
         getPreferences().putBoolean(TABLES, tables);
     }
-    
+
     public boolean isStrikeThrough() {
         return getPreferences().getBoolean(STRIKETHROUGH, false);
     }
@@ -305,13 +317,37 @@ public final class MarkdownGlobalOptions {
     public void setRemoveOrderedListNumber(boolean isRemoveOrderedList) {
         getPreferences().putBoolean(REMOVE_ORDERED_LIST, isRemoveOrderedList);
     }
-    
+
     public boolean isFXHtmlViewEnabled() {
         return getPreferences().getBoolean(FX_HTML_VIEW_ENABLED, true);
     }
 
     public void setFXHtmlViewEnabled(boolean fxHtmlViewEnabled) {
         getPreferences().putBoolean(FX_HTML_VIEW_ENABLED, fxHtmlViewEnabled);
+    }
+
+    public boolean isCustomPreviewRefreshIntervalUsed() {
+      return getPreferences()
+          .getBoolean(USE_CUSTOM_PREVIEW_REFRESH_INTERVAL, DEFAULT_USE_CUSTOM_PREVIEW_REFRESH_INTERVAL);
+    }
+
+    public void setUseCustomPreviewRefreshInterval(final boolean useCustomPreviewRefreshInterval) {
+      getPreferences().putBoolean(USE_CUSTOM_PREVIEW_REFRESH_INTERVAL, useCustomPreviewRefreshInterval);
+    }
+
+    public int getCustomPreviewRefreshInterval() {
+      return getPreferences()
+          .getInt(CUSTOM_PREVIEW_REFRESH_INTERVAL, DEFAULT_PREVIEW_REFRESH_INTERVAL);
+    }
+
+    public int getPreviewRefreshIntervalInUse() {
+      return isCustomPreviewRefreshIntervalUsed() ?
+          getPreferences().getInt(CUSTOM_PREVIEW_REFRESH_INTERVAL, DEFAULT_PREVIEW_REFRESH_INTERVAL) :
+          DEFAULT_PREVIEW_REFRESH_INTERVAL;
+    }
+
+    public void setCustomPreviewRefreshInterval(final int customPreviewRefreshInterval) {
+      getPreferences().putInt(CUSTOM_PREVIEW_REFRESH_INTERVAL, customPreviewRefreshInterval);
     }
 
     private Preferences getPreferences() {
