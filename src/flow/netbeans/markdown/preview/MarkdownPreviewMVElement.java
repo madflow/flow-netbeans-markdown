@@ -5,6 +5,7 @@ import flow.netbeans.markdown.MarkdownViewHtmlAction;
 import flow.netbeans.markdown.api.RenderOption;
 import flow.netbeans.markdown.api.Renderable;
 import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
+import flow.netbeans.markdown.options.MarkdownGlobalOptions;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -177,7 +178,7 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
     }
 
     private void updatePreview() {
-        updateTask.schedule(1000);
+        updateTask.schedule(MarkdownGlobalOptions.getInstance().getPreviewRefreshIntervalInUse());
     }
 
     private void doUpdatePreview() {
@@ -262,7 +263,7 @@ public class MarkdownPreviewMVElement implements MultiViewElement {
     })
     public static class PreviewExternalAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
-        
+
         @StaticResource
         private static final String ICON_PATH = "flow/netbeans/markdown/resources/action-view.png";
 
