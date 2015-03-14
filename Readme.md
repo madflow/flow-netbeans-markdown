@@ -11,7 +11,7 @@ Source: <http://daringfireball.net/projects/markdown/>
 If you just want Markdown-Support - you can **download a pre-packaged release**:
 
  - https://github.com/madflow/flow-netbeans-markdown/releases (list of all releases)
- - https://github.com/madflow/flow-netbeans-markdown/releases/download/2.0/flow-netbeans-markdown.nbm (**note:** version 2.0)
+ - https://github.com/madflow/flow-netbeans-markdown/releases/download/2.1/flow-netbeans-markdown.nbm (**note:** version 2.1)
  
 Install the plugin with: `Tools -> Plugins -> Downloaded`
 
