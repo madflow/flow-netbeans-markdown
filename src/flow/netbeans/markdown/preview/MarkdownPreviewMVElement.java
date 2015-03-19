@@ -43,7 +43,7 @@ import org.openide.windows.TopComponent;
 @NbBundle.Messages("Preview=Preview")
 @MultiViewElement.Registration(
         displayName = "#Preview",
-        iconBase = "flow/netbeans/markdown/resources/text-x-generic.png",
+        iconBase = "flow/netbeans/markdown/resources/markdown-mark-16x16.png",
         persistenceType = TopComponent.PERSISTENCE_ONLY_OPENED,
         mimeType = MarkdownLanguageConfig.MIME_TYPE,
         preferredID = "markdown.preview",
