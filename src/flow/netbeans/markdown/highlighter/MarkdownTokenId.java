@@ -3,8 +3,12 @@ package flow.netbeans.markdown.highlighter;
 import flow.netbeans.markdown.csl.MarkdownLanguageConfig;
 import java.util.Collection;
 import java.util.EnumSet;
+import org.netbeans.api.lexer.InputAttributes;
 import org.netbeans.api.lexer.Language;
+import org.netbeans.api.lexer.LanguagePath;
+import org.netbeans.api.lexer.Token;
 import org.netbeans.api.lexer.TokenId;
+import org.netbeans.spi.lexer.LanguageEmbedding;
 import org.netbeans.spi.lexer.LanguageHierarchy;
 import org.netbeans.spi.lexer.Lexer;
 import org.netbeans.spi.lexer.LexerRestartInfo;
@@ -62,6 +66,17 @@ public enum MarkdownTokenId implements TokenId {
         @Override
         protected String mimeType() {
             return MarkdownLanguageConfig.MIME_TYPE;
+        }
+
+        @Override
+        protected LanguageEmbedding<?> embedding(Token<MarkdownTokenId> token, LanguagePath languagePath, InputAttributes inputAttributes) {
+          if ((token.id() == MarkdownTokenId.HTMLBLOCK) || (token.id() == MarkdownTokenId.INLINEHTML)) {
+            Language<?> htmlLanguage = Language.find("text/html");
+            if (htmlLanguage != null) {
+              return LanguageEmbedding.create(htmlLanguage, 0, 0);
+            }
+          }
+          return null;
         }
     }.language();
 
