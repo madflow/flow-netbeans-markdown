@@ -12,7 +12,7 @@ If you just want Markdown-Support - you can **download a pre-packaged release**:
 
  - https://github.com/madflow/flow-netbeans-markdown/releases (list of all releases)
  - https://github.com/madflow/flow-netbeans-markdown/releases/download/2.1/flow-netbeans-markdown.nbm (**note:** version 2.1)
- 
+
 Install the plugin with: `Tools -> Plugins -> Downloaded`
 
 You may also compile a binary yourself with the **latest development code**.
@@ -65,5 +65,9 @@ Contributions are always welcome and greatly appreciated!
 - [PegDown][] : A pure-Java Markdown processor based on a parboiled PEG parser supporting a number of extensions.
 - http://daringfireball.net/projects/markdown/ : Home of the Markdown (Basics, Syntax)
 - http://openiconlibrary.sourceforge.net/ : Icons
+- [Markdown Mark][mdmark] : A graphic element to identify Markdown files created by [Dustin Curtis][dcurtis] ([Github repo][mdmark-gh])
 
+[dcurtis]: http://dustincurtis.com/
+[mdmark]: http://dcurt.is/the-markdown-mark
+[mdmark-gh]: https://github.com/dcurtis/markdown-mark
 [pegdown]: https://github.com/sirthias/pegdown

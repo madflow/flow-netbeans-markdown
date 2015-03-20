@@ -31,7 +31,7 @@ public class MarkdownDataObject extends MultiDataObject {
 
         lookupContent = new InstanceContent();
         lookupContent.add(new RenderableImpl(this));
-        
+
         lookup = new ProxyLookup(getCookieSet().getLookup(), new AbstractLookup(lookupContent));
     }
 
@@ -53,7 +53,7 @@ public class MarkdownDataObject extends MultiDataObject {
     @NbBundle.Messages("Source=&Source")
     @MultiViewElement.Registration(
             displayName="#Source",
-            iconBase="flow/netbeans/markdown/resources/text-x-generic.png",
+            iconBase="flow/netbeans/markdown/resources/markdown-mark-16x16.png",
             persistenceType=TopComponent.PERSISTENCE_ONLY_OPENED,
             mimeType=MarkdownLanguageConfig.MIME_TYPE,
             preferredID="markdown.source",
