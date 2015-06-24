@@ -8,7 +8,9 @@ Source: <http://daringfireball.net/projects/markdown/>
 
 # Installation
 
-If you just want Markdown-Support - you can **download a pre-packaged release**:
+The plugin is [available](http://plugins.netbeans.org/plugin/50964/markdown-support) in the official NetBeans Plugin Portal Update Center.
+
+You can also download a pre-packaged release:
 
  - https://github.com/madflow/flow-netbeans-markdown/releases (list of all releases)
  - https://github.com/madflow/flow-netbeans-markdown/releases/download/2.2/flow-netbeans-markdown.nbm (**note:** version 2.2)
