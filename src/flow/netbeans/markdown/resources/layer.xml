@@ -83,6 +83,9 @@
                 </folder>
                 <attr name="SystemFileSystem.localizingBundle" stringvalue="flow.netbeans.markdown.resources.Bundle"/>
                 <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#Editors/text/x-markdown"/>
+                <folder name="Preferences">
+                    <file name="org-netbeans-modules-markdown-editor-preferences.xml" url="org-netbeans-modules-markdown-editor-preferences_2.xml"/>
+                </folder>
                 <file name="language.instance">
                     <attr name="instanceCreate" methodvalue="flow.netbeans.markdown.highlighter.MarkdownTokenId.language"/>
                     <attr name="instanceOf" stringvalue="org.netbeans.api.lexer.Language"/>
@@ -112,6 +115,18 @@
         </folder>
     </folder>
     <folder name="OptionsDialog">
+        <folder name="Editor">
+            <folder name="Formatting">
+                <folder name="text">
+                    <folder name="x-markdown">
+                        <file name="MarkdownFormattingCustomizer.instance">
+                            <attr name="instanceOf" stringvalue="org.netbeans.modules.options.editor.spi.PreferencesCustomizer$Factory"/>
+                            <attr name="instanceCreate" newvalue="flow.netbeans.markdown.options.editor.MarkdownFormattingCustomizerFactory"/>
+                        </file>
+                    </folder>
+                </folder>
+            </folder>
+        </folder>
         <folder name="PreviewExamples">
             <folder name="text">
                 <file name="x-markdown" url="MarkdownExample.md"/>
