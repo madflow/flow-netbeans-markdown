@@ -50,8 +50,8 @@ public class FXHtmlView extends AbstractHtmlView {
             public void run() {
                 currentContent = content;
 
-                final Number x = (Integer) webView.getEngine().executeScript("document.body.scrollLeft");
-                final Number y = (Integer) webView.getEngine().executeScript("document.body.scrollTop");
+                final Number x = (Number) webView.getEngine().executeScript("document.body.scrollLeft");
+                final Number y = (Number) webView.getEngine().executeScript("document.body.scrollTop");
 
                 webView.getEngine().loadContent(currentContent);
 
