@@ -1,6 +1,7 @@
 package flow.netbeans.markdown.preview.ext;
 
 import flow.netbeans.markdown.preview.AbstractHtmlView;
+import java.text.MessageFormat;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -49,18 +50,26 @@ public class FXHtmlView extends AbstractHtmlView {
             public void run() {
                 currentContent = content;
 
-                final Integer x = (Integer) webView.getEngine().executeScript("document.body.scrollLeft");
-                final Integer y = (Integer) webView.getEngine().executeScript("document.body.scrollTop");
+                final Number x = (Integer) webView.getEngine().executeScript("document.body.scrollLeft");
+                final Number y = (Integer) webView.getEngine().executeScript("document.body.scrollTop");
 
                 webView.getEngine().loadContent(currentContent);
 
                 final Worker<Void> loadWorker = webView.getEngine().getLoadWorker();
                 loadWorker.stateProperty().addListener(new ChangeListener<Worker.State>() {
                     @Override
-                    public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
-                        if (newValue == Worker.State.SUCCEEDED) {
-                            webView.getEngine().executeScript("window.scrollTo(" + x + "," + y + ");");
-                            loadWorker.stateProperty().removeListener(this);
+                    public void changed(ObservableValue<? extends Worker.State> observable,
+                            Worker.State oldValue, Worker.State newValue) {
+                        switch (newValue) {
+                            case SUCCEEDED:
+                                loadWorker.stateProperty().removeListener(this);
+                                String script = MessageFormat.format("window.scrollTo({0},{1});", x, y);
+                                webView.getEngine().executeScript(script);
+                                break;
+                            case FAILED:
+                            case CANCELLED:
+                                loadWorker.stateProperty().removeListener(this);
+                                break;
                         }
                     }
                 });
