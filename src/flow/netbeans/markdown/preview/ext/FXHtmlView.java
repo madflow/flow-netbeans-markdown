@@ -47,7 +47,6 @@ public class FXHtmlView extends AbstractHtmlView {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                //currentContent = content.replace("</head>", "<script type=\"text/javascript\">window.onload = function(){window.onbeforeunload = function() {return \"***navigation-hook***\";};};</script></head>");
                 currentContent = content;
 
                 final Integer x = (Integer) webView.getEngine().executeScript("document.body.scrollLeft");
@@ -82,12 +81,6 @@ public class FXHtmlView extends AbstractHtmlView {
         webView.setMinSize(widthDouble, heightDouble);
         webView.setPrefSize(widthDouble, heightDouble);
         webView.setContextMenuEnabled(false);
-//        webView.getEngine().setCreatePopupHandler(new Callback<PopupFeatures, WebEngine>() {
-//            @Override
-//            public WebEngine call(PopupFeatures p) {
-//                return null;
-//            }
-//        });
         webView.getEngine().setConfirmHandler(new Callback<String, Boolean>() {
             @Override
             public Boolean call(String p) {
