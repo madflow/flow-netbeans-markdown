@@ -4,6 +4,7 @@ import flow.netbeans.markdown.preview.AbstractHtmlView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.util.Callback;
 import javax.swing.JComponent;
 
 public class FXHtmlView extends AbstractHtmlView {
+
     private static final int PANEL_WIDTH_INT = 675;
 
     private static final int PANEL_HEIGHT_INT = 400;
@@ -47,7 +49,22 @@ public class FXHtmlView extends AbstractHtmlView {
             public void run() {
                 //currentContent = content.replace("</head>", "<script type=\"text/javascript\">window.onload = function(){window.onbeforeunload = function() {return \"***navigation-hook***\";};};</script></head>");
                 currentContent = content;
+
+                final Integer x = (Integer) webView.getEngine().executeScript("document.body.scrollLeft");
+                final Integer y = (Integer) webView.getEngine().executeScript("document.body.scrollTop");
+
                 webView.getEngine().loadContent(currentContent);
+
+                final Worker<Void> loadWorker = webView.getEngine().getLoadWorker();
+                loadWorker.stateProperty().addListener(new ChangeListener<Worker.State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
+                        if (newValue == Worker.State.SUCCEEDED) {
+                            webView.getEngine().executeScript("window.scrollTo(" + x + "," + y + ");");
+                            loadWorker.stateProperty().removeListener(this);
+                        }
+                    }
+                });
             }
         });
     }
