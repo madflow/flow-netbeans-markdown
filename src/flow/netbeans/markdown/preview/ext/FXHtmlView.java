@@ -1,7 +1,6 @@
 package flow.netbeans.markdown.preview.ext;
 
 import flow.netbeans.markdown.preview.AbstractHtmlView;
-import java.text.MessageFormat;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -63,7 +62,7 @@ public class FXHtmlView extends AbstractHtmlView {
                         switch (newValue) {
                             case SUCCEEDED:
                                 loadWorker.stateProperty().removeListener(this);
-                                String script = MessageFormat.format("window.scrollTo({0},{1});", x, y);
+                                String script = String.format("window.scrollTo(%d,%d);", x, y);
                                 webView.getEngine().executeScript(script);
                                 break;
                             case FAILED:
