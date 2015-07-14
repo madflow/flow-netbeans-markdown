@@ -4,6 +4,7 @@ import flow.netbeans.markdown.preview.AbstractHtmlView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.util.Callback;
 import javax.swing.JComponent;
 
 public class FXHtmlView extends AbstractHtmlView {
+
     private static final int PANEL_WIDTH_INT = 675;
 
     private static final int PANEL_HEIGHT_INT = 400;
@@ -45,9 +47,31 @@ public class FXHtmlView extends AbstractHtmlView {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                //currentContent = content.replace("</head>", "<script type=\"text/javascript\">window.onload = function(){window.onbeforeunload = function() {return \"***navigation-hook***\";};};</script></head>");
                 currentContent = content;
+
+                final Number x = (Number) webView.getEngine().executeScript("document.body.scrollLeft");
+                final Number y = (Number) webView.getEngine().executeScript("document.body.scrollTop");
+
                 webView.getEngine().loadContent(currentContent);
+
+                final Worker<Void> loadWorker = webView.getEngine().getLoadWorker();
+                loadWorker.stateProperty().addListener(new ChangeListener<Worker.State>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Worker.State> observable,
+                            Worker.State oldValue, Worker.State newValue) {
+                        switch (newValue) {
+                            case SUCCEEDED:
+                                loadWorker.stateProperty().removeListener(this);
+                                String script = String.format("window.scrollTo(%d,%d);", x, y);
+                                webView.getEngine().executeScript(script);
+                                break;
+                            case FAILED:
+                            case CANCELLED:
+                                loadWorker.stateProperty().removeListener(this);
+                                break;
+                        }
+                    }
+                });
             }
         });
     }
@@ -65,12 +89,6 @@ public class FXHtmlView extends AbstractHtmlView {
         webView.setMinSize(widthDouble, heightDouble);
         webView.setPrefSize(widthDouble, heightDouble);
         webView.setContextMenuEnabled(false);
-//        webView.getEngine().setCreatePopupHandler(new Callback<PopupFeatures, WebEngine>() {
-//            @Override
-//            public WebEngine call(PopupFeatures p) {
-//                return null;
-//            }
-//        });
         webView.getEngine().setConfirmHandler(new Callback<String, Boolean>() {
             @Override
             public Boolean call(String p) {
