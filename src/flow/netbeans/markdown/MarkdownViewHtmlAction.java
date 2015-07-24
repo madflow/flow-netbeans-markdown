@@ -58,7 +58,7 @@ public final class MarkdownViewHtmlAction implements ActionListener {
             out.close();
 
             URL url = temp.toURI().toURL();
-            URLDisplayer.getDefault().showURLExternal(url);
+            URLDisplayer.getDefault().showURL(url);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
