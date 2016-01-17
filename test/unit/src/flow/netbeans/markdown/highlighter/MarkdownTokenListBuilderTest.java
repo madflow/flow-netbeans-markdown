@@ -4,7 +4,7 @@ package flow.netbeans.markdown.highlighter;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static flow.netbeans.markdown.matchers.Matchers.*;
 import static flow.netbeans.markdown.highlighter.MarkdownTokenId.*;
 
