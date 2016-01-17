@@ -2,7 +2,8 @@
 package flow.netbeans.markdown.highlighter;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static flow.netbeans.markdown.matchers.Matchers.*;
 
 import java.io.FileNotFoundException;
