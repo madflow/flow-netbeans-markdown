@@ -13,7 +13,7 @@ The plugin is [available](http://plugins.netbeans.org/plugin/50964/markdown-supp
 You can also download a pre-packaged release:
 
  - https://github.com/madflow/flow-netbeans-markdown/releases (list of all releases)
- - https://github.com/madflow/flow-netbeans-markdown/releases/download/2.2/flow-netbeans-markdown.nbm (**note:** version 2.2)
+ - https://github.com/madflow/flow-netbeans-markdown/releases/download/2.3.1/flow-netbeans-markdown.nbm (**note:** version 2.2)
 
 Install the plugin with: `Tools -> Plugins -> Downloaded`
 
