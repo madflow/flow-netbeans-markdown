@@ -52,15 +52,6 @@ You may also compile a binary yourself with the **latest development code**.
 
 ![Editor - Preview view](editor-preview.png "The Preview view of the Markdown editor")
 
-# Authors
-
-- Florian Reiss <https://github.com/madflow>
-- junichi11 <https://github.com/junichi11>
-- Holger Stenger <https://github.com/stengerh>
-- Radosław Kowalewski <https://github.com/srsbiz>
-- Robert Burkhead <https://github.com/rmburkhead>
-
-Contributions are always welcome and greatly appreciated!
 
 # Resources
 
