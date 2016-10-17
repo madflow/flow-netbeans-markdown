@@ -40,7 +40,7 @@ import org.openide.windows.TopComponent;
  *
  * @author Holger Stenger
  */
-@NbBundle.Messages("Preview=Preview")
+@NbBundle.Messages("Preview=&Preview")
 @MultiViewElement.Registration(
         displayName = "#Preview",
         iconBase = "flow/netbeans/markdown/resources/markdown-mark-16x16.png",
