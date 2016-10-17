@@ -3,6 +3,7 @@ package flow.netbeans.markdown.csl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import org.netbeans.modules.csl.api.OffsetRange;
 import org.netbeans.modules.csl.api.StructureItem;
 import org.openide.filesystems.FileObject;
@@ -118,8 +119,17 @@ public class MarkdownTOCBuilder {
                 if (sb.length() > 0) {
                     sb.append('.');
                 }
-                sb.append(counter);
+                sb.append(String.format(Locale.US, getCounterFormat(), counter));
             }
+        }
+        
+        private String getCounterFormat() {
+            String counterFormat = "%d";
+            if (parent != null) {
+                final int counterWidth = Integer.toString(parent.children.size()).length();
+                 counterFormat = "%0" + counterWidth + "d";
+            }
+            return counterFormat;
         }
 
         private void finish(int endIndex) {
