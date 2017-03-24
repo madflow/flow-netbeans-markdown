@@ -110,16 +110,6 @@
             </folder>
         </folder>
     </folder>
-    <folder name="Templates">
-        <folder name="Other">
-            <file name="MarkdownTemplate.md" url="MarkdownTemplate.md">
-                <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#Templates/Other/MarkdownTemplate.md"/>
-                <attr name="templateWizardURL" urlvalue="nbresloc:/flow/netbeans/markdown/resources/MarkdownTemplateDescription.html"/>
-                <attr name="template" boolvalue="true"/>
-                <attr name="requireProject" boolvalue="false"/>
-            </file>
-        </folder>
-    </folder>
     <folder name="Services">
         <folder name="MIMEResolver">
             <file name="MarkdownResolver.xml" url="MarkdownResolver.xml">
