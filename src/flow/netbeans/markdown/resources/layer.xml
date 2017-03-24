@@ -46,13 +46,6 @@
             </folder>
         </folder>
     </folder>
-    <folder name="Services">
-        <folder name="MIMEResolver">
-            <file name="MarkdownResolver.xml" url="MarkdownResolver.xml">
-                <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#Services/MIMEResolver/MarkdownResolver.xml"/>
-            </file>
-        </folder>
-    </folder>
     <folder name="Spellcheckers">
         <file name="Markdown">
             <attr name="displayName" bundlevalue="flow.netbeans.markdown.resources.Bundle#text/x-markdown"/>

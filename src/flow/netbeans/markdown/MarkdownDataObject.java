@@ -8,6 +8,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.MIMEResolver;
 import org.openide.loaders.DataNode;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectExistsException;
@@ -23,6 +24,11 @@ import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 
 @NbBundle.Messages("Markdown=Markdown")
+@MIMEResolver.ExtensionRegistration(
+        displayName = "flow.netbeans.markdown.resources.Bundle#Services/MIMEResolver/MarkdownResolver.xml",
+        mimeType = MarkdownLanguageConfig.MIME_TYPE,
+        extension = {"md", "MD", "markdown", "MARKDOWN", "mkd", "MKD"}
+)
 @DataObject.Registration(
         displayName = "#Markdown",
         iconBase = "flow/netbeans/markdown/resources/markdown-mark-16x16.png",
