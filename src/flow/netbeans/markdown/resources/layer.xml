@@ -62,14 +62,6 @@
                         <attr name="position" intvalue="1200"/>
                     </file>
                 </folder>
-                <folder name="Factories">
-                    <file name="MarkdownDataLoader.instance">
-                        <attr name="dataObjectClass" stringvalue="flow.netbeans.markdown.MarkdownDataObject"/>
-                        <attr name="iconBase" stringvalue="flow/netbeans/markdown/resources/markdown-mark-16x16.png"/>
-                        <attr name="instanceCreate" methodvalue="org.openide.loaders.DataLoaderPool.factory"/>
-                        <attr name="mimeType" stringvalue="text/x-markdown"/>
-                    </file>
-                </folder>
             </folder>
         </folder>
     </folder>

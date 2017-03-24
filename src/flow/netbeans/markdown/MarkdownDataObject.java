@@ -6,6 +6,7 @@ import org.netbeans.core.spi.multiview.MultiViewElement;
 import org.netbeans.core.spi.multiview.text.MultiViewEditorElement;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataNode;
+import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.MultiDataObject;
 import org.openide.loaders.MultiFileLoader;
@@ -18,6 +19,12 @@ import org.openide.util.lookup.InstanceContent;
 import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 
+@NbBundle.Messages("Markdown=Markdown")
+@DataObject.Registration(
+        displayName = "#Markdown",
+        iconBase = "flow/netbeans/markdown/resources/markdown-mark-16x16.png",
+        mimeType = MarkdownLanguageConfig.MIME_TYPE
+)
 public class MarkdownDataObject extends MultiDataObject {
     private static final long serialVersionUID = 1L;
 
