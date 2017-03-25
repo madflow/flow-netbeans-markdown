@@ -27,7 +27,8 @@ import org.openide.windows.TopComponent;
 @MIMEResolver.ExtensionRegistration(
         displayName = "flow.netbeans.markdown.resources.Bundle#Services/MIMEResolver/MarkdownResolver.xml",
         mimeType = MarkdownLanguageConfig.MIME_TYPE,
-        extension = {"md", "MD", "markdown", "MARKDOWN", "mkd", "MKD"}
+        extension = {"md", "MD", "markdown", "MARKDOWN", "mkd", "MKD"},
+        position = 7314
 )
 @DataObject.Registration(
         displayName = "#Markdown",
